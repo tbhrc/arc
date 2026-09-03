@@ -18,8 +18,9 @@ This manifest defines the logical components required for an ARC deployment. Exa
 | ARC profile | Yes | generated `arc.json` | non-secret target topology/ownership configuration | `onboard` produces valid config and refuses implicit overwrite |
 | Estate safe harbour | Recommended after healthy deployment | `arc.py export` + formal ARC release | non-secret architecture snapshot + recovery references | manifest schema validates and round-trips into a restore plan |
 | Atlas portable distribution | Recommended | `scripts/package_atlas.py` -> `dist/skill.zip` | transport of the same canonical Atlas Skill | package contains canonical Skill, metadata and mode reference; no second editable canon |
-| Private file store | Yes for confidential work | provider chosen by business | private/client/personnel files | private data does not need public repo storage |
-| Specialist systems | As needed | CRM/ERP/ATS/accounting/etc. | declared structured state | ownership map identifies each live field owner |
+| Private file store | Yes for confidential work | provider chosen by business | private/client/personnel files | exact file owner/path/version can be verified without public copying |
+| Specialist integrations | As needed | `integrations/` + connected system | authorised handoff to live external owners | owner, identity scope, allowed actions and verification method are declared |
+| Security/governance | Yes | `SECURITY.md` + `contracts/governance.md` + `contracts/secrets.md` | repository/identity/runner/authority boundaries | deterministic security-contract tests + owner-specific verification |
 | Research escalation | Yes | research + operating rule | recurring problem-to-platform investigation | agent can recognise a broader capability gap |
 | Trusted runtime | Optional | `ai-engine` repository/runtime | privileged machine/runtime access | only used when normal execution is insufficient |
 | Memory | Optional | chosen memory layer | derived context | memory is treated as non-canonical |
@@ -50,6 +51,44 @@ The module/provider/runtime fields describe capability choices without making an
 Domain repositories are configured per business. Atlas can generate the profile through `scripts/arc.py onboard`, then `plan --inspect-target` distinguishes configured repositories that already exist (**REUSE**) from missing ones (**CREATE**) before apply.
 
 For an established business, repository existence alone does not decide ownership. Atlas additionally classifies existing systems and process owners as **KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE**.
+
+## Specialist integration contract
+
+A target business may connect email/calendar/identity, private files, CRM, ATS/HRIS, finance/accounting/ERP, website/CMS/DNS, databases/warehouses/BI, support/service, memory/knowledge and trusted runtimes.
+
+ARC records only the portable contract:
+
+```text
+integration class
+system/provider name
+live state owner
+business/domain owner
+allowed agent actions
+identity/connector name (not value)
+minimum scope
+authority boundary
+verification method
+recovery/revocation owner
+```
+
+The connected specialist system remains authoritative for its live records. GitHub may own the durable work/decision around that system without cloning its database. See [Integration Classes](integrations/README.md) and [Specialist Systems](components/specialist-systems/README.md).
+
+## Security/governance contract
+
+ARC deployments must make these boundaries explicit:
+
+```text
+repository visibility by data class
+branch/ruleset/merge policy proportional to risk
+Actions permissions least-privilege by default
+CODEOWNERS/review owner where meaningful
+agent action authority in the owning system
+runner/trusted-runtime trust boundary
+credential provisioning/rotation/revocation owner
+root/break-glass authority only under explicit current approval
+```
+
+See [Security and Governance](contracts/governance.md), [Secrets](contracts/secrets.md) and [SECURITY.md](SECURITY.md).
 
 ## First-day Skills foundation
 
