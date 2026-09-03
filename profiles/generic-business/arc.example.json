@@ -1,6 +1,7 @@
 {
-  "arc_version": "0.1.0",
+  "arc_version": "0.2.0",
   "target": {
+    "business_name": "YOUR-BUSINESS",
     "owner": "YOUR-GITHUB-ORG",
     "owner_type": "org",
     "default_visibility": "private"
