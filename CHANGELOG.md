@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.0 — 2026-09-03 — Safe Harbour
+
+- Added estate-manifest schema `1.0` for non-secret ARC topology, ownership, integration references and optional observed repository state.
+- Added `arc.py export` to create a non-mutating architecture manifest from a valid ARC profile.
+- Added `arc.py restore-plan` to explain repository reconstruction plus external/manual recovery prerequisites without mutation.
+- Added bounded `arc.py restore --apply` for GitHub repository reconstruction only; private files, specialist-system records, credentials, runtime machine state and memory contents remain external-owner responsibilities.
+- Added known credential-pattern detection in addition to secret-like configuration-key rejection.
+- Added manifest compatibility validation and round-trip reconstruction back into valid ARC configuration.
+- Added the Safe-Harbour Contract defining release guarantees, backup boundaries and recovery ownership.
+- Fixed target inspection so an unavailable or unauthenticated GitHub CLI reports UNKNOWN rather than incorrectly classifying repositories as CREATE.
+- Prepared ARC for its first formal tagged public release from a known-good merged Stage state.
+
 ## 0.2.0 — 2026-09-03 — Atlas Universal Front Door
 
 - Expanded Atlas into seven explicit operating modes: onboard, adopt, audit, health, upgrade, recover and next.
