@@ -1,0 +1,80 @@
+{
+  "manifest_schema": "1.0",
+  "arc_version": "0.3.0",
+  "exported_at": "2026-09-03T00:00:00Z",
+  "target": {
+    "business_name": "Example Business",
+    "owner": "example-org",
+    "owner_type": "org",
+    "default_visibility": "private"
+  },
+  "repositories": [
+    {
+      "name": "skills",
+      "description": "Canonical reusable AI Skills and operating HOW.",
+      "role": "skills",
+      "required": true,
+      "visibility": "private",
+      "observed_action": "NOT_OBSERVED"
+    },
+    {
+      "name": "research",
+      "description": "External research, technology discovery and proving evidence.",
+      "role": "research",
+      "required": true,
+      "visibility": "private",
+      "observed_action": "NOT_OBSERVED"
+    },
+    {
+      "name": "ops",
+      "description": "Business-wide operating architecture and cross-domain control.",
+      "role": "operations",
+      "required": true,
+      "visibility": "private",
+      "observed_action": "NOT_OBSERVED"
+    },
+    {
+      "name": "sales",
+      "description": "Sales business/domain truth owner.",
+      "role": "business-domain",
+      "required": true,
+      "visibility": "private",
+      "observed_action": "NOT_OBSERVED"
+    }
+  ],
+  "integrations": {
+    "private_files": "SharePoint",
+    "specialist_systems": [
+      "HubSpot",
+      "Xero"
+    ],
+    "memory": "optional"
+  },
+  "observation": {
+    "repository_state_observed": false,
+    "meaning": "REUSE means observed present; CREATE means observed missing; UNKNOWN/NOT_OBSERVED is not evidence of absence."
+  },
+  "compatibility": {
+    "manifest_schema": "1.0",
+    "exported_by_arc": "0.3.0",
+    "minimum_reader": "0.3.0"
+  },
+  "recovery": {
+    "repository_reconstruction": "ARC bootstrap may recreate missing configured GitHub repositories only after explicit --apply authority.",
+    "excluded_material": [
+      "credential values",
+      "private-file contents",
+      "CRM/ERP/ATS/accounting records",
+      "database contents",
+      "trusted-runtime machine state",
+      "derived memory contents"
+    ],
+    "manual_prerequisites": [
+      "reprovision required credentials through the approved external credential/identity owner",
+      "restore or reconnect private files through the declared private-file owner",
+      "restore or reconnect specialist-system data through each owning system",
+      "restore trusted runtime machine/state separately when one is required",
+      "run ARC verification after repository and external-owner restoration"
+    ]
+  }
+}

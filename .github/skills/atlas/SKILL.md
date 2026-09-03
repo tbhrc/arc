@@ -1,6 +1,6 @@
 ---
 name: atlas
-description: "ARC's universal front-door onboarding, adoption, audit, health, upgrade, recovery, deployment and navigation Skill. Use when a founder, operator or AI agent asks to install, bootstrap, deploy, reproduce, onboard to, adopt, understand, diagnose, audit, check health, upgrade, recover/redeploy, decide the next ARC action, migrate toward or operate the ARC architecture; when the user invokes or refers to `/atlas` or Atlas; or when an existing business must be assessed against ARC. Atlas reads current ARC truth, selects the right mode, starts plan-first, reuses existing owners where appropriate, asks only for irreducible missing business inputs, and never treats credentials as authority to mutate."
+description: "ARC's universal front-door onboarding, adoption, audit, health, upgrade, recovery, deployment and navigation Skill. Use when a founder, operator or AI agent asks to install, bootstrap, deploy, reproduce, onboard to, adopt, understand, diagnose, audit, check health, upgrade, export a safe-harbour estate manifest, recover/redeploy, decide the next ARC action, migrate toward or operate the ARC architecture; when the user invokes or refers to `/atlas` or Atlas; or when an existing business must be assessed against ARC. Atlas reads current ARC truth, selects the right mode, starts plan-first, reuses existing owners where appropriate, asks only for irreducible missing business inputs, and never treats credentials as authority to mutate."
 ---
 
 # Atlas
@@ -18,7 +18,7 @@ Always read:
 5. `/BOOTSTRAP.md`
 6. the selected deployment profile.
 
-Read [`references/modes.md`](references/modes.md) before choosing an operating mode. Read `/contracts/`, `/components/` and `/VERIFY.md` only as the current decision requires.
+Read [`references/modes.md`](references/modes.md) before choosing an operating mode. For recovery, also read `/contracts/safe-harbour.md`. Read other `/contracts/`, `/components/` and `/VERIFY.md` only as the current decision requires.
 
 ## Select the mode
 
@@ -29,7 +29,7 @@ Choose one dominant mode automatically:
 - `audit` — inspect architecture and ownership without mutation;
 - `health` — diagnose current verified state;
 - `upgrade` — plan movement toward a newer ARC release;
-- `recover` — plan restore/redeployment from known-good evidence;
+- `recover` — export/recover/redeploy from known-good ARC evidence;
 - `next` — determine the smallest safe next action from current durable state.
 
 Do not make the user choose a mode unless ambiguity materially changes the action.
@@ -164,7 +164,7 @@ Private-file owner
 Specialist-system owners
 Trusted-runtime requirement
 Manual/credential inputs (names/purpose only, never values)
-Bootstrap command
+Bootstrap command / recovery command
 Verification gates
 First real workflow to prove
 ```
@@ -175,21 +175,46 @@ Distinguish **required core**, **optional component**, **existing owner to keep/
 
 `plan` is not permission to mutate.
 
-- `doctor`, `onboard` and `plan` are non-mutating.
+- `doctor`, `onboard`, `plan`, `export` and `restore-plan` are non-mutating.
 - `bootstrap` is non-mutating without `--apply`.
-- Existing repositories are reused and not overwritten by bootstrap.
-- Never add secret values to `arc.json`.
+- `restore` is non-mutating without `--apply`.
+- Existing repositories are reused and not overwritten by bootstrap/restore.
+- Never add secret values to `arc.json` or an estate manifest.
 - Never mutate solely because credentials exist.
 
-## Health, upgrade and recovery honesty
+## Safe-harbour recovery
 
-Use the capabilities actually present in the current ARC release. Do not invent future lifecycle tooling.
+A healthy estate can export a non-secret architecture snapshot:
 
-- `health` uses current `/VERIFY.md`, CLI verification and observable target evidence; richer lifecycle health belongs to ARC.7.
-- `upgrade` produces a plan from known current/release contracts until deterministic release-to-estate upgrade support is implemented.
-- `recover` uses only known releases/manifests/backups and declared owners; safe-harbour export/restore is owned by ARC.4.
+```bash
+python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
+```
 
-If the requested capability is not yet implemented, identify the owning Stage/contract and give the current safe route rather than pretending success.
+The manifest contains ARC topology/ownership metadata and external owner **names/references only**. It does not contain private-file contents, CRM/ERP/ATS/accounting records, database contents, credential values, trusted-runtime machine state or derived memory contents.
+
+To plan recovery without mutation:
+
+```bash
+python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
+```
+
+Only after the plan is understood and GitHub repository reconstruction is explicitly authorised:
+
+```bash
+python3 scripts/arc.py restore --manifest arc-estate.json --apply
+```
+
+`restore --apply` is deliberately bounded to ARC's existing conservative GitHub repository bootstrap. External owners must be restored/reconnected through their own approved backup/identity processes, then the full ARC verification contract must pass.
+
+## Health and upgrade honesty
+
+Use the capabilities actually present in the current ARC release.
+
+- `health` uses current `/VERIFY.md`, CLI verification and observable target evidence; richer lifecycle health/drift reporting belongs to ARC.7.
+- `upgrade` should identify the current formal ARC release and manifest schema, then produce a migration plan; automated release-to-estate upgrade remains owned by ARC.7.
+- `recover` uses the implemented safe-harbour export/restore-plan/bounded-restore path plus the external-owner backup responsibilities in `/contracts/safe-harbour.md`.
+
+If a requested capability is not implemented, identify the owning Stage/contract and give the current safe route rather than pretending success.
 
 ## Portable distribution
 
@@ -207,7 +232,7 @@ Course = learning and operator capability. ARC = deployable/recovery architectur
 
 ## Completion
 
-Do not call deployment complete until the relevant `/VERIFY.md` gates pass and one real workflow proves:
+Do not call deployment or recovery complete until the relevant `/VERIFY.md` gates pass and one real workflow proves:
 
 ```text
 request -> Skill -> owner truth -> execution -> verification -> durable evidence

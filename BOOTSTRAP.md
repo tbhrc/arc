@@ -28,7 +28,7 @@ Confirm at minimum:
 - specialist systems already owning structured state;
 - whether a trusted runtime repository is genuinely required.
 
-Do not put secret values or secret-like fields in `arc.json`. ARC rejects common secret-field names by design.
+Do not put secret values or secret-like fields in `arc.json`. ARC rejects common secret-field names and known credential-value patterns by design.
 
 If `arc.json` already exists, onboarding refuses to overwrite it unless `--overwrite` is explicitly supplied.
 
@@ -46,12 +46,14 @@ Doctor checks local prerequisites and authentication. It does not create reposit
 python3 scripts/arc.py plan --config arc.json --inspect-target
 ```
 
-Where GitHub CLI access is available, the plan classifies each configured repository as:
+Where authenticated GitHub CLI access is available, the plan classifies each configured repository as:
 
 ```text
 REUSE  — repository already exists; leave it unchanged during bootstrap
 CREATE — repository is missing and would be created only after apply authority
 ```
+
+If GitHub CLI is unavailable or unauthenticated, ARC reports `UNKNOWN` rather than guessing that a repository is missing.
 
 Review:
 
@@ -77,7 +79,7 @@ The bootstrap is intentionally conservative:
 
 - existing repositories are reused, not overwritten;
 - missing configured repositories are created;
-- no secrets are created or copied;
+- no credentials are created or copied;
 - no production specialist system is modified;
 - no private business data is migrated;
 - the script does not grant broad organisation permissions.
@@ -121,6 +123,37 @@ request
 
 Capture what failed. Promote reusable corrections into the correct owner rather than patching only a chat session.
 
-## 9. Preserve durable continuation state
+## 9. Export the safe-harbour architecture snapshot
+
+Once the estate is healthy, create a non-secret estate manifest:
+
+```bash
+python3 scripts/arc.py export \
+  --config arc.json \
+  --output arc-estate.json \
+  --inspect-target
+```
+
+Keep the estate manifest with the organisation's approved recovery documentation together with a reference to the formal ARC release/tag used by the estate. The manifest contains architecture metadata and owner references only. It is **not** a backup of private files, specialist-system data, credentials, runtime machine state or memory contents.
+
+Read [contracts/safe-harbour.md](contracts/safe-harbour.md) and ensure each external owner has its own appropriate backup/recovery method.
+
+## 10. Recovery / redeployment
+
+To understand recovery without mutation:
+
+```bash
+python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
+```
+
+Only after the recovery plan is understood and GitHub repository reconstruction is explicitly authorised:
+
+```bash
+python3 scripts/arc.py restore --manifest arc-estate.json --apply
+```
+
+`restore --apply` recreates missing configured GitHub repositories through the same conservative bootstrap contract. It does not restore external owner contents. Reconnect/restore those owners separately, then rerun the complete ARC verification contract before declaring recovery complete.
+
+## 11. Preserve durable continuation state
 
 For material ARC Stage/programme work, update the controlling GitHub Issue before stopping. It must contain current branch/state, verification evidence, blockers and the exact next action so a cold agent can resume without chat history.

@@ -31,8 +31,8 @@ Atlas chooses the mode from the user's intent and current state:
 | `adopt` | Bring an existing business into ARC without forced replacement. |
 | `audit` | Inspect architecture, owners and gaps without mutation. |
 | `health` | Diagnose current verified ARC state using capabilities that exist now. |
-| `upgrade` | Plan movement toward a newer ARC release/contract. |
-| `recover` | Plan restore or redeployment from known-good evidence. |
+| `upgrade` | Plan movement toward a newer formal ARC release/contract. |
+| `recover` | Export a safe-harbour manifest, plan recovery and perform bounded repository reconstruction. |
 | `next` | Return the single smallest safe next action from current durable state. |
 
 The detailed mode contract lives in `.github/skills/atlas/references/modes.md`.
@@ -114,7 +114,7 @@ Private-file owner
 Specialist-system owners
 Runtime requirement
 Credential/manual-input list (names/purpose only, never values)
-Bootstrap / current action
+Bootstrap / recovery command
 Verification plan
 First real workflow to prove when deploying
 ```
@@ -132,19 +132,47 @@ The plan should distinguish:
 understand / inspect
 -> plan
 -> explicit apply authority
--> mutation
+-> bounded mutation
 -> verify
 ```
 
-Credentials being available never imply apply authority. `bootstrap` remains non-mutating unless `--apply` is supplied.
+Credentials being available never imply apply authority. `bootstrap` and `restore` remain non-mutating unless `--apply` is supplied.
+
+## Safe-harbour recovery
+
+ARC can preserve the **architecture needed to rebuild an estate** without copying the estate's private/live data.
+
+After the estate is healthy, export a non-secret manifest:
+
+```bash
+python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
+```
+
+The estate manifest records ARC version/schema, target topology, repository roles, declared external owners and optional repository observations. It does not contain private files, specialist-system records, database contents, credential values, trusted-runtime machine state or memory contents.
+
+Plan recovery without mutation:
+
+```bash
+python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
+```
+
+Only after the repository reconstruction plan is accepted:
+
+```bash
+python3 scripts/arc.py restore --manifest arc-estate.json --apply
+```
+
+That apply step is deliberately limited to conservative GitHub repository reconstruction. Restore/reconnect external owners through their own approved backup/identity processes, then run the complete ARC verification contract.
+
+Read [contracts/safe-harbour.md](contracts/safe-harbour.md) before treating the manifest as a disaster-recovery artifact.
 
 ## Current lifecycle honesty
 
 Atlas routes to what the current ARC release can actually prove:
 
-- **health** uses current `VERIFY.md`, CLI checks and observable owner state;
-- **upgrade** produces a plan until release-to-estate upgrade machinery is implemented and proven;
-- **recover** uses only known releases/manifests/backups and declared owners; deterministic safe-harbour export/restore is owned by ARC.4.
+- **health** uses current `VERIFY.md`, CLI checks and observable owner state; richer drift/health reporting belongs to ARC.7;
+- **upgrade** identifies the formal ARC release + manifest schema and produces a migration plan; automated release-to-estate upgrade belongs to ARC.7;
+- **recover** uses the implemented safe-harbour export → restore-plan → bounded restore path plus the external-owner backup boundaries.
 
 Atlas must identify a missing capability or its owning Stage rather than pretend it already exists.
 
@@ -174,6 +202,7 @@ read ARC
 -> onboard agents
 -> connect specialist systems deliberately
 -> run one real business workflow
+-> export safe-harbour manifest
 -> capture reusable learning
 ```
 
