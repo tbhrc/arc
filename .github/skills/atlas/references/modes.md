@@ -7,9 +7,9 @@ Atlas selects one mode before choosing an ARC action. **Plan is not permission t
 | `onboard` | New ARC estate or first business profile | Gather only irreducible inputs, generate `arc.json`, run doctor and plan before apply. |
 | `adopt` | Existing business with repositories, SOPs, automations or specialist systems | Inventory first; classify each relevant owner as KEEP, INTEGRATE, MIGRATE, RESEARCH or RETIRE. Never replace a working owner merely to match an example profile. |
 | `audit` | Non-mutating architecture/ownership review | Inspect current ARC contracts and configured target state; use `plan --inspect-target` where available and report gaps without mutation. |
-| `health` | Current-state diagnosis | Use current verification contracts and observable evidence. Do not claim richer lifecycle health checks before ARC.7 implements them. |
-| `upgrade` | Moving an existing estate toward a newer ARC release | Identify current version/contracts and produce a plan only. Deterministic release-to-estate upgrade machinery belongs to ARC.4/ARC.7 as it becomes available. |
-| `recover` | Restore/redeployment planning after loss or migration | Use known releases, manifests and declared owners only. Never invent backups or secret values. Deterministic safe-harbour export/restore is owned by ARC.4. |
+| `health` | Current-state diagnosis | Use current `VERIFY.md`, CLI verification and observable evidence. Richer estate health/drift reporting remains owned by ARC.7. |
+| `upgrade` | Moving an existing estate toward a newer ARC release | Identify the current ARC version, formal release and manifest schema; produce a migration plan. Automated release-to-estate upgrade machinery remains owned by ARC.7. |
+| `recover` | Safe-harbour export, restore planning and bounded redeployment | Use `export` to create a non-secret estate manifest, `restore-plan` to understand recovery, and `restore --apply` only for explicitly authorised GitHub repository reconstruction. External owner backups/credentials remain separate. |
 | `next` | Operator asks what to do now | Read current owner truth, Stage/Issue state and verification evidence, then return the single smallest safe next action. |
 
 ## Existing-estate classification
@@ -22,13 +22,35 @@ Use these labels during `adopt` and where useful during `audit`:
 - **RESEARCH** — recurring capability gap needs discovery/proving before implementation.
 - **RETIRE** — redundant or unsafe owner should be removed through its own controlled change.
 
+## Recovery route
+
+After an ARC estate is healthy, create a safe-harbour architecture snapshot:
+
+```bash
+python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
+```
+
+To understand recovery without mutation:
+
+```bash
+python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
+```
+
+Only after the recovery plan is understood and repository reconstruction is explicitly authorised:
+
+```bash
+python3 scripts/arc.py restore --manifest arc-estate.json --apply
+```
+
+`restore --apply` does **not** restore private files, CRM/ERP/ATS/accounting records, credential values, trusted-runtime machine state or derived memory contents. Follow `contracts/safe-harbour.md` and restore/reconnect those owners separately.
+
 ## Authority gate
 
 ```text
 understand / inspect
 -> plan
 -> explicit human/operator apply authority
--> mutation
+-> bounded mutation
 -> verify real state
 ```
 
