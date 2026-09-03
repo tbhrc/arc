@@ -137,6 +137,8 @@ The generic profile can declare optional **business modules**, **capable-agent/p
 - [Business modules](modules/README.md) are ownership patterns, not mandatory SaaS bundles.
 - [Provider routes](providers/README.md) are interchangeable capable-agent paths; no vendor is architectural canon.
 - [Runtime routes](runtimes/README.md) follow least privilege: normal connected capability first, trusted runtime only for a genuine gap.
+- [Integration classes](integrations/README.md) define how live specialist systems remain authoritative while agents operate through narrow identities and verifiable actions.
+- [Security and governance](contracts/governance.md) defines repository visibility, merge protection, Actions permissions, agent authority, runner trust and break-glass boundaries.
 
 A newly created Skills repository can also receive ARC's small generic first-day foundation: owner routing, proportionate GitHub work control, Skill authoring and Research escalation. Existing target Skill files are never overwritten automatically; after seeding, the target organisation owns its Skills canon.
 
@@ -238,6 +240,8 @@ The system was learned, tested, corrected and operated—not invented only on a 
 9. **Safe harbour references owners instead of stealing their data.** ARC preserves reconstructable architecture while private/live data remains with its real backup owner.
 10. **Provider and runtime are separate choices.** A business can change capable-agent providers without redesigning ownership or forcing privileged execution.
 11. **Chat is temporary context.** Material programme/Stage state belongs in GitHub Issues so a cold agent can continue without hidden conversation history.
+12. **Specialist systems stay authoritative.** ARC coordinates their use; it does not clone live mailboxes, CRM, ATS, finance, private-file or database state into GitHub for agent convenience.
+13. **Authority is action-specific.** Repository access never silently grants production, specialist-system, runner, secret-admin or root authority.
 
 ## Repository map
 
@@ -252,6 +256,7 @@ ARC
 ├── modules/                         optional business capability patterns
 ├── providers/                       provider-neutral agent contract
 ├── runtimes/                        least-privilege runtime contract
+├── integrations/                    specialist-system integration classes
 ├── starter/skills/                  generic first-day Skills foundation
 ├── components/                      component-specific guidance
 ├── contracts/
@@ -259,6 +264,7 @@ ARC
 │   ├── ownership.md                 source-of-truth boundaries
 │   ├── portability.md               what is portable vs externally owned
 │   ├── safe-harbour.md              release/export/recovery contract
+│   ├── governance.md                security and governance baseline
 │   └── secrets.md                   credential boundary
 ├── scripts/arc.py                   onboard/plan/bootstrap/export/restore/verify CLI
 ├── scripts/package_atlas.py         portable Atlas packager
@@ -283,10 +289,12 @@ Before adapting or recovering ARC, understand:
 - [Ownership and source of truth](contracts/ownership.md)
 - [Portability](contracts/portability.md)
 - [Safe harbour](contracts/safe-harbour.md)
+- [Integration classes](integrations/README.md)
+- [Security and governance](contracts/governance.md)
 
 ## Lifecycle boundary
 
-ARC 0.4 adds business-neutral modules, a first-day Skills foundation and provider/runtime portability on top of the Atlas + Safe Harbour foundation. Richer estate drift/health reporting and automated release-to-estate upgrade lifecycle remain owned by ARC.7.
+ARC 0.5 adds portable specialist-system integration contracts and a security/governance baseline on top of ARC 0.4's business-neutral modules, first-day Skills foundation and provider/runtime portability. Richer estate drift/health reporting and automated release-to-estate upgrade lifecycle remain owned by ARC.7.
 
 ## Public by design
 
@@ -296,6 +304,6 @@ Licensed under the [MIT License](LICENSE).
 
 ## Status
 
-**ARC v0.4.0 — Modular Portability**
+**ARC v0.5.0 — Integrations and Governance**
 
-ARC now supports guided onboarding/adoption, safe-harbour recovery, optional business capability modules, a generic first-day Skills foundation, provider-neutral capable-agent routes and least-privilege runtime selection. The Level 3 ARC v1 programme continues with specialist integrations/security, richer health/upgrades, independent clean-room proof and the final public reference monument.
+ARC now supports guided onboarding/adoption, safe-harbour recovery, optional business capability modules, a generic first-day Skills foundation, provider-neutral capable-agent routes, least-privilege runtime selection, specialist-system integration ownership and a portable security/governance baseline. The Level 3 ARC v1 programme continues with estate health/upgrades, independent clean-room proof and the final public reference monument.
