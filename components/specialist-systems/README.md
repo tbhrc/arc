@@ -47,6 +47,7 @@ business need
 - Write only when the user/owner has authorised the relevant action.
 - Prefer typed/native connector actions over scraping or copying whole datasets.
 - Verify writes from the specialist system after mutation.
+- Agents must **never mirror the specialist system** into GitHub or ARC merely for convenience; the live owner remains authoritative.
 - Do not convert a temporary export into a new source of truth.
 - If the integration exposes a recurring tooling limitation, route the capability gap through Research rather than repeatedly adding local workarounds.
 
