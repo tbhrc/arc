@@ -1,18 +1,16 @@
 name: ARC Stage 3 Runner
 
 on:
-  issue_comment:
-    types: [created]
+  push:
+    paths:
+      - '.github/workflows/arc-stage3-runner.yml'
 
 permissions:
   contents: write
 
 jobs:
   apply:
-    if: >-
-      github.event.issue.number == 6 &&
-      github.event.comment.body == '/arc-stage3-runner-20260903' &&
-      github.event.comment.user.login == 'david-aicoach'
+    if: github.event.head_commit.message == 'Run ARC Stage 3 bundle once'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
