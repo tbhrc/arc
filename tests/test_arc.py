@@ -36,6 +36,14 @@ class ArcConfigTests(unittest.TestCase):
         data = self.base()
         self.assertEqual(arc.command_bootstrap(data, False), 0)
 
+    def test_generated_repository_contract_links_core_owners(self):
+        repo = {"name": "sales", "role": "business-domain", "description": "Sales owner.", "required": True, "visibility": "private"}
+        readme = arc.generated_readme("acme", repo)
+        agents = arc.generated_agents("acme", repo)
+        self.assertIn("acme/skills", readme)
+        self.assertIn("acme/research", agents)
+        self.assertIn("Atlas", agents)
+
 
 if __name__ == "__main__":
     unittest.main()
