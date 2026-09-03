@@ -116,6 +116,15 @@ The generic profile can create a small operating estate rather than one giant re
 
 ARC does **not** automatically configure production secrets, grant broad credentials, move client data, or connect third-party systems. Those are explicit deployment decisions documented in the contracts.
 
+Every **newly created** repository is immediately seeded with:
+
+- a role-aware `README.md`;
+- a root `AGENTS.md`;
+- a thin Atlas Agent Skill pointer;
+- an `/atlas` prompt-file entrypoint for supported IDE surfaces.
+
+Existing repositories are detected and reused **without overwrite**; Atlas then proposes how to integrate them safely.
+
 ## Why ARC exists
 
 ARC grew out of a real operating migration. The [GitHub Course](https://github.com/tbhrc/gh-course) began as an attempt to learn GitHub properly. Each useful capability was immediately applied to real business operations. Issues became durable work objects. Pull Requests became controlled integration boundaries. Skills replaced scattered reusable SOP logic. Research became the discovery layer for missing capability. Self-hosted and VPS runtimes became bounded execution bridges rather than general control planes.
