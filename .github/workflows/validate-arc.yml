@@ -16,7 +16,40 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Compile ARC utilities
+        run: python3 -m py_compile scripts/arc.py scripts/package_atlas.py
       - name: Validate repository contract
         run: python3 scripts/arc.py verify-self
       - name: Run unit tests
         run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: Prove non-mutating onboarding
+        run: >-
+          python3 scripts/arc.py onboard
+          --non-interactive
+          --business-name 'ARC CI Business'
+          --owner arc-ci-business
+          --domains 'sales,delivery'
+          --private-files SharePoint
+          --specialist-systems 'HubSpot,Xero'
+          --output /tmp/arc-ci.json
+      - name: Package canonical Atlas Skill
+        run: python3 scripts/package_atlas.py
+      - name: Validate Atlas package contents
+        run: |
+          python3 - <<'PY'
+          import zipfile
+          from pathlib import Path
+
+          package = Path('dist/skill.zip')
+          assert package.exists(), 'dist/skill.zip missing'
+          with zipfile.ZipFile(package) as archive:
+              names = set(archive.namelist())
+          required = {
+              'atlas/SKILL.md',
+              'atlas/agents/openai.yaml',
+              'atlas/references/modes.md',
+          }
+          missing = required - names
+          assert not missing, f'missing Atlas package paths: {sorted(missing)}'
+          print('Atlas package contract PASS')
+          PY
