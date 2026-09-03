@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Compile ARC utilities
-        run: python3 -m py_compile scripts/arc.py scripts/package_atlas.py
+        run: python3 -m py_compile scripts/arc.py scripts/package_atlas.py scripts/seed_foundation.py
       - name: Validate repository contract
         run: python3 scripts/arc.py verify-self
       - name: Run unit tests
@@ -32,6 +32,8 @@ jobs:
           --private-files SharePoint
           --specialist-systems 'HubSpot,Xero'
           --output /tmp/arc-ci.json
+      - name: Prove first-day Skills foundation plan
+        run: python3 scripts/seed_foundation.py --config /tmp/arc-ci.json
       - name: Prove safe-harbour export
         run: >-
           python3 scripts/arc.py export
