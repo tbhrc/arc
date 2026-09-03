@@ -235,6 +235,7 @@ def create_repo(owner: str, owner_type: str, repo: dict[str, Any]) -> bool:
     seed_new_repo(owner, repo)
     return True
 
+
 def command_bootstrap(data: dict[str, Any], apply: bool) -> int:
     if not apply:
         print("ARC bootstrap is in PLAN-ONLY mode. Add --apply to create missing repositories.")
@@ -253,6 +254,11 @@ def command_bootstrap(data: dict[str, Any], apply: bool) -> int:
     return 0
 
 
+def gh_path_exists(full: str, path: str) -> bool:
+    result = run(["gh", "api", f"repos/{full}/contents/{path}"], check=False)
+    return result.returncode == 0
+
+
 def command_verify(data: dict[str, Any]) -> int:
     if not gh_available():
         raise ArcError("GitHub CLI (gh) is required for target verification")
@@ -265,9 +271,19 @@ def command_verify(data: dict[str, Any]) -> int:
             state = "MISSING"
             if repo["required"]:
                 failed = True
+            print(f"{state} {full}")
+            continue
+        missing_contract = [
+            path for path in ("README.md", "AGENTS.md", ".github/skills/atlas/SKILL.md")
+            if not gh_path_exists(full, path)
+        ]
+        if missing_contract:
+            state = "INCOMPLETE"
+            if repo["required"]:
+                failed = True
+            print(f"{state} {full}: missing {', '.join(missing_contract)}")
         else:
-            state = "OK"
-        print(f"{state} {full}")
+            print(f"OK {full}: repository + agent contract + Atlas")
     print("Target repository verification complete. Finish the human/agent gates in VERIFY.md.")
     return 1 if failed else 0
 
