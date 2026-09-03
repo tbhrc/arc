@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.0 — 2026-09-03 — Modular Portability
+
+- Added a business-neutral module catalogue covering CRM/sales, recruitment/HR, finance, marketing, customer service, product/software, research, knowledge/memory, website and reporting/BI.
+- Added provider-neutral agent capability contracts so ChatGPT, Codex, Claude, GitHub Copilot or other capable agents can satisfy the same ARC ownership/verification model without becoming architectural canon.
+- Added runtime portability guidance for GitHub-hosted Actions, local CLI/profile execution, self-hosted Mac/Linux and VPS/trusted-runtime paths.
+- Added a generic first-day Skills foundation with starter Skills for owner routing, GitHub work control, Skill authoring and Research escalation.
+- Added `scripts/seed_foundation.py`, which is plan-first and creates only missing target Skill files after explicit `--apply` authority.
+- Added unit tests and CI coverage for the Skills foundation plan.
+- Extended the generic business profile with optional `modules`, `providers` and `runtimes` selections.
+- Expanded bootstrap, manifest and verification contracts so module selection, provider portability and least-privilege runtime choice are explicit deployment concerns.
+
 ## 0.3.0 — 2026-09-03 — Safe Harbour
 
 - Added estate-manifest schema `1.0` for non-secret ARC topology, ownership, integration references and optional observed repository state.
