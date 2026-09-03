@@ -64,17 +64,19 @@ The bootstrap is intentionally conservative:
 - no private business data is migrated;
 - the script does not grant broad organisation permissions.
 
-## 6. Seed each repository
+## 6. Confirm repository seeding and ownership
 
-Repository creation is only the shell. Atlas should then guide the operator/agent to establish:
+For each **new** repository, bootstrap seeds a role-aware README, root `AGENTS.md`, Atlas Skill pointer and `/atlas` prompt-file entrypoint. Existing repositories are deliberately left unchanged.
 
-- root README;
-- `AGENTS.md`;
+Atlas should then guide the operator/agent to establish or reconcile:
+
 - declared owner/boundary;
 - Issue/PR workflow;
 - initial Skills canon;
 - Research front door;
 - private-file and specialist-system ownership map.
+
+If `verify` reports an existing repository as `INCOMPLETE`, integrate the missing ARC navigation deliberately rather than overwriting the repository.
 
 Use the [GitHub Course](https://github.com/tbhrc/gh-course) when a human needs to learn why these objects matter.
 
