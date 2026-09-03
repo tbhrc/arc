@@ -1,0 +1,102 @@
+name: ARC Stage 3 Runner
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: >-
+      github.event.issue.number == 6 &&
+      github.event.comment.body == '/arc-stage3-runner-20260903' &&
+      github.event.comment.user.login == 'david-aicoach'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: issue-6-atlas-universal-front-door
+          fetch-depth: 0
+
+      - name: Apply and verify ARC.3 bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          expected='306d82d52991346803256a4ff458b685e563325b'
+          actual="$(git rev-parse HEAD)"
+          if [ "$actual" != "$expected" ]; then
+            echo "Stage branch moved unexpectedly: $actual"
+            exit 1
+          fi
+
+          git fetch origin main
+          git show origin/main:.github/workflows/arc-stage3-apply.yml \
+            | awk '/^H4sI/{flag=1} /^B64$/{if(flag){exit}} flag{print}' \
+            > /tmp/arc-stage3.b64
+          test -s /tmp/arc-stage3.b64
+          base64 -d /tmp/arc-stage3.b64 > /tmp/arc-stage3.tgz
+          tar -xzf /tmp/arc-stage3.tgz -C .
+
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('README.md')
+          s = p.read_text()
+          old = '''git clone https://github.com/tbhrc/arc.git
+          cd arc
+          cp profiles/generic-business/arc.example.json arc.json
+
+          python3 scripts/arc.py doctor --config arc.json
+          python3 scripts/arc.py plan --config arc.json
+          python3 scripts/arc.py bootstrap --config arc.json --apply
+          python3 scripts/arc.py verify --config arc.json'''.replace('          ', '')
+          new = '''git clone https://github.com/tbhrc/arc.git
+          cd arc
+
+          python3 scripts/arc.py onboard --output arc.json
+          python3 scripts/arc.py doctor --config arc.json
+          python3 scripts/arc.py plan --config arc.json --inspect-target
+          # Review REUSE vs CREATE and the ownership map before authorising apply.
+          python3 scripts/arc.py bootstrap --config arc.json --apply
+          python3 scripts/arc.py verify --config arc.json'''.replace('          ', '')
+          if old in s:
+              s = s.replace(old, new, 1)
+          modes = '''
+          ### Atlas modes
+
+          Atlas can now route seven intents without restarting onboarding: **onboard, adopt, audit, health, upgrade, recover, next**. For an existing business, inspect first and classify systems/repositories `KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE`; do not replace working owners merely to resemble an example profile.
+          '''.replace('          ', '')
+          anchor = '- Learn the operating method: [GitHub Course](https://github.com/tbhrc/gh-course)\n'
+          if '### Atlas modes' not in s and anchor in s:
+              s = s.replace(anchor, anchor + modes, 1)
+          s = s.replace('**ARC v0.1.0 — Public Foundation**', '**ARC v0.2.0 — Atlas universal front door**')
+          p.write_text(s)
+          PY
+
+          python3 -m py_compile scripts/arc.py scripts/package_atlas.py
+          python3 scripts/arc.py verify-self
+          python3 -m unittest discover -s tests -v
+          python3 scripts/arc.py onboard --non-interactive --business-name 'ARC Test Business' --owner arc-test-business --domains 'sales,delivery' --private-files 'SharePoint' --specialist-systems 'HubSpot,Xero' --output /tmp/arc-test.json
+          python3 scripts/arc.py plan --config /tmp/arc-test.json
+          python3 scripts/package_atlas.py
+          python3 - <<'PY'
+          import zipfile
+          from pathlib import Path
+          p = Path('dist/skill.zip')
+          assert p.exists()
+          with zipfile.ZipFile(p) as z:
+              names = set(z.namelist())
+              assert 'atlas/SKILL.md' in names
+              assert 'atlas/agents/openai.yaml' in names
+              assert 'atlas/references/modes.md' in names
+          print('PASS Atlas portable package contract')
+          PY
+          git diff --check
+
+          git config user.name 'David Potgieter'
+          git config user.email 'talentbridgedubai@gmail.com'
+          git add README.md ATLAS.md BOOTSTRAP.md CHANGELOG.md VERSION profiles/generic-business/arc.example.json scripts/arc.py scripts/package_atlas.py tests/test_arc.py .github/skills/atlas .github/prompts/atlas.prompt.md
+          git commit -m 'Make Atlas the universal ARC front door'
+          git push origin HEAD:issue-6-atlas-universal-front-door
