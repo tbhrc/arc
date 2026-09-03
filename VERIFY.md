@@ -30,36 +30,18 @@ python3 scripts/arc.py onboard \
 python3 scripts/seed_foundation.py --config /tmp/arc-test.json
 ```
 
-The plan must resolve the configured Skills repository and list the generic starter Skills without making a remote change. Apply remains a separate explicit authority gate.
-
-The starter set must include owner routing, GitHub work control, Skill authoring and Research escalation, and existing target Skill files must never be overwritten.
+The plan must resolve the configured Skills repository and list the generic starter Skills without making a remote change. Apply remains a separate explicit authority gate. Existing target Skill files must never be overwritten automatically.
 
 ## Safe-harbour baseline
 
-Export architecture without mutation:
-
 ```bash
-python3 scripts/arc.py export \
-  --config /tmp/arc-test.json \
-  --output /tmp/arc-estate.json
-```
-
-Then prove the manifest can drive a non-mutating recovery plan:
-
-```bash
+python3 scripts/arc.py export --config /tmp/arc-test.json --output /tmp/arc-estate.json
 python3 scripts/arc.py restore-plan --manifest /tmp/arc-estate.json
 ```
 
-The estate manifest must:
+The estate manifest must use supported schema `1.0`, reconstruct valid ARC topology, contain architecture/owner references only, and explicitly exclude credential values, private-file contents, specialist-system records, database contents, trusted-runtime machine state and derived memory contents.
 
-- use supported `manifest_schema: 1.0`;
-- identify the ARC version that exported it;
-- reconstruct a valid ARC topology/configuration;
-- contain architecture/owner references only;
-- explicitly exclude credential values, private-file contents, specialist-system records, database contents, trusted-runtime machine state and derived memory contents;
-- refuse unsupported schemas and secret-like/known credential material.
-
-`restore --apply` is not part of routine CI because it is a real mutation gate. It must remain explicitly authorised and bounded to conservative GitHub repository reconstruction.
+`restore --apply` is not part of routine CI because it is a real mutation gate. It remains explicitly authorised and bounded to conservative GitHub repository reconstruction.
 
 ## Portable Atlas packaging
 
@@ -67,82 +49,83 @@ The estate manifest must:
 python3 scripts/package_atlas.py
 ```
 
-The resulting `dist/skill.zip` must contain the canonical `atlas/SKILL.md`, `atlas/agents/openai.yaml` and `atlas/references/modes.md` from this repository.
+The resulting `dist/skill.zip` must contain canonical Atlas Skill, metadata and mode reference from this repository.
 
 ## Human/agent acceptance
 
-A cold agent should be able to enter the deployed environment and answer:
+A cold agent should be able to answer:
 
 - What is this business/environment trying to achieve?
 - Which Atlas mode applies now?
-- Where are reusable Skills?
-- Which optional business modules are selected and who owns them?
-- Which provider and runtime routes are authorised for ordinary work?
-- Which repository/system owns the current facts for this task?
-- Which configured repositories will be REUSED versus CREATED before apply?
-- Which existing owners should be KEPT, INTEGRATED, MIGRATED, RESEARCHED or RETIRED?
-- Where should durable work be recorded?
-- What private data must stay outside public repositories?
-- When should Research be triggered?
-- When is a trusted runtime required rather than normal execution?
-- What has actually been authorised to mutate?
-- Which formal ARC release and estate-manifest schema describe this architecture?
-- Which external owners require separate backup/recovery?
-- How is deployment or recovery completion verified?
+- Where are reusable Skills and current owner truth?
+- Which optional modules, providers and runtimes are selected?
+- Which specialist system owns each live field/state involved?
+- Which identity/connector is authorised and at what scope?
+- Which configured repositories are REUSE versus CREATE?
+- Which existing owners are KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE?
+- Which data must stay outside public repositories?
+- What mutation has actually been authorised?
+- When is a trusted runtime or root/break-glass path justified?
+- How will the live specialist-system result be verified?
+- Which release/estate manifest and external recovery owners describe recovery?
 
 ## Required gates
 
 ### Gate A — navigation
 - Atlas/front-door instructions are discoverable.
-- Atlas exposes onboard, adopt, audit, health, upgrade, recover and next modes.
-- Every core repository has a useful README and agent contract.
-- Cross-repository handoffs have a return/onward route.
+- Core repositories have useful README/agent contracts.
+- Cross-system handoffs expose a return/onward route.
 
 ### Gate B — truth ownership
-- At least one real workflow has an explicit Skill owner and fact/state owner.
+- At least one real workflow has explicit Skill owner and fact/state owner.
 - Private files and specialist-system state are not duplicated as fake GitHub canon.
-- Existing correct owners are kept/integrated rather than replaced merely to match an ARC example.
+- Existing correct owners are kept/integrated rather than flattened to an ARC example.
 
 ### Gate C — execution and authority
 - An authorised agent can execute one bounded task through normal tools.
 - A plan or available credential is not treated as mutation authority.
-- `bootstrap` and `restore` remain non-mutating unless explicit `--apply` authority exists.
-- `restore --apply` is limited to configured GitHub repository reconstruction; external owner data is restored separately.
-- If privileged runtime is configured, it is used only for an actual runtime gap and has its own verification.
+- Bootstrap/restore apply gates remain explicit.
+- Privileged runtime is used only for an actual runtime gap and has separate verification.
 
 ### Gate D — research
-- A recurring operational problem can be routed to Research.
-- Research can return a qualified Test/Adopt/Watch/Reject decision to the correct owner.
+- A recurring operational problem can route to Research and return a Test/Adopt/Watch/Reject decision.
 
-### Gate E — security
-- No credential values or secret-like configuration fields are committed to `arc.json` or the estate manifest.
+### Gate E — specialist integrations
+- Every connected specialist system has a declared live owner, business owner, allowed agent actions, identity/connector name, minimum scope and verification method.
+- Email/calendar/directory, private files, CRM, ATS/HRIS, finance/ERP, website/DNS, database/BI, service, memory and runtime integrations follow the common owner contract where used.
+- A write is verified from the actual specialist system after mutation.
+- GitHub durable evidence does not become a mirror of the external database.
+
+### Gate F — security/governance
+- No credential values or secret-like configuration fields are committed to ARC profile/manifest/public examples.
+- Repository visibility matches the intended data class.
+- Material production/security/automation repositories use proportional branch/ruleset/review protection.
+- Actions default to read-only permissions and elevate only required scopes.
+- Self-hosted/VPS/local privileged runners are not exposed to arbitrary untrusted PR execution.
 - Routine agents do not use founder/root credentials.
-- Repository/public/private boundaries match the deployment plan.
+- Root/break-glass use requires explicit current authority and temporary bridges/privilege are torn down and verified.
+- Credential lifecycle has owner, minimum scope, rotation trigger and revocation path.
 
-### Gate F — safe harbour
-- A formal ARC release/tag identifies a known-good ARC repository state.
-- An estate manifest validates against the supported schema.
-- The manifest can round-trip into a valid ARC topology and restore plan.
+### Gate G — safe harbour
+- A formal ARC release/tag identifies known-good state.
+- Estate manifest validates and can round-trip to a restore plan.
 - External owner recovery responsibilities are explicit.
-- Repository reconstruction plus external owner restoration/reconnection is followed by complete ARC verification.
 
-### Gate G — portability
-- Optional business modules are selected explicitly rather than forced.
-- A newly created Skills repository can receive the generic starter foundation through a plan-first path.
-- Existing target Skills are reused and never overwritten automatically.
-- At least two capable agent/provider routes can satisfy the same owner/Skill/verification contract without changing ARC architecture.
-- GitHub-hosted execution is sufficient for ordinary deterministic work when appropriate.
-- Self-hosted/local/VPS runtime routes remain optional exceptions for genuine capability or privilege gaps.
-- Provider choice and runtime choice are independent decisions.
+### Gate H — portability
+- Optional modules are selected explicitly rather than forced.
+- A new Skills repo can receive the generic starter foundation plan-first.
+- Existing target Skills are never overwritten automatically.
+- Multiple capable agent/provider routes can satisfy the same owner/verification contract.
+- GitHub-hosted execution is sufficient for ordinary deterministic work where appropriate; trusted runtimes remain optional exceptions.
 
-### Gate H — learning and continuity
+### Gate I — learning and continuity
 - One real workflow has run end to end.
-- Reusable learning has been promoted to the correct Skill/architecture owner.
-- Material ARC Stage/programme state is recorded in the controlling GitHub Issue with branch, evidence, blockers and exact next action.
-- A fresh agent can continue the active Stage from GitHub alone without a hidden chat transcript.
+- Reusable learning has been promoted to the correct owner.
+- Material Stage/programme state is recorded in the controlling GitHub Issue.
+- A fresh agent can continue from GitHub alone without a hidden chat transcript.
 
 ## Definition of healthy
 
-ARC is healthy when a fresh human or capable agent can navigate from a business need to the correct method, owner, provider/runtime execution route and evidence without relying on one person's memory or a hidden chat transcript.
+ARC is healthy when a fresh human or capable agent can navigate from a business need to the correct method, live owner, narrow authorised integration/runtime route and verifiable evidence without relying on one person's memory or hidden chat.
 
-ARC is recoverable when that same operator can pair a known-good ARC release with a valid non-secret estate manifest and the external owners' own backups/reprovisioning paths to reconstruct and re-verify the operating architecture.
+ARC is recoverable when the same operator can pair a known-good ARC release with a valid non-secret estate manifest and the external owners' own backups/reprovisioning paths to reconstruct and re-verify the architecture.
