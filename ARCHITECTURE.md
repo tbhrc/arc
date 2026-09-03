@@ -125,7 +125,7 @@ It is not:
 - a second Skills Bank;
 - a second business database;
 - the default hop for every action;
-- a place for secret values in source control.
+- a place for credential values in source control.
 
 ## 8. Private files and specialist systems
 
@@ -153,10 +153,59 @@ architecture contract
 + Skills strategy
 + agent entrypoints
 + configuration schema
-+ secret metadata (never values)
++ credential metadata (never values)
 + external-system owner map
 + bootstrap procedure
 + verification procedure
 ```
 
 Not a raw copy of one company's entire filesystem.
+
+## 11. Release and safe-harbour layer
+
+ARC adds a recovery layer **around** the live owners without replacing them.
+
+```text
+formal ARC release/tag
+        |
+        +-------------------+
+        |                   |
+        v                   v
+ARC repository state   estate manifest schema 1.0
+known-good portable    non-secret target topology
+architecture           + owner references
+        \                   /
+         +--------+---------+
+                  |
+                  v
+             restore-plan
+                  |
+        explicit apply authority
+                  |
+                  v
+      GitHub repository reconstruction
+                  |
+        external owner restoration
+                  |
+                  v
+            ARC verification
+```
+
+The estate manifest is intentionally a map, not a data dump. It may name the private-file owner, CRM, accounting system, trusted-runtime owner and memory layer so recovery knows where state belongs. It does not copy their contents or credential values.
+
+This preserves ARC's one-owner/one-truth rule even during disaster recovery.
+
+## 12. Recovery ownership
+
+| Recovery material | Owner |
+|---|---|
+| ARC versioned portable architecture | formal `tbhrc/arc` release/tag |
+| Target topology/role metadata | non-secret ARC estate manifest |
+| Repository contents/history beyond newly seeded ARC contracts | GitHub/source repository backup/history owner |
+| Private files | declared private-file provider/backup owner |
+| CRM/ERP/ATS/accounting data | owning specialist system |
+| Credential values | approved external identity/credential store |
+| VPS/Mac/runtime machine state | trusted-runtime owner |
+| Derived memory contents | memory owner; never current canon |
+
+See [Safe-Harbour Contract](contracts/safe-harbour.md) and [Release Contract](RELEASES.md).
