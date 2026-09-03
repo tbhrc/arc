@@ -24,6 +24,8 @@ Confirm at minimum:
 - `target.owner_type` — `org` or `user`;
 - repository visibility defaults;
 - domain repositories required by the business;
+- selected optional business modules;
+- provider routes and runtimes available to agents;
 - private-file owner;
 - specialist systems already owning structured state;
 - whether a trusted runtime repository is genuinely required.
@@ -31,6 +33,8 @@ Confirm at minimum:
 Do not put secret values or secret-like fields in `arc.json`. ARC rejects common secret-field names and known credential-value patterns by design.
 
 If `arc.json` already exists, onboarding refuses to overwrite it unless `--overwrite` is explicitly supplied.
+
+Read [modules](modules/README.md), [providers](providers/README.md) and [runtimes](runtimes/README.md) before adding optional capability selections. ARC modules are ownership patterns, not mandatory software bundles.
 
 ## 3. Doctor
 
@@ -61,6 +65,8 @@ Review:
 - repository roles and visibility;
 - required vs optional components;
 - domain owners;
+- modules selected by the business;
+- authorised provider/runtime routes;
 - existing repositories to reuse;
 - private files and specialist systems that remain external owners;
 - manual integrations that remain outside repository bootstrap.
@@ -100,7 +106,32 @@ If `verify` reports an existing repository as `INCOMPLETE`, integrate the missin
 
 Use the [GitHub Course](https://github.com/tbhrc/gh-course) when a human needs to learn why these objects matter.
 
-## 7. Verify
+## 7. Seed the first-day Skills foundation
+
+A newly created ARC Skills repository should be usable immediately rather than empty.
+
+First inspect the non-mutating plan:
+
+```bash
+python3 scripts/seed_foundation.py --config arc.json
+```
+
+The plan resolves the configured repository with role `skills` and lists the generic starter Skills that are missing. After explicit approval:
+
+```bash
+python3 scripts/seed_foundation.py --config arc.json --apply
+```
+
+ARC creates only missing files for:
+
+- `owner-router`;
+- `github-workflow`;
+- `skill-authoring`;
+- `research-escalation`.
+
+Existing target Skills are never overwritten. After this first seed, the target organisation's Skills repository owns its editable reusable HOW. ARC does not continuously overwrite those Skills from upstream templates.
+
+## 8. Verify
 
 ```bash
 python3 scripts/arc.py verify --config arc.json
@@ -108,7 +139,7 @@ python3 scripts/arc.py verify --config arc.json
 
 Then complete the non-automatable acceptance in [VERIFY.md](VERIFY.md).
 
-## 8. Run one real workflow
+## 9. Run one real workflow
 
 The first meaningful proof is not an empty architecture. Select one real business workflow and prove:
 
@@ -116,6 +147,7 @@ The first meaningful proof is not an empty architecture. Select one real busines
 request
 -> Skill
 -> owner truth
+-> authorised provider/runtime
 -> agent execution
 -> verification
 -> durable evidence
@@ -123,7 +155,7 @@ request
 
 Capture what failed. Promote reusable corrections into the correct owner rather than patching only a chat session.
 
-## 9. Export the safe-harbour architecture snapshot
+## 10. Export the safe-harbour architecture snapshot
 
 Once the estate is healthy, create a non-secret estate manifest:
 
@@ -138,7 +170,7 @@ Keep the estate manifest with the organisation's approved recovery documentation
 
 Read [contracts/safe-harbour.md](contracts/safe-harbour.md) and ensure each external owner has its own appropriate backup/recovery method.
 
-## 10. Recovery / redeployment
+## 11. Recovery / redeployment
 
 To understand recovery without mutation:
 
@@ -154,6 +186,6 @@ python3 scripts/arc.py restore --manifest arc-estate.json --apply
 
 `restore --apply` recreates missing configured GitHub repositories through the same conservative bootstrap contract. It does not restore external owner contents. Reconnect/restore those owners separately, then rerun the complete ARC verification contract before declaring recovery complete.
 
-## 11. Preserve durable continuation state
+## 12. Preserve durable continuation state
 
 For material ARC Stage/programme work, update the controlling GitHub Issue before stopping. It must contain current branch/state, verification evidence, blockers and the exact next action so a cold agent can resume without chat history.
