@@ -2,16 +2,17 @@
 
 Atlas is the single onboarding and navigation entrypoint for ARC.
 
-It exists so a founder, operator or AI agent does not need to understand the whole repository before beginning.
+It exists so a founder, operator or AI agent does not need to understand the whole repository before beginning, and so ARC operation does not depend on one person's memory or a hidden chat transcript.
 
 ## Say this to your agent
 
 ```text
 Use the Atlas skill in this repository.
-I want to deploy ARC for my business.
+Understand my business and current ARC state.
+Choose the correct Atlas mode.
 Start in plan mode and tell me what you can infer from the current environment.
 Ask only for information you genuinely cannot resolve.
-Do not mutate anything until the plan and target ownership map are explicit.
+Do not mutate anything until the plan and target ownership map are explicit and apply authority is given.
 ```
 
 On supported IDE prompt-file surfaces, invoke:
@@ -20,27 +21,91 @@ On supported IDE prompt-file surfaces, invoke:
 /atlas
 ```
 
+## Seven Atlas modes
+
+Atlas chooses the mode from the user's intent and current state:
+
+| Mode | Purpose |
+|---|---|
+| `onboard` | Create a valid first ARC profile for a new estate. |
+| `adopt` | Bring an existing business into ARC without forced replacement. |
+| `audit` | Inspect architecture, owners and gaps without mutation. |
+| `health` | Diagnose current verified ARC state using capabilities that exist now. |
+| `upgrade` | Plan movement toward a newer ARC release/contract. |
+| `recover` | Plan restore or redeployment from known-good evidence. |
+| `next` | Return the single smallest safe next action from current durable state. |
+
+The detailed mode contract lives in `.github/skills/atlas/references/modes.md`.
+
 ## What Atlas should establish
 
-Atlas needs enough information to answer six questions:
+Atlas needs enough information to answer:
 
 1. **Purpose** — what business/environment is ARC supporting?
-2. **GitHub home** — user account or organisation, and desired repository visibility defaults.
+2. **GitHub home** — user account or organisation and repository visibility defaults.
 3. **Domains** — what business units, products or workflows need their own truth owners?
-4. **Private files** — where confidential documents should live.
-5. **Specialist systems** — which systems already own CRM, finance, HR, ATS, service delivery or other structured state?
-6. **Execution** — can normal APIs/connectors/tools perform the work, or is a trusted runtime genuinely required?
+4. **Existing estate** — which repositories, processes and systems already exist and should be kept or integrated?
+5. **Private files** — where confidential documents should live.
+6. **Specialist systems** — which systems own CRM, finance, HR, ATS, service delivery or other structured state?
+7. **Execution** — can normal APIs/connectors/tools perform the work, or is a trusted runtime genuinely required?
+8. **Authority** — what may be inspected, planned and applied?
 
-If the user already supplied an answer, do not ask again.
+If the user already supplied an answer or a connected owner proves it, do not ask again.
 
-## Atlas output
+## New-business first run
 
-Before mutation, return a compact deployment plan containing:
+A normal new deployment should not require hand-editing JSON:
+
+```bash
+python3 scripts/arc.py onboard --output arc.json
+python3 scripts/arc.py doctor --config arc.json
+python3 scripts/arc.py plan --config arc.json --inspect-target
+```
+
+For capable agents with the required facts already available, `onboard --non-interactive` can generate the same validated profile without a questionnaire.
+
+`onboard`, `doctor` and `plan` do not mutate the target.
+
+## Existing-business path
+
+Do **not** force replacement.
+
+Inventory:
+
+```text
+existing GitHub repositories
+existing SOP / knowledge owners
+existing automations
+existing CRM / ERP / ATS / accounting
+private file stores
+agent providers / tools
+credentials and identity boundaries
+```
+
+Classify each relevant owner:
+
+```text
+KEEP
+INTEGRATE
+MIGRATE
+RESEARCH
+RETIRE
+```
+
+For repositories already declared in `arc.json`, use `plan --inspect-target` to surface **REUSE / CREATE** before apply where GitHub CLI access is available.
+
+## Atlas output before mutation
+
+Return a compact deployment/operation plan containing:
 
 ```text
 Target
+Purpose
+Atlas mode
 Core repositories
-Domain repositories
+Domain repositories / owners
+Existing owners: KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE
+Configured repositories: REUSE / CREATE where observable
 Truth-owner map
 Skills strategy
 Research strategy
@@ -48,28 +113,62 @@ Agent entrypoints
 Private-file owner
 Specialist-system owners
 Runtime requirement
-Credential/manual-input list
-Bootstrap command
+Credential/manual-input list (names/purpose only, never values)
+Bootstrap / current action
 Verification plan
+First real workflow to prove when deploying
 ```
 
 The plan should distinguish:
 
 - **required core**;
-- **optional module**;
-- **existing system to integrate**;
+- **optional component**;
+- **existing owner to keep/integrate**;
 - **future improvement**.
+
+## Authority gate
+
+```text
+understand / inspect
+-> plan
+-> explicit apply authority
+-> mutation
+-> verify
+```
+
+Credentials being available never imply apply authority. `bootstrap` remains non-mutating unless `--apply` is supplied.
+
+## Current lifecycle honesty
+
+Atlas routes to what the current ARC release can actually prove:
+
+- **health** uses current `VERIFY.md`, CLI checks and observable owner state;
+- **upgrade** produces a plan until release-to-estate upgrade machinery is implemented and proven;
+- **recover** uses only known releases/manifests/backups and declared owners; deterministic safe-harbour export/restore is owned by ARC.4.
+
+Atlas must identify a missing capability or its owning Stage rather than pretend it already exists.
+
+## Portable Atlas Skill
+
+The editable Atlas canon is `.github/skills/atlas/`.
+
+```bash
+python3 scripts/package_atlas.py
+```
+
+This packages that same directory as `dist/skill.zip`. There is no second editable portable copy. ARC-generated repositories receive a thin pointer to the current upstream Atlas canon.
 
 ## Default deployment route
 
 ```text
 read ARC
--> select profile
--> inspect target GitHub state
--> create/adjust arc.json
+-> Atlas selects mode
+-> inspect current target
+-> generate/reconcile arc.json
 -> doctor
--> plan
--> founder/operator reviews plan
+-> plan --inspect-target
+-> operator reviews plan
+-> explicit apply authority
 -> bootstrap --apply
 -> verify
 -> onboard agents
@@ -80,47 +179,25 @@ read ARC
 
 ## Minimum information path
 
-For a brand-new GitHub organisation with no existing operating architecture, Atlas can start with:
+For a brand-new GitHub organisation, Atlas can start with:
 
 ```text
 business name
 GitHub organisation/login
 private vs public default
-first 1-3 business domains
+first business domains
 private-file store
 known specialist systems
 ```
 
 Everything else should be derived or postponed until needed.
 
-## Existing-business path
+## Durable continuity
 
-For an established business, do **not** force replacement.
-
-Inventory first:
-
-```text
-existing GitHub repos
-existing SOP/knowledge stores
-existing automations
-existing CRM/ERP/ATS/accounting
-private file stores
-agent providers/tools
-credentials and identity boundaries
-```
-
-Then classify each item:
-
-```text
-KEEP
-INTEGRATE
-MIGRATE
-RESEARCH
-RETIRE
-```
+For material ARC programme/Stage work, the controlling GitHub Issue—not the current chat—must contain the objective, branch, evidence, blockers and exact next action. A fresh agent should be able to continue from GitHub alone.
 
 ## Learning path
 
-If the user wants to understand why ARC is designed this way rather than only deploy it, route them to the [GitHub Course](https://github.com/tbhrc/gh-course).
+If the user wants to understand why ARC is designed this way rather than only operate or deploy it, route them to the [GitHub Course](https://github.com/tbhrc/gh-course).
 
 The Course teaches the journey. ARC packages the deployable architecture.
