@@ -32,6 +32,31 @@ jobs:
           --private-files SharePoint
           --specialist-systems 'HubSpot,Xero'
           --output /tmp/arc-ci.json
+      - name: Prove safe-harbour export
+        run: >-
+          python3 scripts/arc.py export
+          --config /tmp/arc-ci.json
+          --output /tmp/arc-estate.json
+      - name: Prove non-mutating restore plan
+        run: python3 scripts/arc.py restore-plan --manifest /tmp/arc-estate.json
+      - name: Validate estate manifest boundary
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path('/tmp/arc-estate.json').read_text())
+          assert manifest['manifest_schema'] == '1.0'
+          assert manifest['target']['owner'] == 'arc-ci-business'
+          excluded = set(manifest['recovery']['excluded_material'])
+          assert 'credential values' in excluded
+          assert 'private-file contents' in excluded
+          assert 'CRM/ERP/ATS/accounting records' in excluded
+          serialized = json.dumps(manifest)
+          assert 'github_pat_' not in serialized
+          assert 'BEGIN PRIVATE KEY' not in serialized
+          print('Estate manifest boundary PASS')
+          PY
       - name: Package canonical Atlas Skill
         run: python3 scripts/package_atlas.py
       - name: Validate Atlas package contents
