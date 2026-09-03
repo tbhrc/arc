@@ -38,10 +38,11 @@ class ArcConfigTests(unittest.TestCase):
 
     def test_generated_repository_contract_links_core_owners(self):
         repo = {"name": "sales", "role": "business-domain", "description": "Sales owner.", "required": True, "visibility": "private"}
-        readme = arc.generated_readme("acme", repo)
-        agents = arc.generated_agents("acme", repo)
-        self.assertIn("acme/skills", readme)
-        self.assertIn("acme/research", agents)
+        navigation = {"skills": "playbooks", "research": "lab"}
+        readme = arc.generated_readme("acme", repo, navigation)
+        agents = arc.generated_agents("acme", repo, navigation)
+        self.assertIn("acme/playbooks", readme)
+        self.assertIn("acme/lab", agents)
         self.assertIn("Atlas", agents)
 
 
