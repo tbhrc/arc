@@ -1,4 +1,6 @@
 import importlib.util
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -31,6 +33,52 @@ class ArcConfigTests(unittest.TestCase):
         data["domains"] = [{"name": "skills"}]
         with self.assertRaises(arc.ArcError):
             arc.validate_config(data)
+
+    def test_secret_like_field_rejected(self):
+        data = self.base()
+        data["integrations"] = {"api_token": "do-not-store-secrets-here"}
+        with self.assertRaises(arc.ArcError):
+            arc.validate_config(data)
+
+    def test_onboarding_config_is_valid_and_slugs_domains(self):
+        data = arc.build_onboarding_config(
+            business_name="Example Business",
+            owner="example-org",
+            domains=["Sales & Marketing", "Client Delivery"],
+            private_files="SharePoint",
+            specialist_systems=["HubSpot", "Xero"],
+        )
+        arc.validate_config(data)
+        self.assertEqual(data["target"]["business_name"], "Example Business")
+        self.assertEqual([row["name"] for row in data["domains"]], ["sales-marketing", "client-delivery"])
+        self.assertEqual(data["integrations"]["specialist_systems"], ["HubSpot", "Xero"])
+
+    def test_write_config_refuses_implicit_overwrite(self):
+        data = self.base()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "arc.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            with self.assertRaises(arc.ArcError):
+                arc.write_config(data, str(path))
+            arc.write_config(data, str(path), overwrite=True)
+            saved = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(saved["target"]["owner"], "example-org")
+
+    def test_repository_inspection_classifies_reuse_and_create(self):
+        data = self.base()
+        rows = arc.inspect_repository_state(
+            data,
+            exists_fn=lambda full_name: full_name == "example-org/skills",
+        )
+        states = {row["name"]: row["action"] for row in rows}
+        self.assertEqual(states["skills"], "REUSE")
+        self.assertEqual(states["sales"], "CREATE")
+
+    def test_atlas_modes_are_stable(self):
+        self.assertEqual(
+            set(arc.ATLAS_MODES),
+            {"onboard", "adopt", "audit", "health", "upgrade", "recover", "next"},
+        )
 
     def test_bootstrap_without_apply_is_plan_only(self):
         data = self.base()

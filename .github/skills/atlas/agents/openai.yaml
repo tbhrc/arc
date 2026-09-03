@@ -1,0 +1,4 @@
+interface:
+  display_name: "Atlas"
+  short_description: "Onboard, deploy, diagnose and recover ARC."
+  default_prompt: "Use Atlas to understand this business, start in plan mode, and route me to the correct ARC action without mutating anything until authority is explicit."

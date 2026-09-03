@@ -2,27 +2,35 @@
 
 ARC bootstrap is deliberately **plan-first**. The goal is reproducibility without surprise mutation.
 
-## 1. Choose a deployment context
+## 1. Create a business profile through Atlas
 
-Use the generic profile for a new organisation/client:
+For a normal new organisation/client, do not start by hand-editing the example JSON. Use Atlas or the deterministic onboarding command:
 
 ```bash
-cp profiles/generic-business/arc.example.json arc.json
+python3 scripts/arc.py onboard --output arc.json
 ```
 
-Use the TBHRC profile only as a reference for how a mature deployment can be structured. Do not clone TBHRC names blindly into another business.
+The command asks only for business-specific facts needed to create a valid profile. A capable agent that already knows those facts can use `onboard --non-interactive`.
 
-## 2. Edit only business-specific configuration
+The generic example remains available at `profiles/generic-business/arc.example.json` for inspection and automation. The TBHRC profile is reference wiring only; do not clone TBHRC names blindly into another business.
 
-At minimum set:
+`onboard` writes local configuration only. It does not mutate GitHub or any specialist system.
 
-- `target.owner` — GitHub user or organisation;
+## 2. Review the generated ownership configuration
+
+Confirm at minimum:
+
+- `target.business_name` and `target.owner`;
 - `target.owner_type` — `org` or `user`;
 - repository visibility defaults;
 - domain repositories required by the business;
-- whether a trusted runtime repository is required.
+- private-file owner;
+- specialist systems already owning structured state;
+- whether a trusted runtime repository is genuinely required.
 
-Do not put secret values in `arc.json`.
+Do not put secret values or secret-like fields in `arc.json`. ARC rejects common secret-field names by design.
+
+If `arc.json` already exists, onboarding refuses to overwrite it unless `--overwrite` is explicitly supplied.
 
 ## 3. Doctor
 
@@ -32,24 +40,34 @@ python3 scripts/arc.py doctor --config arc.json
 
 Doctor checks local prerequisites and authentication. It does not create repositories.
 
-## 4. Plan
+## 4. Inspect and plan
 
 ```bash
-python3 scripts/arc.py plan --config arc.json
+python3 scripts/arc.py plan --config arc.json --inspect-target
+```
+
+Where GitHub CLI access is available, the plan classifies each configured repository as:
+
+```text
+REUSE  — repository already exists; leave it unchanged during bootstrap
+CREATE — repository is missing and would be created only after apply authority
 ```
 
 Review:
 
 - target owner;
-- repositories to be created or reused;
-- visibility;
+- repository roles and visibility;
 - required vs optional components;
 - domain owners;
+- existing repositories to reuse;
+- private files and specialist systems that remain external owners;
 - manual integrations that remain outside repository bootstrap.
+
+For an established business, Atlas should additionally classify existing owners as **KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE** before recommending structural change.
 
 ## 5. Apply
 
-Only after the target plan is accepted:
+A plan is not permission to mutate. Only after the target plan is accepted:
 
 ```bash
 python3 scripts/arc.py bootstrap --config arc.json --apply
@@ -60,7 +78,7 @@ The bootstrap is intentionally conservative:
 - existing repositories are reused, not overwritten;
 - missing configured repositories are created;
 - no secrets are created or copied;
-- no production system is modified;
+- no production specialist system is modified;
 - no private business data is migrated;
 - the script does not grant broad organisation permissions.
 
@@ -101,4 +119,8 @@ request
 -> durable evidence
 ```
 
-Capture what failed. Promote reusable corrections into the correct owner rather than patching only the chat session.
+Capture what failed. Promote reusable corrections into the correct owner rather than patching only a chat session.
+
+## 9. Preserve durable continuation state
+
+For material ARC Stage/programme work, update the controlling GitHub Issue before stopping. It must contain current branch/state, verification evidence, blockers and the exact next action so a cold agent can resume without chat history.
