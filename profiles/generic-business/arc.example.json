@@ -1,0 +1,45 @@
+{
+  "arc_version": "0.1.0",
+  "target": {
+    "owner": "YOUR-GITHUB-ORG",
+    "owner_type": "org",
+    "default_visibility": "private"
+  },
+  "repositories": [
+    {
+      "name": "skills",
+      "description": "Canonical reusable AI Skills and operating HOW.",
+      "role": "skills",
+      "required": true
+    },
+    {
+      "name": "research",
+      "description": "External research, technology discovery and proving evidence.",
+      "role": "research",
+      "required": true
+    },
+    {
+      "name": "ops",
+      "description": "Business-wide operating architecture and cross-domain control.",
+      "role": "operations",
+      "required": true
+    },
+    {
+      "name": "ai-engine",
+      "description": "Optional privileged execution infrastructure for genuine runtime gaps.",
+      "role": "trusted-runtime",
+      "required": false
+    }
+  ],
+  "domains": [
+    {
+      "name": "example-domain",
+      "description": "Replace with a real business unit, product or service owner."
+    }
+  ],
+  "integrations": {
+    "private_files": "declare-provider",
+    "specialist_systems": [],
+    "memory": "optional"
+  }
+}
