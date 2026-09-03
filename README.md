@@ -106,16 +106,39 @@ cd arc
 python3 scripts/arc.py onboard --output arc.json
 python3 scripts/arc.py doctor --config arc.json
 python3 scripts/arc.py plan --config arc.json --inspect-target
-# Review ownership, REUSE/CREATE and integrations before authorising apply.
+# Review ownership, modules, provider/runtime routes, REUSE/CREATE and integrations.
 python3 scripts/arc.py bootstrap --config arc.json --apply
+
+# Review first-day Skills before applying them.
+python3 scripts/seed_foundation.py --config arc.json
+python3 scripts/seed_foundation.py --config arc.json --apply
+
 python3 scripts/arc.py verify --config arc.json
 ```
 
-`onboard`, `doctor` and `plan` are non-mutating. `bootstrap` is also non-mutating unless `--apply` is present. A credential being available is never treated as apply authority.
+`onboard`, `doctor`, `plan` and the Skills-foundation plan are non-mutating. `bootstrap` and Skills seeding mutate only when explicit `--apply` authority is present. A credential being available is never treated as apply authority.
 
 ARC rejects common secret-like configuration fields and known credential-value patterns. Credential values belong in the correct external identity/secret store, never `arc.json`.
 
 Read [BOOTSTRAP.md](BOOTSTRAP.md) before the first deployment.
+
+## Modular by design
+
+ARC does not impose one universal business stack.
+
+The generic profile can declare optional **business modules**, **capable-agent/provider routes** and **runtime routes**:
+
+```json
+"modules": ["sales", "research", "website"],
+"providers": ["capable-agent"],
+"runtimes": ["github-hosted-actions"]
+```
+
+- [Business modules](modules/README.md) are ownership patterns, not mandatory SaaS bundles.
+- [Provider routes](providers/README.md) are interchangeable capable-agent paths; no vendor is architectural canon.
+- [Runtime routes](runtimes/README.md) follow least privilege: normal connected capability first, trusted runtime only for a genuine gap.
+
+A newly created Skills repository can also receive ARC's small generic first-day foundation: owner routing, proportionate GitHub work control, Skill authoring and Research escalation. Existing target Skill files are never overwritten automatically; after seeding, the target organisation owns its Skills canon.
 
 ## Safe harbour: export the architecture, not the private data
 
@@ -213,7 +236,8 @@ The system was learned, tested, corrected and operated—not invented only on a 
 7. **Existing businesses are adopted, not flattened.** Keep/integrate correct owners instead of replacing them to match a template.
 8. **Deployment and recovery are incomplete until verified.** Green automation matters only when it proves the required outcome.
 9. **Safe harbour references owners instead of stealing their data.** ARC preserves reconstructable architecture while private/live data remains with its real backup owner.
-10. **Chat is temporary context.** Material programme/Stage state belongs in GitHub Issues so a cold agent can continue without hidden conversation history.
+10. **Provider and runtime are separate choices.** A business can change capable-agent providers without redesigning ownership or forcing privileged execution.
+11. **Chat is temporary context.** Material programme/Stage state belongs in GitHub Issues so a cold agent can continue without hidden conversation history.
 
 ## Repository map
 
@@ -225,6 +249,10 @@ ARC
 ├── BOOTSTRAP.md                     deployment + safe-harbour path
 ├── VERIFY.md                        acceptance, recovery and health checks
 ├── profiles/                        deployment profiles
+├── modules/                         optional business capability patterns
+├── providers/                       provider-neutral agent contract
+├── runtimes/                        least-privilege runtime contract
+├── starter/skills/                  generic first-day Skills foundation
 ├── components/                      component-specific guidance
 ├── contracts/
 │   ├── configuration.md             non-secret configuration contract
@@ -234,6 +262,7 @@ ARC
 │   └── secrets.md                   credential boundary
 ├── scripts/arc.py                   onboard/plan/bootstrap/export/restore/verify CLI
 ├── scripts/package_atlas.py         portable Atlas packager
+├── scripts/seed_foundation.py       first-day Skills seeder
 └── .github/
     ├── skills/atlas/                 canonical Atlas Skill
     ├── prompts/atlas.prompt.md      /atlas-compatible prompt file
@@ -257,7 +286,7 @@ Before adapting or recovering ARC, understand:
 
 ## Lifecycle boundary
 
-ARC 0.3 provides the universal Atlas front door plus versioned safe-harbour export/restore planning and bounded GitHub repository reconstruction. Richer estate drift/health reporting and automated release-to-estate upgrade lifecycle remain owned by ARC.7.
+ARC 0.4 adds business-neutral modules, a first-day Skills foundation and provider/runtime portability on top of the Atlas + Safe Harbour foundation. Richer estate drift/health reporting and automated release-to-estate upgrade lifecycle remain owned by ARC.7.
 
 ## Public by design
 
@@ -267,6 +296,6 @@ Licensed under the [MIT License](LICENSE).
 
 ## Status
 
-**ARC v0.3.0 — Safe Harbour**
+**ARC v0.4.0 — Modular Portability**
 
-ARC is usable for guided GitHub-first onboarding, adoption, deployment, verification, non-secret estate export, recovery planning and bounded repository reconstruction. The Level 3 ARC v1 programme continues with business modules/provider portability, integrations/security, richer health/upgrades, independent clean-room proof and the final public reference monument.
+ARC now supports guided onboarding/adoption, safe-harbour recovery, optional business capability modules, a generic first-day Skills foundation, provider-neutral capable-agent routes and least-privilege runtime selection. The Level 3 ARC v1 programme continues with specialist integrations/security, richer health/upgrades, independent clean-room proof and the final public reference monument.

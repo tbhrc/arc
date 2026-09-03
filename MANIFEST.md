@@ -6,8 +6,12 @@ This manifest defines the logical components required for an ARC deployment. Exa
 |---|---|---|---|---|
 | Operating desk | Yes | GitHub | durable work, architecture, Issues/PRs, automation evidence | repository access + Issue/PR path works |
 | Skills canon | Yes | `skills` repository | reusable HOW | agent can find and read a canonical Skill |
+| Foundational Skills | Yes for new Skills repos | `starter/skills/` + `scripts/seed_foundation.py` | first-day routing, GitHub workflow, Skill authoring, Research escalation | plan lists starter Skills; apply creates only missing files |
 | Research | Yes | `research` repository | external evidence, comparisons, proving | one research record can route to an owner |
 | Operations hub | Yes | `ops` repository | cross-business architecture/operating decisions | agent can identify domain owners |
+| Business modules | Optional | `modules/` catalogue | capability selection + ownership pattern | only selected modules appear in profile/plan |
+| Agent provider routes | At least one | provider-neutral capability contract | authorised agent execution route | at least two capable routes can satisfy same ARC owner/verification contract |
+| Runtime routes | At least one normal route | GitHub-hosted Actions by default | execution environment | ordinary work does not require privileged runtime |
 | Domain owners | Yes | configurable repositories/systems | current business/product facts | one source of truth per declared field/class |
 | Agent instructions | Yes | `AGENTS.md` + platform instructions | repository-wide operating behaviour | cold agent can route work correctly |
 | Atlas front door | Yes | ARC Atlas Skill + `/atlas` prompt | onboarding, adoption, audit, health, upgrade/recovery routing and next-action guidance | cold agent selects a mode and produces a plan without hidden context |
@@ -33,9 +37,31 @@ ops
 ai-engine   # optional trusted-runtime owner
 ```
 
+It may also declare business-neutral selections:
+
+```json
+"modules": ["research"],
+"providers": ["capable-agent"],
+"runtimes": ["github-hosted-actions"]
+```
+
+The module/provider/runtime fields describe capability choices without making any vendor the source of truth. See [modules](modules/README.md), [providers](providers/README.md) and [runtimes](runtimes/README.md).
+
 Domain repositories are configured per business. Atlas can generate the profile through `scripts/arc.py onboard`, then `plan --inspect-target` distinguishes configured repositories that already exist (**REUSE**) from missing ones (**CREATE**) before apply.
 
 For an established business, repository existence alone does not decide ownership. Atlas additionally classifies existing systems and process owners as **KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE**.
+
+## First-day Skills foundation
+
+A newly created Skills repository should not remain empty. After repository bootstrap, use:
+
+```bash
+python3 scripts/seed_foundation.py --config arc.json
+# review the plan, then explicitly:
+python3 scripts/seed_foundation.py --config arc.json --apply
+```
+
+The foundation contains generic starter Skills for owner routing, GitHub work control, Skill authoring and Research escalation. Existing target Skill files are never overwritten. After deployment, the target organisation's Skills repository becomes its editable canon; ARC does not continuously sync these starter templates over local improvements.
 
 ## Estate manifest schema 1.0
 
@@ -56,16 +82,7 @@ compatibility metadata
 explicit recovery exclusions + manual prerequisites
 ```
 
-It deliberately excludes:
-
-```text
-credential values
-private-file contents
-CRM / ERP / ATS / accounting records
-database contents
-trusted-runtime machine state
-derived memory contents
-```
+It deliberately excludes credential values, private-file contents, CRM/ERP/ATS/accounting records, database contents, trusted-runtime machine state and derived memory contents.
 
 Use:
 
