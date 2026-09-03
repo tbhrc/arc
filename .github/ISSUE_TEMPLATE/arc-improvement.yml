@@ -1,0 +1,23 @@
+name: ARC improvement
+description: Propose a reproducibility, architecture, onboarding or deployment improvement.
+title: "[ARC] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What deployment or operating problem is ARC not solving well?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: What should a user or agent be able to do afterwards?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence / context
+      description: Link a real deployment, failure, benchmark or upstream capability when available. Never paste secrets.

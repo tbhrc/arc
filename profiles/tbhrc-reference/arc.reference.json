@@ -1,0 +1,22 @@
+{
+  "arc_version": "0.1.0",
+  "reference_only": true,
+  "target": {
+    "owner": "tbhrc",
+    "owner_type": "org",
+    "default_visibility": "mixed"
+  },
+  "repositories": [
+    {"name": "skills", "role": "skills", "visibility": "private"},
+    {"name": "research", "role": "research", "visibility": "private"},
+    {"name": "ai-ops", "role": "operations", "visibility": "private"},
+    {"name": "ai-engine", "role": "trusted-runtime", "visibility": "private"},
+    {"name": "tb", "role": "business-domain", "visibility": "private"},
+    {"name": "now-hiring", "role": "business-domain", "visibility": "private"},
+    {"name": "drf-main", "role": "business-domain", "visibility": "private"},
+    {"name": "implementai.ae", "role": "product-website", "visibility": "private"},
+    {"name": "gh-course", "role": "learning", "visibility": "public"},
+    {"name": "arc", "role": "portable-architecture", "visibility": "public"}
+  ],
+  "notes": "Private live business truth remains in its owners. ARC exposes architecture, not private state."
+}
