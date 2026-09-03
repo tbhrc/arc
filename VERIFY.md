@@ -24,6 +24,16 @@ python3 scripts/arc.py onboard \
   --output /tmp/arc-test.json
 ```
 
+## First-day Skills baseline
+
+```bash
+python3 scripts/seed_foundation.py --config /tmp/arc-test.json
+```
+
+The plan must resolve the configured Skills repository and list the generic starter Skills without making a remote change. Apply remains a separate explicit authority gate.
+
+The starter set must include owner routing, GitHub work control, Skill authoring and Research escalation, and existing target Skill files must never be overwritten.
+
 ## Safe-harbour baseline
 
 Export architecture without mutation:
@@ -66,6 +76,8 @@ A cold agent should be able to enter the deployed environment and answer:
 - What is this business/environment trying to achieve?
 - Which Atlas mode applies now?
 - Where are reusable Skills?
+- Which optional business modules are selected and who owns them?
+- Which provider and runtime routes are authorised for ordinary work?
 - Which repository/system owns the current facts for this task?
 - Which configured repositories will be REUSED versus CREATED before apply?
 - Which existing owners should be KEPT, INTEGRATED, MIGRATED, RESEARCHED or RETIRED?
@@ -114,7 +126,16 @@ A cold agent should be able to enter the deployed environment and answer:
 - External owner recovery responsibilities are explicit.
 - Repository reconstruction plus external owner restoration/reconnection is followed by complete ARC verification.
 
-### Gate G — learning and continuity
+### Gate G — portability
+- Optional business modules are selected explicitly rather than forced.
+- A newly created Skills repository can receive the generic starter foundation through a plan-first path.
+- Existing target Skills are reused and never overwritten automatically.
+- At least two capable agent/provider routes can satisfy the same owner/Skill/verification contract without changing ARC architecture.
+- GitHub-hosted execution is sufficient for ordinary deterministic work when appropriate.
+- Self-hosted/local/VPS runtime routes remain optional exceptions for genuine capability or privilege gaps.
+- Provider choice and runtime choice are independent decisions.
+
+### Gate H — learning and continuity
 - One real workflow has run end to end.
 - Reusable learning has been promoted to the correct Skill/architecture owner.
 - Material ARC Stage/programme state is recorded in the controlling GitHub Issue with branch, evidence, blockers and exact next action.
@@ -122,6 +143,6 @@ A cold agent should be able to enter the deployed environment and answer:
 
 ## Definition of healthy
 
-ARC is healthy when a fresh human or capable agent can navigate from a business need to the correct method, owner, execution route and evidence without relying on one person's memory or a hidden chat transcript.
+ARC is healthy when a fresh human or capable agent can navigate from a business need to the correct method, owner, provider/runtime execution route and evidence without relying on one person's memory or a hidden chat transcript.
 
 ARC is recoverable when that same operator can pair a known-good ARC release with a valid non-secret estate manifest and the external owners' own backups/reprovisioning paths to reconstruct and re-verify the operating architecture.
