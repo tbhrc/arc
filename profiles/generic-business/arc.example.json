@@ -38,6 +38,15 @@
       "description": "Replace with a real business unit, product or service owner."
     }
   ],
+  "modules": [
+    "research"
+  ],
+  "providers": [
+    "capable-agent"
+  ],
+  "runtimes": [
+    "github-hosted-actions"
+  ],
   "integrations": {
     "private_files": "declare-provider",
     "specialist_systems": [],
