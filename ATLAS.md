@@ -208,11 +208,11 @@ Read [contracts/safe-harbour.md](contracts/safe-harbour.md) before treating the 
 
 Atlas routes to what the current ARC release can actually prove:
 
-- **health** uses current `VERIFY.md`, CLI checks and observable owner state; richer drift/health reporting belongs to ARC.7;
-- **upgrade** identifies the formal ARC release + manifest schema and produces a migration plan; automated release-to-estate upgrade belongs to ARC.7;
+- **health** uses current `VERIFY.md`, CLI checks and ordinary owner-state inspection; no dedicated ARC health subsystem is required for v1;
+- **upgrade** uses the formal ARC release + manifest schema and an ordinary agent-reviewed migration plan; automated upgrade machinery is deferred unless real evidence proves it necessary;
 - **recover** uses the implemented safe-harbour export → restore-plan → bounded restore path plus the external-owner backup boundaries.
 
-Atlas must identify a missing capability or its owning Stage rather than pretend it already exists.
+Atlas must identify a missing capability plainly rather than invent or assume machinery that has not been proven necessary.
 
 ## Portable Atlas Skill
 
