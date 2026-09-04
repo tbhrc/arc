@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.0 — 2026-09-04 — Blank-Slate Reproduction Proven
+
+- Reset ARC around its Primary Objective: reproduce the proven human + AI operating ecosystem on a blank environment for ourselves or another organisation/client.
+- Made that Primary Objective the programme Anti-Drift anchor and removed scope that did not directly support redeployment, reconnection, proof or recovery.
+- Added explicit organisation North-Star mechanics, task-level Anti-Drift, lightweight durable-work Issue structure and machine-first routing contracts.
+- Removed the standalone Fast Links validator and numeric link quota; reduced CI to executable correctness plus one representative deploy/export/restore smoke path.
+- Rejected the unmerged broad ARC.6 governance/Gate-E expansion and replaced it with one minimal non-secret external-system reconnection handoff.
+- Deferred speculative health/drift/upgrade machinery beyond v1 unless real evidence later proves it necessary.
+- Completed independent non-TBHRC clean-room proof: target routing + Skills owner + external Gmail reconnection + real durable research workflow + non-secret estate snapshot + destructive recovery of the machine-first agent contract.
+- Rewrote the public README around the proven deployment/recovery outcome rather than the historical build programme.
+
 ## 0.4.0 — 2026-09-03 — Modular Portability
 
 - Added a business-neutral module catalogue covering CRM/sales, recruitment/HR, finance, marketing, customer service, product/software, research, knowledge/memory, website and reporting/BI.
@@ -33,7 +44,7 @@
 - Added secret-like configuration-field rejection and explicit config overwrite protection.
 - Added portable Atlas Skill packaging from the same canonical `.github/skills/atlas` source, including ChatGPT metadata and mode reference.
 - Added durable-continuity rules so material ARC Stage/programme state must live in GitHub Issues rather than a hidden chat transcript.
-- Kept health, upgrade and recovery claims bounded to capabilities actually implemented in the current release; ARC.4 and ARC.7 own the richer lifecycle machinery.
+- Kept health, upgrade and recovery claims bounded to capabilities actually implemented in the current release.
 
 ## 0.1.0 — 2026-09-03 — Public Foundation
 
