@@ -45,7 +45,7 @@ class FoundationTests(unittest.TestCase):
     def test_starter_routing_contract_has_north_star_and_fast_links(self):
         owner_router = (ROOT / "starter/skills/owner-router/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("North Star", owner_router)
-        self.assertIn("Fast links:", owner_router)
+        self.assertIn("Fast Links", owner_router)
 
     def test_starter_github_workflow_has_anti_drift_and_issue_contract(self):
         workflow = (ROOT / "starter/skills/github-workflow/SKILL.md").read_text(encoding="utf-8")
