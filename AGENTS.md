@@ -2,6 +2,8 @@
 
 Read this before substantive work in ARC.
 
+**Fast links:** [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md) · [North Star](https://github.com/tbhrc/skills/tree/main/founder-story-mission-vision) · [Atlas](.github/skills/atlas/SKILL.md) · [Architecture](ARCHITECTURE.md) · [Manifest](MANIFEST.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Releases](RELEASES.md) · [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) · [Issues](https://github.com/tbhrc/arc/issues)
+
 ## Mission
 
 ARC is an open, reproducible operating architecture for a business in which humans and capable AI agents share durable work control, reusable methods, explicit truth ownership, safe tools and verifiable execution.
