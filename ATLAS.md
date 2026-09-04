@@ -1,14 +1,19 @@
 # Atlas — ARC Front Door
 
-Atlas is the single onboarding and navigation entrypoint for ARC.
+Atlas is the single onboarding, adoption and lifecycle entrypoint for ARC.
+
+**Fast links:** [Architecture](ARCHITECTURE.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Starter Skills](starter/skills/README.md) · [Root Contract](AGENTS.md) · [ARC Issues](https://github.com/tbhrc/arc/issues)
 
 It exists so a founder, operator or AI agent does not need to understand the whole repository before beginning, and so ARC operation does not depend on one person's memory or a hidden chat transcript.
+
+Atlas is **not** the deployed estate's day-to-day machine router. Atlas owns ARC onboarding/adoption/audit/health/upgrade/recovery. A deployed estate should expose its own compact operational machine-first route to the organisation North Star, Skills, workflow, owner/system map and Issues.
 
 ## Say this to your agent
 
 ```text
 Use the Atlas skill in this repository.
 Understand my business and current ARC state.
+Identify my organisation's canonical North Star location.
 Choose the correct Atlas mode.
 Start in plan mode and tell me what you can infer from the current environment.
 Ask only for information you genuinely cannot resolve.
@@ -41,16 +46,19 @@ The detailed mode contract lives in `.github/skills/atlas/references/modes.md`.
 
 Atlas needs enough information to answer:
 
-1. **Purpose** — what business/environment is ARC supporting?
-2. **GitHub home** — user account or organisation and repository visibility defaults.
-3. **Domains** — what business units, products or workflows need their own truth owners?
-4. **Existing estate** — which repositories, processes and systems already exist and should be kept or integrated?
-5. **Private files** — where confidential documents should live.
-6. **Specialist systems** — which systems own CRM, finance, HR, ATS, service delivery or other structured state?
-7. **Execution** — can normal APIs/connectors/tools perform the work, or is a trusted runtime genuinely required?
-8. **Authority** — what may be inspected, planned and applied?
+1. **North Star** — where does the target organisation own its canonical mission, vision and/or directives?
+2. **Purpose** — what business/environment is ARC supporting?
+3. **GitHub home** — user account or organisation and repository visibility defaults.
+4. **Domains** — what business units, products or workflows need their own truth owners?
+5. **Existing estate** — which repositories, processes and systems already exist and should be kept or integrated?
+6. **Private files** — where confidential documents should live.
+7. **Specialist systems** — which systems own CRM, finance, HR, ATS, service delivery or other structured state?
+8. **Execution** — can normal APIs/connectors/tools perform the work, or is a trusted runtime genuinely required?
+9. **Authority** — what may be inspected, planned and applied?
 
 If the user already supplied an answer or a connected owner proves it, do not ask again.
+
+ARC reproduces the **North-Star mechanism**, not TBHRC's editable mission wording. A generic deployment must point to the target organisation's own canonical direction.
 
 ## New-business first run
 
@@ -73,6 +81,7 @@ Do **not** force replacement.
 Inventory:
 
 ```text
+organisation North Star owner
 existing GitHub repositories
 existing SOP / knowledge owners
 existing automations
@@ -100,6 +109,7 @@ Return a compact deployment/operation plan containing:
 
 ```text
 Target
+Organisation North Star owner/location
 Purpose
 Atlas mode
 Core repositories
@@ -108,6 +118,9 @@ Existing owners: KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE
 Configured repositories: REUSE / CREATE where observable
 Truth-owner map
 Skills strategy
+Operational machine-router/front-door strategy
+Fast Links strategy for important active front doors
+Durable Issue / Anti-Drift strategy
 Research strategy
 Agent entrypoints
 Private-file owner
@@ -125,6 +138,31 @@ The plan should distinguish:
 - **optional component**;
 - **existing owner to keep/integrate**;
 - **future improvement**.
+
+## North Star and Anti-Drift
+
+Keep these concepts separate:
+
+```text
+North Star = organisation-level mission / vision / directives
+Anti-Drift — Original Objective = the original requested outcome of one durable work item
+```
+
+Issues should normally point to the canonical North Star rather than duplicate editable mission text.
+
+For substantive durable GitHub work, use the canonical structure:
+
+```text
+North Star
+Anti-Drift — Original Objective
+Local Objective
+Checklist
+Acceptance Criteria
+Current Status
+Exact Next Action
+```
+
+The route may change during implementation. The Anti-Drift destination must not silently change.
 
 ## Authority gate
 
@@ -170,11 +208,11 @@ Read [contracts/safe-harbour.md](contracts/safe-harbour.md) before treating the 
 
 Atlas routes to what the current ARC release can actually prove:
 
-- **health** uses current `VERIFY.md`, CLI checks and observable owner state; richer drift/health reporting belongs to ARC.7;
-- **upgrade** identifies the formal ARC release + manifest schema and produces a migration plan; automated release-to-estate upgrade belongs to ARC.7;
+- **health** uses current `VERIFY.md`, CLI checks and ordinary owner-state inspection; no dedicated ARC health subsystem is required for v1;
+- **upgrade** uses the formal ARC release + manifest schema and an ordinary agent-reviewed migration plan; automated upgrade machinery is deferred unless real evidence proves it necessary;
 - **recover** uses the implemented safe-harbour export → restore-plan → bounded restore path plus the external-owner backup boundaries.
 
-Atlas must identify a missing capability or its owning Stage rather than pretend it already exists.
+Atlas must identify a missing capability plainly rather than invent or assume machinery that has not been proven necessary.
 
 ## Portable Atlas Skill
 
@@ -191,6 +229,7 @@ This packages that same directory as `dist/skill.zip`. There is no second editab
 ```text
 read ARC
 -> Atlas selects mode
+-> identify organisation North Star owner
 -> inspect current target
 -> generate/reconcile arc.json
 -> doctor
@@ -199,9 +238,10 @@ read ARC
 -> explicit apply authority
 -> bootstrap --apply
 -> verify
--> onboard agents
+-> establish machine-first operational routing + Fast Links
+-> seed/onboard Skills and agents
 -> connect specialist systems deliberately
--> run one real business workflow
+-> run one real business workflow with Anti-Drift
 -> export safe-harbour manifest
 -> capture reusable learning
 ```
@@ -212,6 +252,7 @@ For a brand-new GitHub organisation, Atlas can start with:
 
 ```text
 business name
+North Star owner/location if already known
 GitHub organisation/login
 private vs public default
 first business domains
@@ -223,7 +264,7 @@ Everything else should be derived or postponed until needed.
 
 ## Durable continuity
 
-For material ARC programme/Stage work, the controlling GitHub Issue—not the current chat—must contain the objective, branch, evidence, blockers and exact next action. A fresh agent should be able to continue from GitHub alone.
+For material ARC programme/Stage work, the controlling GitHub Issue—not the current chat—must contain the Anti-Drift objective, branch, evidence, blockers and exact next action. A fresh agent should be able to continue from GitHub alone.
 
 ## Learning path
 
