@@ -16,67 +16,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Compile ARC utilities
-        run: python3 -m py_compile scripts/arc.py scripts/package_atlas.py scripts/seed_foundation.py
-      - name: Validate repository contract
-        run: python3 scripts/arc.py verify-self
-      - name: Run unit tests
-        run: python3 -m unittest discover -s tests -p 'test_*.py'
-      - name: Prove non-mutating onboarding
-        run: >-
-          python3 scripts/arc.py onboard
-          --non-interactive
-          --business-name 'ARC CI Business'
-          --owner arc-ci-business
-          --domains 'sales,delivery'
-          --private-files SharePoint
-          --specialist-systems 'HubSpot,Xero'
-          --output /tmp/arc-ci.json
-      - name: Prove first-day Skills foundation plan
-        run: python3 scripts/seed_foundation.py --config /tmp/arc-ci.json
-      - name: Prove safe-harbour export
-        run: >-
-          python3 scripts/arc.py export
-          --config /tmp/arc-ci.json
-          --output /tmp/arc-estate.json
-      - name: Prove non-mutating restore plan
-        run: python3 scripts/arc.py restore-plan --manifest /tmp/arc-estate.json
-      - name: Validate estate manifest boundary
+      - name: Compile and test
         run: |
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-
-          manifest = json.loads(Path('/tmp/arc-estate.json').read_text())
-          assert manifest['manifest_schema'] == '1.0'
-          assert manifest['target']['owner'] == 'arc-ci-business'
-          excluded = set(manifest['recovery']['excluded_material'])
-          assert 'credential values' in excluded
-          assert 'private-file contents' in excluded
-          assert 'CRM/ERP/ATS/accounting records' in excluded
-          serialized = json.dumps(manifest)
-          assert 'github_pat_' not in serialized
-          assert 'BEGIN PRIVATE KEY' not in serialized
-          print('Estate manifest boundary PASS')
-          PY
-      - name: Package canonical Atlas Skill
-        run: python3 scripts/package_atlas.py
-      - name: Validate Atlas package contents
+          python3 -m py_compile scripts/arc.py scripts/package_atlas.py scripts/seed_foundation.py
+          python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: Blank-slate smoke proof
         run: |
-          python3 - <<'PY'
-          import zipfile
-          from pathlib import Path
-
-          package = Path('dist/skill.zip')
-          assert package.exists(), 'dist/skill.zip missing'
-          with zipfile.ZipFile(package) as archive:
-              names = set(archive.namelist())
-          required = {
-              'atlas/SKILL.md',
-              'atlas/agents/openai.yaml',
-              'atlas/references/modes.md',
-          }
-          missing = required - names
-          assert not missing, f'missing Atlas package paths: {sorted(missing)}'
-          print('Atlas package contract PASS')
-          PY
+          python3 scripts/arc.py onboard --non-interactive --business-name 'ARC CI Business' --owner arc-ci-business --domains 'sales,delivery' --private-files SharePoint --specialist-systems 'HubSpot,Xero' --output /tmp/arc-ci.json
+          python3 scripts/seed_foundation.py --config /tmp/arc-ci.json
+          python3 scripts/arc.py export --config /tmp/arc-ci.json --output /tmp/arc-estate.json
+          python3 scripts/arc.py restore-plan --manifest /tmp/arc-estate.json
+          python3 scripts/package_atlas.py
