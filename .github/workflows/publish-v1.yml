@@ -1,0 +1,33 @@
+name: Publish ARC v1
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/publish-v1.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Publish exact verified v1 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view v1.0.0 >/dev/null 2>&1 || gh release create v1.0.0 \
+            --repo tbhrc/arc \
+            --target 6e57d03e868fc61f98a4a66883a11153b16e8959 \
+            --title "ARC v1.0.0 — Blank-Slate Reproduction Proven" \
+            --notes "ARC v1.0.0 proves the primary objective: reproduce the human + AI operating ecosystem on a blank non-TBHRC environment, reconnect an external owner, run a real durable workflow, export a non-secret estate snapshot, and recover the ARC-owned operating surface. See #11 and #12."
+      - name: Remove one-use release lane
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/publish-v1.yml
+          git commit -m "chore: remove one-use ARC v1 release lane"
+          git push origin HEAD:main
