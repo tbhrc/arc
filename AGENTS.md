@@ -10,6 +10,8 @@ ARC is an open, reproducible operating architecture for a business in which huma
 
 This repository owns **ARC's portable deployment and recovery architecture**. It does not own the live business facts of organisations that deploy it.
 
+ARC reproduces the **North-Star mechanism**, not TBHRC's editable mission wording. Each deploying organisation must own one canonical mission / vision / directive layer that agents can reach from the machine-first operating entry surface.
+
 ## First action
 
 If the user asks to install, deploy, onboard, adopt, audit, diagnose, check health, upgrade, export an estate manifest, recover/redeploy, reproduce or understand ARC, use the project Agent Skill:
@@ -18,29 +20,35 @@ If the user asks to install, deploy, onboard, adopt, audit, diagnose, check heal
 .github/skills/atlas/SKILL.md
 ```
 
-Atlas is the front door. Do not invent a competing onboarding or lifecycle path.
+Atlas is the ARC lifecycle front door. Do not invent a competing onboarding or lifecycle path. After deployment, the target estate's machine-first operational router is a separate concern and must expose its North Star, Skills, owner/system map, workflow and Issues without unnecessary rediscovery.
 
 ## Core doctrine
 
 ```text
-purpose / need
+organisation North Star
+-> requested need / objective
+-> preserve Anti-Drift in durable work when required
 -> Skills first
 -> find the owner of facts/state
 -> read current truth
--> capable authorised agent
+-> choose the lowest sufficient authorised execution path
 -> direct execution when normal tools are sufficient
 -> Research when recurring friction suggests a broader capability gap
 -> trusted runtime only for a genuine privilege/runtime gap
 -> verify real state
 -> write durable evidence to the correct owner
 -> promote reusable learning into Skills
+-> close
 ```
+
+**North Star** means organisation-level mission / vision / directives. **Anti-Drift — Original Objective** means the original requested outcome of a specific durable work item. Never use those labels interchangeably.
 
 ## Source-of-truth boundaries
 
 | Information class | Owner |
 |---|---|
 | ARC portable architecture, bootstrap/recovery contract, profiles, release/manifest schema | this repository |
+| target organisation North Star | target organisation's declared canonical North-Star owner |
 | reusable business/agent HOW after deployment | target organisation's Skills canon |
 | external tool/technology research | target Research owner |
 | live business/product facts | target domain/business repository or specialist system |
@@ -73,8 +81,9 @@ Chat/session context is temporary and never programme truth.
 For every material ARC Stage or programme workstream, the controlling GitHub Issue must allow a cold agent to answer:
 
 ```text
-What are we doing?
-Why?
+What organisation North Star governs this work?
+What exact original objective are we preserving?
+What local objective is active now?
 What branch/PR owns the active change?
 What is already implemented?
 What evidence proves it?
@@ -82,6 +91,18 @@ What failed or is blocked?
 What remains?
 What is the exact next action?
 ```
+
+Use the lightweight canonical durable-work Issue structure:
+
+1. `North Star`
+2. `Anti-Drift — Original Objective`
+3. `Local Objective`
+4. `Checklist`
+5. `Acceptance Criteria`
+6. `Current Status`
+7. `Exact Next Action`
+
+The North Star section should normally **point to the canonical organisation-level source** rather than duplicating editable mission text into every Issue. Anti-Drift preserves the original requested outcome and must not be silently rewritten as the local implementation evolves.
 
 Before pausing or handing off substantive work:
 
@@ -96,6 +117,10 @@ A fresh agent must be able to continue from repository state + Issues/PRs alone.
 ## Working in this repository
 
 Use Issues as durable work objects. For material multi-file changes, use an Issue-linked branch and Pull Request. Keep changes focused and verify the relevant paths.
+
+Use compact **Fast Links** near the top of important active front doors and routers when they reduce rediscovery. Known destination -> link it. Do not manufacture links on raw evidence, generated output, archives or superseded documents merely to satisfy a quota.
+
+Choose the **lowest sufficient governed path**. Do not add an Action, validator, daemon or enforcement service when a template, pointer, contract or direct change is enough.
 
 When a change alters the deployable/recovery architecture:
 
