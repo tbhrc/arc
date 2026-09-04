@@ -1,68 +1,139 @@
 # Atlas — ARC Front Door
 
-Atlas is the single onboarding, adoption and lifecycle entrypoint for ARC.
+Atlas is the onboarding, adoption, audit and recovery front door for ARC.
 
-**Fast links:** [Architecture](ARCHITECTURE.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Starter Skills](starter/skills/README.md) · [Root Contract](AGENTS.md) · [ARC Issues](https://github.com/tbhrc/arc/issues)
+Use Atlas when a founder, operator or capable AI agent needs to **understand a target environment and reproduce the ARC operating model there without first learning the entire repository**.
 
-It exists so a founder, operator or AI agent does not need to understand the whole repository before beginning, and so ARC operation does not depend on one person's memory or a hidden chat transcript.
+**Fast links:** [README](README.md) · [Architecture](ARCHITECTURE.md) · [Ecosystem Evidence](ECOSYSTEM-EVIDENCE.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Reconnections](RECONNECTIONS.md) · [Agent Contract](AGENTS.md) · [ARC Issues](https://github.com/tbhrc/arc/issues)
 
-Atlas is **not** the deployed estate's day-to-day machine router. Atlas owns ARC onboarding/adoption/audit/health/upgrade/recovery. A deployed estate should expose its own compact operational machine-first route to the organisation North Star, Skills, workflow, owner/system map and Issues.
+---
+
+## What Atlas is trying to achieve
+
+ARC's Primary Objective is:
+
+> **Reproduce the proven human + AI operating ecosystem on a blank environment for ourselves or another organisation/client, reconnect the required external owners, prove the redeployed ecosystem works, and preserve enough non-secret architecture state to reproduce it again.**
+
+Atlas exists to make the first part of that journey understandable and safe.
+
+It should help a user move from:
+
+```text
+I have a business / new environment / existing estate
+```
+
+into:
+
+```text
+I know what ARC should create,
+what should stay where it already is,
+what must be connected,
+what authority is required,
+and what real workflow will prove the deployment.
+```
+
+Atlas is **not** the deployed estate's permanent day-to-day router. After deployment, normal work should route directly through the estate's North Star, Skills, owner/system map, workflow and Issues.
+
+---
+
+## What ecosystem Atlas is reproducing
+
+Atlas should understand that ARC is reproducing this operating model:
+
+```text
+organisation North Star
+→ humans + AI agents
+→ GitHub durable operating desk
+→ Skills-first reusable HOW
+→ current owner truth
+→ lowest-sufficient authorised execution
+→ real-state verification
+→ durable evidence
+→ reusable learning
+```
+
+With separate owners for:
+
+```text
+private files
+specialist systems
+credentials
+trusted runtime state
+memory
+```
+
+The measured TBHRC/iMPLEMENTAi reference estate reached 29 repositories, 57 canonical Skills and seven named AI execution lanes during the first 7.57-day GitHub operating-era snapshot. Those are **reference-evidence figures**, not requirements for a target deployment. See [ECOSYSTEM-EVIDENCE.md](ECOSYSTEM-EVIDENCE.md).
+
+---
 
 ## Say this to your agent
 
 ```text
 Use the Atlas skill in this repository.
-Understand my business and current ARC state.
-Identify my organisation's canonical North Star location.
-Choose the correct Atlas mode.
-Start in plan mode and tell me what you can infer from the current environment.
-Ask only for information you genuinely cannot resolve.
-Do not mutate anything until the plan and target ownership map are explicit and apply authority is given.
+Understand my business and current environment.
+Identify where my organisation should own its North Star.
+Work out which existing systems and repositories should be kept rather than replaced.
+Start in plan mode.
+Ask only for facts or authority you cannot resolve.
+Do not mutate anything until the target ownership map and apply authority are explicit.
+Tell me what first real workflow will prove the deployment.
 ```
 
-On supported IDE prompt-file surfaces, invoke:
+On supported IDE prompt-file surfaces:
 
 ```text
 /atlas
 ```
 
-## Seven Atlas modes
+The editable Skill canon is:
 
-Atlas chooses the mode from the user's intent and current state:
+```text
+.github/skills/atlas/SKILL.md
+```
+
+---
+
+## Atlas modes
+
+Atlas can route the user's intent into these practical modes:
 
 | Mode | Purpose |
 |---|---|
-| `onboard` | Create a valid first ARC profile for a new estate. |
-| `adopt` | Bring an existing business into ARC without forced replacement. |
-| `audit` | Inspect architecture, owners and gaps without mutation. |
-| `health` | Diagnose current verified ARC state using capabilities that exist now. |
-| `upgrade` | Plan movement toward a newer formal ARC release/contract. |
-| `recover` | Export a safe-harbour manifest, plan recovery and perform bounded repository reconstruction. |
-| `next` | Return the single smallest safe next action from current durable state. |
+| `onboard` | Create the first valid ARC profile for a new estate. |
+| `adopt` | Bring an existing organisation into ARC without unnecessary replacement. |
+| `audit` | Inspect architecture, owners, routes and gaps without mutation. |
+| `health` | Assess current ARC state using present verification/owner truth; no special health subsystem is required. |
+| `upgrade` | Plan movement toward a newer ARC release through ordinary migration reasoning and verification. |
+| `recover` | Export/inspect a non-secret estate map, plan recovery and perform bounded reconstruction. |
+| `next` | Return the single smallest safe next action from durable state. |
 
-The detailed mode contract lives in `.github/skills/atlas/references/modes.md`.
+Detailed mode behaviour lives in `.github/skills/atlas/references/modes.md`.
 
-## What Atlas should establish
+---
 
-Atlas needs enough information to answer:
+## The first questions Atlas must answer
 
-1. **North Star** — where does the target organisation own its canonical mission, vision and/or directives?
+Atlas needs enough information to resolve:
+
+1. **North Star** — where will the organisation own its canonical mission/vision/directives?
 2. **Purpose** — what business/environment is ARC supporting?
-3. **GitHub home** — user account or organisation and repository visibility defaults.
-4. **Domains** — what business units, products or workflows need their own truth owners?
-5. **Existing estate** — which repositories, processes and systems already exist and should be kept or integrated?
-6. **Private files** — where confidential documents should live.
-7. **Specialist systems** — which systems own CRM, finance, HR, ATS, service delivery or other structured state?
-8. **Execution** — can normal APIs/connectors/tools perform the work, or is a trusted runtime genuinely required?
-9. **Authority** — what may be inspected, planned and applied?
+3. **GitHub home** — which account/organisation owns durable work?
+4. **Domains** — which business areas/products/services require their own truth owners?
+5. **Existing estate** — what repositories, processes and systems already exist?
+6. **Skills** — where will reusable HOW live?
+7. **Private files** — where must confidential evidence remain?
+8. **Specialist systems** — what owns CRM, finance, HR, ATS, service delivery or other structured live state?
+9. **Execution** — can normal connected tools perform the required work, or is trusted runtime actually needed?
+10. **Authority** — what may the current agent inspect, plan and apply?
+11. **Proof workflow** — what real work will demonstrate that the deployed estate actually operates?
 
 If the user already supplied an answer or a connected owner proves it, do not ask again.
 
-ARC reproduces the **North-Star mechanism**, not TBHRC's editable mission wording. A generic deployment must point to the target organisation's own canonical direction.
+---
 
-## New-business first run
+## New organisation / blank environment
 
-A normal new deployment should not require hand-editing JSON:
+A normal new deployment can start with:
 
 ```bash
 python3 scripts/arc.py onboard --output arc.json
@@ -70,28 +141,45 @@ python3 scripts/arc.py doctor --config arc.json
 python3 scripts/arc.py plan --config arc.json --inspect-target
 ```
 
-For capable agents with the required facts already available, `onboard --non-interactive` can generate the same validated profile without a questionnaire.
+These are non-mutating.
 
-`onboard`, `doctor` and `plan` do not mutate the target.
+For capable agents with the required facts already available, non-interactive onboarding may be used where supported rather than forcing a questionnaire.
 
-## Existing-business path
+Minimum useful inputs are usually:
 
-Do **not** force replacement.
+```text
+organisation/business name
+North Star owner/location if already known
+GitHub organisation/login
+visibility defaults
+first domains
+private-file owner
+known specialist systems
+```
+
+Everything else should be derived or postponed until needed.
+
+---
+
+## Existing organisation / adoption path
+
+Do **not** rebuild working systems merely to make them resemble an ARC example.
 
 Inventory:
 
 ```text
-organisation North Star owner
-existing GitHub repositories
-existing SOP / knowledge owners
+North Star owner
+GitHub repositories
+Skills / SOP / knowledge owners
 existing automations
-existing CRM / ERP / ATS / accounting
+CRM / ERP / ATS / accounting
 private file stores
-agent providers / tools
-credentials and identity boundaries
+agent providers / connected tools
+trusted runtime if any
+identity/credential boundaries
 ```
 
-Classify each relevant owner:
+Classify relevant existing owners:
 
 ```text
 KEEP
@@ -101,56 +189,71 @@ RESEARCH
 RETIRE
 ```
 
-For repositories already declared in `arc.json`, use `plan --inspect-target` to surface **REUSE / CREATE** before apply where GitHub CLI access is available.
+For configured repositories, surface:
 
-## Atlas output before mutation
+```text
+REUSE
+CREATE
+```
 
-Return a compact deployment/operation plan containing:
+where observable before apply.
+
+The default is **reuse/integrate**, not replacement.
+
+---
+
+## Atlas plan before mutation
+
+Before making changes, return a compact plan containing:
 
 ```text
 Target
-Organisation North Star owner/location
 Purpose
+North Star owner/location
 Atlas mode
 Core repositories
-Domain repositories / owners
+Domain owners
 Existing owners: KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE
 Configured repositories: REUSE / CREATE where observable
-Truth-owner map
 Skills strategy
-Operational machine-router/front-door strategy
-Fast Links strategy for important active front doors
+Machine-first operational front door/router
+Useful Fast Links
 Durable Issue / Anti-Drift strategy
-Research strategy
-Agent entrypoints
 Private-file owner
 Specialist-system owners
-Runtime requirement
-Credential/manual-input list (names/purpose only, never values)
-Bootstrap / recovery command
+Research owner/path
+Agent/provider strategy
+Normal execution capabilities
+Trusted-runtime need, if genuine
+Credential/manual input names and purposes only — never values
+Bootstrap/recovery route
 Verification plan
-First real workflow to prove when deploying
+First real workflow to prove
 ```
 
-The plan should distinguish:
+Clearly distinguish:
 
-- **required core**;
-- **optional component**;
-- **existing owner to keep/integrate**;
-- **future improvement**.
+- required core;
+- optional component;
+- existing owner to keep/integrate;
+- future improvement.
+
+Do not build future improvements before the core deployment needs them.
+
+---
 
 ## North Star and Anti-Drift
 
-Keep these concepts separate:
+Keep these separate:
 
 ```text
 North Star = organisation-level mission / vision / directives
-Anti-Drift — Original Objective = the original requested outcome of one durable work item
+Anti-Drift — Original Objective = original requested outcome of one durable work item
 ```
 
-Issues should normally point to the canonical North Star rather than duplicate editable mission text.
+ARC reproduces the North-Star **ownership mechanism**, not TBHRC's editable wording.
 
-For substantive durable GitHub work, use the canonical structure:
+For substantive durable work use:
 
 ```text
 North Star
@@ -162,112 +265,241 @@ Current Status
 Exact Next Action
 ```
 
-The route may change during implementation. The Anti-Drift destination must not silently change.
+The implementation route may evolve. The original objective must not silently change.
+
+---
 
 ## Authority gate
 
+ARC separates understanding from mutation:
+
 ```text
-understand / inspect
--> plan
--> explicit apply authority
--> bounded mutation
--> verify
+inspect / understand
+→ plan
+→ explicit apply authority
+→ bounded mutation
+→ verify
 ```
 
-Credentials being available never imply apply authority. `bootstrap` and `restore` remain non-mutating unless `--apply` is supplied.
+Credentials or connected capabilities do not imply apply authority.
 
-## Safe-harbour recovery
+`bootstrap` and `restore` remain non-mutating without `--apply`.
 
-ARC can preserve the **architecture needed to rebuild an estate** without copying the estate's private/live data.
+---
 
-After the estate is healthy, export a non-secret manifest:
+## Apply route
+
+Once the plan is accepted and authority exists:
 
 ```bash
-python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
+python3 scripts/arc.py bootstrap --config arc.json --apply
+python3 scripts/seed_foundation.py --config arc.json --apply
+python3 scripts/arc.py verify --config arc.json
 ```
 
-The estate manifest records ARC version/schema, target topology, repository roles, declared external owners and optional repository observations. It does not contain private files, specialist-system records, database contents, credential values, trusted-runtime machine state or memory contents.
+Existing repositories should be reused rather than overwritten.
 
-Plan recovery without mutation:
+After bootstrap:
+
+1. establish the target North Star route;
+2. establish the Skills owner;
+3. establish the machine-first operational router/front door;
+4. establish durable Issue/Anti-Drift control;
+5. reconnect only the external systems required for actual work;
+6. run one real workflow;
+7. verify real state;
+8. capture durable evidence.
+
+---
+
+## External-system reconnection
+
+Keep it minimal.
+
+For each system genuinely required by the proof workflow, record:
+
+```text
+System / provider
+Live owner
+Connection / identity reference
+Required authority / scope
+Verification
+```
+
+Do not copy private/live records into ARC.
+
+See [RECONNECTIONS.md](RECONNECTIONS.md).
+
+---
+
+## Real-work proof
+
+A successful deployment is not:
+
+```text
+repositories created
+folders exist
+README looks correct
+```
+
+It is:
+
+```text
+organisation North Star
+→ request / Anti-Drift objective
+→ Skill
+→ owner truth
+→ authorised execution
+→ real-state verification
+→ durable evidence
+```
+
+Choose a proof workflow that is real but proportionate.
+
+ARC v1 itself passed this model in an independent non-TBHRC clean-room test. See [Core Proof #11](https://github.com/tbhrc/arc/issues/11).
+
+---
+
+## Safe-harbour export
+
+After the estate is working, preserve the non-secret architecture map:
 
 ```bash
-python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
+python3 scripts/arc.py export \
+  --config arc.json \
+  --output arc-estate.json \
+  --inspect-target
 ```
 
-Only after the repository reconstruction plan is accepted:
+The manifest may record:
+
+- ARC version/schema;
+- topology;
+- repository roles;
+- external owner names/references;
+- non-secret observations useful for recovery.
+
+It must not contain:
+
+- private files;
+- CRM/ATS/ERP/accounting records;
+- credential values;
+- machine-local runtime state;
+- memory contents.
+
+---
+
+## Recovery
+
+Plan without mutation:
 
 ```bash
-python3 scripts/arc.py restore --manifest arc-estate.json --apply
+python3 scripts/arc.py restore-plan \
+  --manifest arc-estate.json \
+  --inspect-target
 ```
 
-That apply step is deliberately limited to conservative GitHub repository reconstruction. Restore/reconnect external owners through their own approved backup/identity processes, then run the complete ARC verification contract.
-
-Read [contracts/safe-harbour.md](contracts/safe-harbour.md) before treating the manifest as a disaster-recovery artifact.
-
-## Current lifecycle honesty
-
-Atlas routes to what the current ARC release can actually prove:
-
-- **health** uses current `VERIFY.md`, CLI checks and ordinary owner-state inspection; no dedicated ARC health subsystem is required for v1;
-- **upgrade** uses the formal ARC release + manifest schema and an ordinary agent-reviewed migration plan; automated upgrade machinery is deferred unless real evidence proves it necessary;
-- **recover** uses the implemented safe-harbour export → restore-plan → bounded restore path plus the external-owner backup boundaries.
-
-Atlas must identify a missing capability plainly rather than invent or assume machinery that has not been proven necessary.
-
-## Portable Atlas Skill
-
-The editable Atlas canon is `.github/skills/atlas/`.
+Only after the plan is accepted:
 
 ```bash
-python3 scripts/package_atlas.py
+python3 scripts/arc.py restore \
+  --manifest arc-estate.json \
+  --apply
 ```
 
-This packages that same directory as `dist/skill.zip`. There is no second editable portable copy. ARC-generated repositories receive a thin pointer to the current upstream Atlas canon.
+Then reconnect external owners through their own approved identity/backup processes and rerun verification.
+
+ARC v1 destructive proof deliberately removed a deployed `AGENTS.md` and successfully reconstructed it from durable ARC/estate sources.
+
+---
+
+## Health and upgrade honesty
+
+ARC v1 intentionally avoids speculative lifecycle machinery.
+
+- **health** = use current `VERIFY.md`, CLI checks and owner-state inspection;
+- **upgrade** = compare release/contracts and create an ordinary reviewed migration plan;
+- **recover** = use export → restore-plan → bounded restore + external-owner reconnection.
+
+Do not invent a dedicated health/upgrade service unless real deployment evidence proves the simpler methods insufficient.
+
+---
+
+## KISSS rule
+
+> **The operating system must not become the work.**
+
+Atlas should always ask:
+
+> What is the smallest deployment path that gets this organisation to a verified working estate?
+
+Do not add:
+
+- validators;
+- policy engines;
+- daemons;
+- services;
+- schemas;
+- mandatory repositories;
+- integrations;
+- agent routes;
+
+unless the target actually needs them.
+
+The measured TBHRC/iMPLEMENTAi ecosystem is a **reference implementation and proof source**, not a requirement to clone all 29 repositories or all historical infrastructure into every deployment.
+
+---
 
 ## Default deployment route
 
 ```text
-read ARC
--> Atlas selects mode
--> identify organisation North Star owner
--> inspect current target
--> generate/reconcile arc.json
--> doctor
--> plan --inspect-target
--> operator reviews plan
--> explicit apply authority
--> bootstrap --apply
--> verify
--> establish machine-first operational routing + Fast Links
--> seed/onboard Skills and agents
--> connect specialist systems deliberately
--> run one real business workflow with Anti-Drift
--> export safe-harbour manifest
--> capture reusable learning
+read ARC README
+→ Atlas selects mode
+→ identify organisation North Star owner
+→ inspect current target
+→ reconcile existing owners
+→ generate/reconcile arc.json
+→ doctor
+→ plan --inspect-target
+→ operator reviews plan
+→ explicit apply authority
+→ bootstrap --apply
+→ seed foundation
+→ verify base estate
+→ establish machine-first operational routing
+→ establish Skills owner
+→ reconnect required external systems
+→ run one real workflow with Anti-Drift
+→ verify real outcome
+→ export safe-harbour manifest
+→ capture reusable learning
 ```
 
-## Minimum information path
-
-For a brand-new GitHub organisation, Atlas can start with:
-
-```text
-business name
-North Star owner/location if already known
-GitHub organisation/login
-private vs public default
-first business domains
-private-file store
-known specialist systems
-```
-
-Everything else should be derived or postponed until needed.
+---
 
 ## Durable continuity
 
-For material ARC programme/Stage work, the controlling GitHub Issue—not the current chat—must contain the Anti-Drift objective, branch, evidence, blockers and exact next action. A fresh agent should be able to continue from GitHub alone.
+For material ARC programme/change work, the controlling GitHub Issue—not the current chat—must preserve:
+
+- North Star;
+- Anti-Drift objective;
+- active branch/PR;
+- implementation state;
+- evidence;
+- material failures/abandoned paths;
+- exact next action.
+
+A cold capable agent should be able to continue from GitHub alone.
+
+---
 
 ## Learning path
 
-If the user wants to understand why ARC is designed this way rather than only operate or deploy it, route them to the [GitHub Course](https://github.com/tbhrc/gh-course).
+If the user wants to understand how this architecture emerged rather than only deploy it:
 
-The Course teaches the journey. ARC packages the deployable architecture.
+- read [README.md](README.md) for the public story;
+- read [ECOSYSTEM-EVIDENCE.md](ECOSYSTEM-EVIDENCE.md) for measured provenance;
+- read the [Founder Story / Mission / Vision](https://github.com/tbhrc/skills/tree/main/founder-story-mission-vision) for founder direction;
+- use the [GitHub Course](https://github.com/tbhrc/gh-course) for the operating method and learning journey.
+
+**Course = learn the method. ARC = reproduce the operating architecture.**

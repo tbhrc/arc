@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased — Public Front-Door Clarification
+
+- Rewrote `README.md` so ARC is explained as the portable reproduction package for the **whole proven TBHRC/iMPLEMENTAi human + AI operating ecosystem**, not merely as the ARC repository or its final build window.
+- Rewrote root `AGENTS.md` so a cold coding agent can understand ARC's Primary Objective, ecosystem model, current v1 proof, source-of-truth boundaries, deployment/recovery rules, historical statistics interpretation and KISSS guardrails without hidden chat context.
+- Added `ECOSYSTEM-EVIDENCE.md` to preserve the 27 Aug–4 Sep 2026 GitHub-era measurement snapshot with exact / derived / estimated confidence labels, business outcomes, infrastructure proof and transformation timeline.
+- Aligned `ARCHITECTURE.md` and `ATLAS.md` to distinguish the measured TBHRC/iMPLEMENTAi reference ecosystem from what a generic ARC deployment is actually required to reproduce.
+- Added the concise founder/origin story and linked the canonical Founder Story / Mission / Vision rather than copying mutable doctrine into ARC.
+- Added a complete public feature/capability map, before/after operating model, independent v1 proof and explicit statement that historical ecosystem statistics are provenance — not mandatory target scale.
+- No executable architecture, validator, schema, daemon, service or release behaviour changed.
+
 ## 1.0.0 — 2026-09-04 — Blank-Slate Reproduction Proven
 
 - Reset ARC around its Primary Objective: reproduce the proven human + AI operating ecosystem on a blank environment for ourselves or another organisation/client.
