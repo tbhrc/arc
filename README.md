@@ -2,6 +2,8 @@
 
 **An open, Skills-first operating architecture for businesses where humans and AI agents work from the same durable map.**
 
+**Fast links:** [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md) · [North Star](https://github.com/tbhrc/skills/tree/main/founder-story-mission-vision) · [Skills](https://github.com/tbhrc/skills/blob/main/INDEX.md) · [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) · [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Root Contract](AGENTS.md) · [Issues](https://github.com/tbhrc/arc/issues)
+
 ARC is not an AI chatbot, an automation bundle, or another project-management framework. It is a reproducible operating architecture for combining **GitHub, reusable Skills, AI agents, research, trusted runtimes, private files, specialist systems and durable verification** without turning any one tool into the whole business.
 
 > Build once. Make the operating logic explicit. Give every capable agent the same map. Improve the system through evidence. Preserve enough non-secret architecture evidence to rebuild it.
