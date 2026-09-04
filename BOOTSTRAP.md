@@ -2,6 +2,8 @@
 
 ARC bootstrap is deliberately **plan-first**. The goal is reproducibility without surprise mutation.
 
+**Fast links:** [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Manifest](MANIFEST.md) · [Verify](VERIFY.md) · [Starter Skills](starter/skills/README.md) · [Root Contract](AGENTS.md) · [ARC Issues](https://github.com/tbhrc/arc/issues)
+
 ## 1. Create a business profile through Atlas
 
 For a normal new organisation/client, do not start by hand-editing the example JSON. Use Atlas or the deterministic onboarding command:
@@ -16,10 +18,11 @@ The generic example remains available at `profiles/generic-business/arc.example.
 
 `onboard` writes local configuration only. It does not mutate GitHub or any specialist system.
 
-## 2. Review the generated ownership configuration
+## 2. Review the generated ownership configuration and North Star
 
 Confirm at minimum:
 
+- the target organisation's canonical **North Star** location — its mission, vision and/or directives owner;
 - `target.business_name` and `target.owner`;
 - `target.owner_type` — `org` or `user`;
 - repository visibility defaults;
@@ -29,6 +32,8 @@ Confirm at minimum:
 - private-file owner;
 - specialist systems already owning structured state;
 - whether a trusted runtime repository is genuinely required.
+
+ARC reproduces the **North-Star mechanism**, not TBHRC's editable mission wording. A generic deployment must point to the target organisation's own canonical direction rather than copying TBHRC's Top Five.
 
 Do not put secret values or secret-like fields in `arc.json`. ARC rejects common secret-field names and known credential-value patterns by design.
 
@@ -61,6 +66,7 @@ If GitHub CLI is unavailable or unauthenticated, ARC reports `UNKNOWN` rather th
 
 Review:
 
+- organisation North Star owner/location;
 - target owner;
 - repository roles and visibility;
 - required vs optional components;
@@ -90,9 +96,35 @@ The bootstrap is intentionally conservative:
 - no private business data is migrated;
 - the script does not grant broad organisation permissions.
 
-## 6. Confirm repository seeding and ownership
+## 6. Confirm repository seeding, navigation and durable work control
 
 For each **new** repository, bootstrap seeds a role-aware README, root `AGENTS.md`, Atlas Skill pointer and `/atlas` prompt-file entrypoint. Existing repositories are deliberately left unchanged.
+
+Before substantive durable work begins, the estate must also have a machine-first route that makes the following directly reachable without broad rediscovery:
+
+```text
+North Star
+Skills
+workflow / durable work method
+owner / system map
+Issues
+```
+
+Important active front doors should use compact **Fast Links**. Do not manufacture decorative links or add Fast Links to raw evidence/generated/archive material unless a canonical return/replacement link materially helps.
+
+Durable GitHub work should use the canonical Issue structure:
+
+```text
+North Star
+Anti-Drift — Original Objective
+Local Objective
+Checklist
+Acceptance Criteria
+Current Status
+Exact Next Action
+```
+
+North Star is organisation-level direction. **Anti-Drift** is the founder/user's original requested outcome for the specific work item. The route may change; the destination must not silently change.
 
 Atlas should then guide the operator/agent to establish or reconcile:
 
@@ -129,6 +161,8 @@ ARC creates only missing files for:
 - `skill-authoring`;
 - `research-escalation`.
 
+`owner-router` starts from the organisation North Star before resolving owner truth. `github-workflow` preserves Anti-Drift and chooses the lowest sufficient durable GitHub execution lane.
+
 Existing target Skills are never overwritten. After this first seed, the target organisation's Skills repository owns its editable reusable HOW. ARC does not continuously overwrite those Skills from upstream templates.
 
 ## 8. Verify
@@ -144,7 +178,8 @@ Then complete the non-automatable acceptance in [VERIFY.md](VERIFY.md).
 The first meaningful proof is not an empty architecture. Select one real business workflow and prove:
 
 ```text
-request
+organisation North Star
+-> request / Anti-Drift objective
 -> Skill
 -> owner truth
 -> authorised provider/runtime
