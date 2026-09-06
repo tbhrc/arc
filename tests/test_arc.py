@@ -148,6 +148,7 @@ class ArcConfigTests(unittest.TestCase):
             )
             self.assertNotIn("start in plan mode", surface)
             self.assertNotIn("start in non-mutating plan mode", surface)
+            self.assertNotIn("fail closed", surface.lower())
 
     def test_cli_description_is_not_plan_first(self):
         description = arc.parser().description
@@ -214,16 +215,17 @@ class ArcSafeHarbourTests(unittest.TestCase):
             saved = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(saved["manifest_schema"], "1.0")
 
-    def test_restore_without_apply_is_destructive_boundary_preview(self):
+    def test_restore_without_apply_is_simple_preview(self):
         manifest = arc.manifest_from_config(self.base())
         with mock.patch("builtins.print") as print_mock:
             self.assertEqual(arc.command_restore(manifest, apply=False), 0)
         messages = [call.args[0] for call in print_mock.call_args_list]
         self.assertEqual(
             messages[0],
-            "ARC recovery preview: no mutation selected. Destructive repository reconstruction requires explicit authority before `restore --apply`.",
+            "ARC recovery preview: no mutation selected. Use `restore --apply` to create missing configured repositories.",
         )
-        self.assertIn("destructive", messages[0].lower())
+        self.assertNotIn("destructive", messages[0].lower())
+        self.assertNotIn("approval", messages[0].lower())
 
 
 if __name__ == "__main__":
