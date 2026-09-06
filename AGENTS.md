@@ -24,10 +24,13 @@ This file is the repository **Router** and cold-start contract. Read it first. F
 - Fast Links are pointers, not preload instructions.
 - Reusable HOW belongs in canonical Skills; load only the Skill needed for the task.
 - Use one controlling Issue for substantive durable work and recover from Issue + current `main`, not chat reconstruction.
+- **An Issue provides continuity, not runtime permission.** Do not make an open Issue, label, comment, approval ritual, repeated governance check or documentation hop a technical prerequisite for ordinary authorised reads, writes or reversible operations.
+- **Friction masquerading as security is prohibited. Non-negotiable.** Protect the actual boundary with the smallest real control: authenticated identity, fixed/bounded or allow-listed operation, least necessary authority, input validation, secrets handling, audit evidence, integrity verification, rollback/concurrency protection and one outcome verification as relevant.
+- Human approval is reserved for genuinely consequential actions: root authority, destructive/irreversible mutation, spend, legal/compliance commitment, private-data disclosure or material external/client commitment.
+- Production-specific controls apply only when the action actually crosses a production boundary.
 - Founder-facing output: make every mentioned navigable GitHub object clickable when a stable URL is known. For substantive durable work, always state the controlling Issue as a compact clickable `#<number>` label, with repository context when needed to avoid ambiguity.
 - Fresh-read targets, preserve unrelated newer work, and keep one active writer per unresolved mutation scope.
 - Never commit secrets, credentials, private candidate/client evidence or unnecessary PII.
-- Root/security, production/destructive, spend, private-data, legal/compliance and material client-commitment gates remain binding when crossed.
 - Verify the requested outcome once, update/close the controlling Issue with DONE or one exact blocker/next action, then stop.
 
-**Issue keeps continuity. `main` keeps progress. KISSS keeps speed.**
+**Issue keeps continuity. `main` keeps progress. KISSS keeps speed. Friction masquerading as security is prohibited.**
