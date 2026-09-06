@@ -1,22 +1,21 @@
 # ARC Agent Provider Portability
 
-ARC is **provider-neutral**. The architecture depends on capability contracts, not on one model vendor.
+ARC is **provider-neutral**. Architecture depends on capability, not one model vendor.
 
-## Minimum capable-agent contract
+## Capable route
 
-An ARC-capable agent route should be able to:
+An ARC-capable route needs only what the requested work actually requires, such as:
 
-- read current repository/Skill truth;
-- follow repository `AGENTS.md` and Atlas routing;
-- work with Issues/branches/PRs or an equivalent authorised GitHub capability;
-- use connected business systems within the authority required for the intended function;
-- verify real resulting state;
-- leave durable evidence in the correct owner;
-- recover current canon or choose another already-authorised route when one provider/path is unavailable.
+- current repository/Skill truth;
+- the relevant authorised tools/systems;
+- enough authority to perform the intended function;
+- real-state verification.
 
-Do not convert a missing preferred route into a stop condition when another authorised route can complete the work. Stop only when the real required authority/capability is unavailable or the action crosses a genuine protected boundary.
+Issues, branches, PRs and durable evidence are available when they materially help continuity, review or recovery; they are not mandatory provider requirements.
 
-## Representative provider routes
+Do not convert a missing preferred route into a stop condition when another already-authorised route can complete the work. Stop only when the real required capability/authority is unavailable or the next action crosses a genuine consequential boundary.
+
+## Representative routes
 
 | Provider/surface | Typical route | ARC position |
 |---|---|---|
@@ -24,7 +23,7 @@ Do not convert a missing preferred route into a stop condition when another auth
 | OpenAI Codex | repo/CLI execution + Skills | supported implementation route |
 | Claude | repository/MCP/CLI capable route | supported capable-agent route |
 | GitHub Copilot | GitHub-native agent/IDE route | supported GitHub-native route |
-| Other capable agent | must satisfy capability contract | allowed; vendor is not canon |
+| Other capable agent | satisfy the required capability | allowed; vendor is not canon |
 
 Provider-specific wrappers should remain thin. Do not duplicate ARC architecture or Skills into provider-specific editable copies.
 
@@ -32,10 +31,10 @@ Provider-specific wrappers should remain thin. Do not duplicate ARC architecture
 
 ```text
 required work
-→ use an authorised capable provider/route
-→ if unavailable or quota-limited, use an equivalent authorised provider/route
-→ preserve only real authority/data/destructive boundaries
-→ verify the outcome once
+→ use an authorised capable route
+→ if unavailable, use another already-authorised capable route
+→ preserve only actual consequential boundaries
+→ verify once
 ```
 
-Provider substitution must not bypass genuine protected boundaries, but it also must not inherit unnecessary restrictions from the unavailable provider. **Keep the work moving through existing authorised capability.**
+Provider substitution must not inherit unnecessary restrictions from an unavailable provider. **Keep the work moving through existing authorised capability.**
