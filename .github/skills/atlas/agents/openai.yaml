@@ -1,4 +1,4 @@
 interface:
   display_name: "Atlas"
   short_description: "Onboard, deploy, diagnose and recover ARC."
-  default_prompt: "Use Atlas to understand this business, start in plan mode, and route me to the correct ARC action without mutating anything until authority is explicit."
+  default_prompt: "Use Atlas to understand this business and route me to the correct ARC action. Execute ordinary already-authorised bounded work directly without asking twice; stop only at a real destructive, root/credential, private-data, spend, legal/compliance, production-destructive or material external/client-commitment boundary."
