@@ -1,465 +1,273 @@
-# ARC
+# ARC — Reproduce a Proven Human + AI Operating Ecosystem
 
-> **Reproduce a proven human + AI operating ecosystem on a blank environment.**
+ARC is a public, non-secret architecture package for reproducing a proven human + AI operating ecosystem on a blank environment without pretending that one repository should own every piece of live business state.
 
-ARC is the portable deployment, reproduction and recovery package for a real operating ecosystem built across TBHRC and iMPLEMENTAi. It packages the architecture, operating rules and reusable methods that let humans and capable AI agents work from durable truth, use the right tools, execute safely, verify real outcomes and preserve learning.
+ARC is the **reproducible DNA of the organisation**: direction, operating method, routing, ownership boundaries, deployment, verification and recovery contracts that can be recreated while private files, credentials and specialist-system data remain with their proper owners.
 
-**ARC does not mean “copy this repository.”** It means reproduce the operating model behind the ecosystem.
+**Fast links:** [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Manifest](MANIFEST.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Reconnections](RECONNECTIONS.md) · [Repository Router](AGENTS.md) · [Ecosystem Evidence](ECOSYSTEM-EVIDENCE.md) · [Releases](RELEASES.md)
 
-**Fast links:** [Start with Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Ecosystem evidence](ECOSYSTEM-EVIDENCE.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Reconnections](RECONNECTIONS.md) · [Starter Skills](starter/skills/README.md) · [Agent contract](AGENTS.md) · [v1 proof](https://github.com/tbhrc/arc/issues/11) · [Issues](https://github.com/tbhrc/arc/issues)
+## The outcome
 
----
+ARC should let a capable founder, operator or AI agent take a blank or existing environment and reach a working estate where:
 
-## What ARC is
-
-ARC is the **simplest reliable way to reproduce the proven TBHRC human + AI operating ecosystem onto a blank environment for ourselves or another organisation/client, reconnect the required external owners, prove the redeployed ecosystem works, and preserve enough non-secret architecture state to reproduce it again.**
-
-Think of ARC as an **architecture backup + deployment recipe + recovery package**.
-
-It reproduces the operating design. It does **not** copy live CRM records, client files, candidate data, accounting records, secrets or machine-local state into GitHub.
-
-```text
-PROVEN OPERATING ECOSYSTEM
-        ↓
-extract architecture + reusable operating method
-        ↓
-ARC
-        ↓
-blank environment / new organisation / client
-        ↓
-North Star + GitHub operating desk + Skills + routing + owners
-        ↓
-reconnect external systems
-        ↓
-run real work
-        ↓
-verify
-        ↓
-export non-secret estate map
-        ↓
-recover / reproduce again
-```
+- the organisation has a canonical North Star owner;
+- root `AGENTS.md` is the first-hop Repository Router;
+- reusable HOW lives in Skills;
+- current facts stay with their real owners;
+- GitHub carries durable work, decisions and architecture evidence;
+- Fast Links are progressive pointers rather than preload instructions;
+- owner/source lookup is conditional only when the Router cannot resolve the route;
+- normal authorised work executes directly at the lowest sufficient level;
+- specialist agents/runtime are used only when genuinely needed;
+- private files, credentials and structured live systems remain external owners;
+- deployment and recovery are plan-first and explicit-apply;
+- real work is verified and leaves durable evidence.
 
 ## Why ARC exists
 
-ARC did not begin as a theoretical architecture project.
+The reference TBHRC/iMPLEMENTAi operating estate evolved rapidly once GitHub became the durable operating desk for both humans and AI agents. The useful pattern was not the number of repositories or agents. It was the separation of concerns:
 
-It emerged from running real businesses with AI and repeatedly finding the same practical problems:
+1. **North Star ownership** — the organisation keeps one canonical direction source.
+2. **GitHub durable work** — Issues, PRs, decisions and architecture survive individual chats.
+3. **Skills-first architecture** — reusable HOW becomes versioned, discoverable operating intelligence rather than repeated prompting.
+4. **Repository Router** — root `AGENTS.md` gives a small cold-start surface and routes known bounded work directly to the smallest relevant Skill/owner.
+5. **Progressive Fast Links** — agents load only what the current task needs.
+6. **One owner / one truth** — current state stays in the correct system rather than being copied everywhere.
+7. **Lowest-sufficient execution** — direct connected capability beats unnecessary infrastructure.
+8. **Provider neutrality** — agent/provider choice is an implementation detail, not the architecture itself.
+9. **Verification** — work is accepted only after real-state evidence.
+10. **Safe Harbour recovery** — non-secret topology and owner references can reproduce ARC-owned operating surfaces without pretending to back up private external systems.
 
-- agents lost context between chats;
-- work depended too heavily on one person or one model;
-- reusable know-how stayed trapped in prompts and conversations;
-- business truth was copied into the wrong places;
-- agents rediscovered the same routes and owners repeatedly;
-- technical sophistication sometimes grew faster than business value;
-- execution was reported as complete before real state was verified;
-- useful lessons were not always promoted into reusable operating intelligence.
+## Core operating route
 
-The response was not one giant platform. It was a progressively simpler operating architecture:
-
-```text
-clear direction
-→ durable work control
-→ reusable Skills
-→ explicit truth ownership
-→ multi-agent routing
-→ lowest-sufficient execution
-→ real-state verification
-→ durable evidence
-→ reusable learning promoted back into Skills
-```
-
-That architecture is what ARC makes portable.
-
-The broader founder doctrine behind it is public in the canonical [Founder Story, Mission & Vision](https://github.com/tbhrc/skills/tree/main/founder-story-mission-vision). ARC reproduces the **mechanism** for an organisation to own its own North Star; it does not force TBHRC's mission wording onto another business.
-
----
-
-# The ecosystem ARC reproduces
-
-The operating model is larger than ARC itself.
+For ordinary deployed-repository work:
 
 ```text
-                         ORGANISATION NORTH STAR
-                                   ↓
-                          HUMANS + AI AGENTS
-                                   ↓
-                    GITHUB — DURABLE OPERATING DESK
-                    Issues · PRs · work · evidence
-                       ↙          ↓          ↘
-                 SKILLS       DOMAIN      RESEARCH
-              reusable HOW     TRUTH      discover/prove
-                       ↘          ↓          ↙
-                         AUTHORISED AGENT
-                                   ↓
-                    LOWEST SUFFICIENT EXECUTION
-                 API · MCP · browser · CLI · Actions
-                           ↓ when required
-                       TRUSTED RUNTIME
-                         Mac · VPS · runner
-                                   ↓
-                           VERIFY REAL STATE
-                                   ↓
-                           DURABLE EVIDENCE
-
-PRIVATE FILE STORES        SPECIALIST SYSTEMS        MEMORY
-client/candidate docs      CRM/ATS/ERP/accounting    derived context only
+request
+  ↓
+root AGENTS.md = Repository Router
+  ↓
+known bounded task → one relevant Fast Link → smallest relevant Skill / owner → execute
+  ↓ only when owner/source is unclear
+owner lookup / Sniper
+  ↓ only when execution-level choice is genuinely needed
+Workflow
+  ↓ only when delegation/specialist/parallel work is genuinely required
+Multi-Agent Orchestrator
+  ↓
+verify real state once
+  ↓
+update controlling Issue / durable evidence
+  ↓
+stop
 ```
 
-GitHub is the durable operating desk, but it is **not the database for everything**. Skills own reusable HOW. Domain repositories and specialist systems own current facts. Private files stay private. Memory is derived context. Trusted runtimes are exception paths, not mandatory hops.
+The Router is deliberately small. Fast Links are pointers, not mandatory reads. There is no separate routing service, daemon, queue or provider hierarchy.
 
-## What you get
+## What ARC reproduces
 
-A deployed ARC estate can establish the following capability set without forcing one vendor stack:
+ARC reproduces portable architecture and contracts such as:
 
-1. **Blank-slate deployment and reproduction** — establish a working estate from public ARC.
-2. **Atlas front door** — one onboarding/adoption/recovery entrypoint for a founder, operator or AI agent.
-3. **Organisation North Star** — a canonical mission/vision/directive layer reachable by agents.
-4. **Anti-Drift work control** — durable work preserves the original requested objective separately from implementation detail.
-5. **GitHub operating desk** — Issues, PRs, repositories and evidence provide durable human + AI work control.
-6. **Skills-first architecture** — reusable HOW becomes versioned, discoverable operating intelligence rather than repeated prompting.
-7. **Machine-first routing** — agents can reach North Star, Skills, owners, workflow and Issues without repeated rediscovery.
-8. **Fast Links where useful** — important active front doors provide direct navigation without quotas or decorative link clutter.
-9. **One owner / one truth** — each fact or state class has a declared authoritative owner.
-10. **Business/domain separation** — products, services, recruitment, finance, research and other domains can own their own current truth.
-11. **Provider-neutral AI execution** — no permanent model workhorse is required.
-12. **Multi-agent routing** — eligible agents/providers can be selected by capability, permissions, workload, independence and task fit.
-13. **Normal tools first** — connected APIs, MCPs, browser, CLI and native app actions are preferred before privileged infrastructure.
-14. **Trusted runtime only when justified** — Mac, VPS or runner access exists for genuine machine/profile/privilege gaps.
-15. **Research escalation** — recurring friction can be promoted into evidence-backed capability research instead of one-off patching.
-16. **Private-file separation** — client/candidate/confidential documents stay with approved private owners such as OneDrive/SharePoint.
-17. **Specialist-system ownership** — CRM, ATS, ERP, accounting and other live applications remain authoritative for their own records.
-18. **External-system reconnection** — deployments reconnect required systems through minimal non-secret handoffs rather than copying their data.
-19. **Derived memory** — memory can retain context and lessons, but must defer to current canon before action.
-20. **Real-workflow verification** — deployment is not accepted because folders exist; one genuine workflow must succeed end to end.
-21. **Non-secret estate export** — topology and owner references can be preserved without exporting credentials or private records.
-22. **Recovery/redeployment** — ARC can rebuild ARC-owned operating surfaces from known-good durable sources.
-23. **KISSS / lowest-sufficient-path discipline** — the operating system must not become the work.
-24. **Reusable evolution** — proven lessons can be promoted into Skills, tests, automation or tooling through governed change.
+- North-Star ownership mechanism;
+- repository/domain topology pattern;
+- root `AGENTS.md` Repository Router;
+- Skills-first method;
+- progressive Fast Links;
+- durable Issue / Anti-Drift control;
+- source-of-truth boundaries;
+- provider/runtime-neutral execution rules;
+- plan-first bootstrap and recovery;
+- verification contracts;
+- non-secret estate manifests and external-owner references.
 
----
+ARC does **not** copy the target organisation's editable live truth.
 
-# ARC by the numbers
+## What remains external
 
-ARC packages an ecosystem that was measured during its first concentrated GitHub operating era from **27 August 2026, 13:19 GST to 4 September 2026, ~03:00 GST** — **7.57 days / 181.7 hours**.
+The target organisation continues to own its own:
 
-These figures describe the **whole operating ecosystem**, not only the `tbhrc/arc` repository.
+- mission/vision/directive wording;
+- client and candidate files;
+- CRM, ATS, ERP and accounting records;
+- credentials and identity material;
+- machine-local runtime state;
+- memory contents;
+- business/product facts that belong in domain systems.
 
-| Metric | Figure | Confidence |
-|---|---:|---|
-| Measurement window | **7.57 days / 181.7 hours** | Exact |
-| Current TBHRC repositories at measurement | **29** | Exact |
-| Active / archived | **26 / 3** | Exact |
-| Private / public | **21 / 8** | Exact |
-| GitHub-era repository cohort | **12** | Derived |
-| Canonical Skills | **57** | Exact |
-| Named AI execution lanes | **7** | Exact |
-| Conditional additional AI route | **Gemini** | Recorded conditional route |
-| Issues created | **~530** | Estimated; range ~500–560 |
-| Pull requests | **~470** | Estimated; range ~440–500 |
-| Issue + PR work objects | **~1,000** | Estimated; range ~950–1,060 |
-| Commits | **~1,500** | Estimated; range ~1,200–1,800 |
-| AI / API / connector tool calls | **~6,000 midpoint** | Estimated; range ~4,000–8,000 |
-| Actions workflow runs | **~1,400 midpoint** | Estimated; range ~1,000–1,800 |
-| Repository lines touched | **120,000–200,000** | Estimated |
-| Gmail messages in reporting window | **1,477** | Exact |
-| GitHub notification emails | **1,358** | Exact |
-| GitHub share of Gmail traffic | **91.9%** | Derived |
-| Approx. GitHub work-object velocity | **132/day** | Derived from estimate |
-| Approx. Issue/PR creation rate | **one every ~11 minutes** | Derived from estimate |
-| Targeted router turnaround | **92 sec → 18 sec** | Measured benchmark |
-| Targeted router tool calls | **20 → 5** | Measured benchmark |
-| Turnaround reduction | **80.4%** | Derived |
-| Tool-call reduction | **75%** | Derived |
-| Relative router speed | **5.1×** | Derived |
+ARC records only the minimum non-secret references required to reconstruct the operating architecture and reconnect those owners through their own approved recovery processes.
 
-### The headline
+## Blank-environment route
 
-> **In 7.6 days: a 29-repository estate, 57 canonical Skills, ~1,000 governed GitHub work objects, 1,358 GitHub notification emails, seven named AI execution lanes and an 80% reduction in targeted router turnaround.**
-
-The distinction between exact, derived and estimated figures is intentional. ARC should never turn a historical estimate into false precision. See [Ecosystem Evidence](ECOSYSTEM-EVIDENCE.md) for the measurement method and full provenance.
-
----
-
-# What that activity produced
-
-The point is not repository count. The point is **business and operating capability**.
-
-During the measured period, the ecosystem had already produced outcomes including:
-
-- **100+** fresh UAE vacancy signals reviewed in one Now Hiring run;
-- **12** deeply enriched vacancy signals;
-- **10** qualified opportunities;
-- **2** reaching David Review;
-- **≥16** controlled recruitment outreach emails;
-- the first positive client response requesting CVs;
-- a sourcing pool reaching **120 records / 119 active profiles** after deduplication and quality control;
-- **27** structured DRF V3 opportunity parents;
-- **82** Business Blueprint opportunity/RBS records;
-- reusable operating IP growing from roughly **35 legacy-scope Skills to 57 canonical Skills**.
-
-The same estate had also proven or established execution capability across:
-
-- GitHub Issues / PRs / Actions;
-- ChatGPT;
-- Claude;
-- GitHub Copilot;
-- Jules exact-seat lanes;
-- Codex exact-seat lanes;
-- Mac execution;
-- VPS execution;
-- Microsoft Graph / OneDrive;
-- Monid specialist API/tool access;
-- Composio authenticated connected-app routing;
-- provider/runtime-independent Skills and routing.
-
-That is why ARC is meaningful: **it packages an operating architecture that was already doing real work.**
-
----
-
-# The transformation story
-
-The GitHub-era operating transformation occurred in stages:
-
-| Date | Milestone |
-|---|---|
-| **27 Aug 2026** | `gh-course` becomes the learning laboratory for Issue-first work, PR discipline, Wiki, Pages, SemVer and AI control-plane experiments. |
-| **28 Aug** | Projects automation, executor benchmarks and durable agent evidence move GitHub from repository storage toward an operating control plane. |
-| **29–31 Aug** | The pattern propagates into DSF, DRF and Now Hiring; business workflows begin inheriting the governance model. |
-| **1 Sep** | TB federation, Recruitment, Assessments and DRF domain ownership become explicit; Now Hiring performs a 100+ signal run. |
-| **2 Sep** | GitHub-first becomes canonical; Skill migration accelerates; business workflows begin producing client-facing outcomes. |
-| **3 Sep** | Mac/VPS execution, exact agent seats, Monid and Composio expand the execution surface; router baseline records 20 calls / 92 sec. |
-| **4 Sep** | Router optimisation reaches 5 calls / 18 sec; the Skill Bank reaches 57 canonical Skills; ARC becomes the portable reproduction layer. |
-
-ARC therefore represents the **packaging of the accumulated architecture**, not a claim that the entire operating model was invented inside the ARC repository in one day.
-
----
-
-# Before and after
-
-### Before
-
-- important work and context lived across chats, local procedures and disconnected tools;
-- agents often depended on the current model, surface or account;
-- reusable knowledge was duplicated between prompts and documents;
-- source-of-truth ownership was inconsistent;
-- execution evidence was difficult to reconstruct across sessions;
-- technical and business operating layers were only loosely connected.
-
-### After
-
-- GitHub Issues, PRs and repositories provide durable work control;
-- Skills provide reusable, versioned operating intelligence;
-- North Star and Anti-Drift keep purpose and task objective explicit;
-- owner/system routing separates current truth from reusable HOW;
-- multi-agent routing avoids dependence on one provider;
-- connected tools execute directly when sufficient;
-- trusted runtimes fill only genuine execution gaps;
-- results are verified against real state;
-- reusable lessons are promoted back into the system.
-
----
-
-# Independent ARC v1 proof
-
-ARC v1 was not declared ready because the documentation looked complete.
-
-On **4 September 2026**, ARC passed a non-TBHRC clean-room proof using a near-blank personal GitHub target. The proof demonstrated:
-
-- target-specific North Star ownership;
-- machine-first routing;
-- an independent Skills owner;
-- durable Issue / Anti-Drift work control;
-- successful external-system reconnection using a minimal Gmail handoff without copying mailbox content or credentials;
-- one genuine source-backed research workflow from Issue → execution → verified durable artifact;
-- a non-secret estate snapshot;
-- destructive recovery: the deployed `AGENTS.md` was deliberately deleted and reconstructed from durable ARC/estate sources.
-
-Evidence: [ARC Core Proof #11](https://github.com/tbhrc/arc/issues/11).
-
-The proof also justified **removing** unnecessary complexity. ARC v1 deliberately does not require a dedicated health subsystem, Gate-E governance schema, Fast-Links quota validator, policy engine or continuous deployment service.
-
----
-
-# Deploy ARC
-
-## Start with Atlas
-
-Tell a capable agent:
-
-```text
-Use the Atlas skill in this repository.
-Understand my business and current ARC state.
-Identify my organisation's canonical North Star location.
-Start in plan mode.
-Do not mutate anything until the target ownership map is explicit and apply authority is given.
-```
-
-Atlas is ARC's onboarding/adoption/recovery front door. After deployment, the target estate should use its own compact operational router for daily work.
-
-## Manual CLI path
-
-Prerequisites:
-
-- Git;
-- Python 3.10+;
-- GitHub CLI (`gh`);
-- authority over the intended target.
+A new deployment starts in plan mode:
 
 ```bash
-git clone https://github.com/tbhrc/arc.git
-cd arc
-
 python3 scripts/arc.py onboard --output arc.json
 python3 scripts/arc.py doctor --config arc.json
 python3 scripts/arc.py plan --config arc.json --inspect-target
+```
 
-# Explicit mutation gates:
+After explicit apply authority:
+
+```bash
 python3 scripts/arc.py bootstrap --config arc.json --apply
 python3 scripts/seed_foundation.py --config arc.json --apply
-
 python3 scripts/arc.py verify --config arc.json
 ```
 
-Existing repositories are reused rather than overwritten. Credentials being available never imply permission to mutate.
+Bootstrap is conservative:
 
-Read [BOOTSTRAP.md](BOOTSTRAP.md) for the complete route.
+- existing repositories are classified REUSE and left unchanged;
+- only missing configured repositories are CREATE candidates;
+- no credentials are copied;
+- no private business data is migrated;
+- no production specialist system is rewritten merely to resemble ARC.
 
----
+Read [BOOTSTRAP.md](BOOTSTRAP.md) for the full deployment contract.
 
-# Reconnect external owners
+## Existing-estate adoption
 
-ARC keeps external-system reconnection deliberately small.
+ARC is reuse-first.
 
-For each system actually needed by the target workflow, record only the useful non-secret handoff:
+Before structural change, classify existing systems and owners as appropriate:
 
 ```text
-System / provider
-Live owner
-Connection / identity reference
-Required authority / scope
-Verification
+KEEP
+INTEGRATE
+MIGRATE
+RESEARCH
+RETIRE
 ```
 
-Add recovery/revocation ownership only where useful. See [RECONNECTIONS.md](RECONNECTIONS.md).
+For configured GitHub repositories, ARC surfaces:
 
-ARC does **not** copy the system's live records into its own configuration.
+```text
+REUSE
+CREATE
+```
 
----
+where the target state can be observed.
 
-# Prove one real workflow
+Existing working systems should normally be integrated rather than replaced.
 
-A deployment is not accepted because repositories and folders exist.
+## Starter Skills
 
-Prove:
+A new ARC Skills repository can seed a minimal generic foundation:
+
+- `owner-router` — conditional owner/source lookup when root `AGENTS.md` cannot resolve the route;
+- `github-workflow` — durable execution-level method;
+- `skill-authoring` — how to create reusable Skills;
+- `research-escalation` — when recurring friction merits structured research.
+
+These are starter assets only. After deployment, the target organisation owns and evolves its own Skills canon.
+
+## Real acceptance
+
+ARC is not accepted because folders or repositories exist.
+
+A real proof should demonstrate:
 
 ```text
 organisation North Star
 → request / Anti-Drift objective
-→ Skill
-→ current owner truth
+→ Repository Router
+→ relevant Skill / owner truth
 → authorised execution
-→ verify real state
+→ real-state verification
 → durable evidence
 ```
 
-That proof is the difference between “installed architecture” and a working operating ecosystem.
+That proof should use actual work but remain proportionate and bounded.
 
----
+## Safe Harbour
 
-# Safe harbour and recovery
-
-Export the **architecture map**, not the private data:
+After the estate works, export a non-secret architecture snapshot:
 
 ```bash
 python3 scripts/arc.py export \
   --config arc.json \
   --output arc-estate.json \
   --inspect-target
+```
 
+The resulting estate manifest is a **map, not a data dump**. It may contain topology, repository roles and non-secret owner references. It must not contain private files, live CRM/ATS/ERP data, credentials, machine state or memory contents.
+
+Plan recovery without mutation:
+
+```bash
 python3 scripts/arc.py restore-plan \
   --manifest arc-estate.json \
   --inspect-target
 ```
 
-Only after the recovery plan is accepted:
+Only after explicit authority:
 
 ```bash
-python3 scripts/arc.py restore --manifest arc-estate.json --apply
+python3 scripts/arc.py restore \
+  --manifest arc-estate.json \
+  --apply
 ```
 
-The estate manifest records topology, role metadata and owner references. Private files, CRM/ATS/ERP/accounting data, credential values, machine state and memory contents remain with their own approved owners.
+External owners are then restored or reconnected through their own approved backup and identity mechanisms.
 
----
+## Measured reference evidence
 
-# What ARC reproduces
+ARC was extracted from a measured TBHRC/iMPLEMENTAi operating transformation. Historical metrics are reference evidence rather than deployment requirements.
 
-- North-Star ownership mechanism;
-- repository roles/topology needed to operate;
-- Skills-first operating method;
-- machine-first routing;
-- useful Fast Links;
-- durable Issue / `Anti-Drift — Original Objective` pattern;
-- provider/runtime-neutral agent guidance;
-- owner/source-of-truth boundaries;
-- private-file and specialist-system separation;
-- non-secret deployment configuration;
-- external-system reconnection references;
-- bootstrap, verification and recovery instructions;
-- enough operating structure for a capable agent to continue from durable state rather than hidden chat context.
+The 27 Aug–4 Sep 2026 snapshot recorded, among other measures:
 
-# What ARC does not copy
+| Measure | Reference evidence |
+|---|---:|
+| GitHub repositories | 29 |
+| Canonical Skills | 57 |
+| Named AI execution lanes | 7 |
+| Governed GitHub work objects | ~1,000 |
+| GitHub notification emails | 1,358 |
+| Targeted router turnaround | 92 sec → 18 sec |
+| Tool calls in targeted router benchmark | 20 → 5 |
+| Tool-call reduction | 75% |
+| Relative router speed | 5.1× |
 
-- CRM / ATS / ERP / accounting live records;
-- private client/candidate/personnel files;
-- credentials or secret values;
-- machine-local runtime state unless explicitly referenced as an external owner;
-- derived memory contents;
-- TBHRC's editable organisation-specific mission wording;
-- every implementation detail of every business that originally helped prove the architecture.
+These figures describe the reference ecosystem during that measurement window. ARC does not require another organisation to reproduce its size, provider mix or historical infrastructure.
 
----
+Read [ECOSYSTEM-EVIDENCE.md](ECOSYSTEM-EVIDENCE.md) for provenance before repeating historical statistics.
 
-# Core files
-
-- [ATLAS.md](ATLAS.md) — onboarding/adoption/recovery front door
-- [AGENTS.md](AGENTS.md) — root contract for coding agents and AI operators
-- [ARCHITECTURE.md](ARCHITECTURE.md) — system model and ownership boundaries
-- [ECOSYSTEM-EVIDENCE.md](ECOSYSTEM-EVIDENCE.md) — historical GitHub-era statistics, confidence and provenance
-- [BOOTSTRAP.md](BOOTSTRAP.md) — blank-slate deployment path
-- [VERIFY.md](VERIFY.md) — acceptance checks
-- [RECONNECTIONS.md](RECONNECTIONS.md) — minimal external-system handoff
-- [MANIFEST.md](MANIFEST.md) — portable component inventory
-- [RELEASES.md](RELEASES.md) — release/safe-harbour guarantees
-- [starter/skills/](starter/skills/) — first-day reusable operating foundation
-- [profiles/generic-business/](profiles/generic-business/) — generic deployment example
-- [profiles/tbhrc-reference/](profiles/tbhrc-reference/) — worked reference wiring only, never copied live state
-
-# Related public canon
-
-- [Founder Story, Mission & Vision](https://github.com/tbhrc/skills/tree/main/founder-story-mission-vision) — why the ecosystem exists
-- [Human + AI Operations Map / Sniper](https://github.com/tbhrc/skills/tree/main/human-ai-operations-map) — where work and truth belong
-- [Skills](https://github.com/tbhrc/skills) — reusable operating HOW
-- [GitHub Course](https://github.com/tbhrc/gh-course) — learn the operating method and journey
-
----
-
-# KISSS rule
+## KISSS guardrail
 
 > **The operating system must not become the work.**
 
-When ARC scope grows, ask:
+Before adding architecture, ask whether the requirement materially improves deployment, routing, reconnection, real-work proof or recovery.
 
-> Does this materially help blank-slate redeployment, reconnection, real-work proof or recovery?
+Prefer:
 
-If not: **delete or defer**.
+```text
+direct edit
+pointer
+Fast Link
+existing Skill
+existing system
+ordinary agent judgement
+```
 
-That rule is part of why ARC v1 became simpler before release.
+before creating:
 
----
+```text
+validator
+daemon
+scheduler
+queue
+policy engine
+provider hierarchy
+new control plane
+```
 
-## Status
+## Start here
 
-**ARC v1.0.0 — blank-slate reproduction, real-workflow and destructive-recovery proof complete.**
+- Deploy/adopt/recover: [Atlas](ATLAS.md)
+- Understand the model: [Architecture](ARCHITECTURE.md)
+- Work inside this repository: [Repository Router](AGENTS.md)
+- Bootstrap: [Bootstrap](BOOTSTRAP.md)
+- Verify: [Verify](VERIFY.md)
+- Recovery boundaries: [Manifest](MANIFEST.md) and [Reconnections](RECONNECTIONS.md)
+- Historical proof: [Ecosystem Evidence](ECOSYSTEM-EVIDENCE.md)
 
-Licensed under the [MIT License](LICENSE).
+**Issue keeps continuity. `main` keeps progress. KISSS keeps speed.**
