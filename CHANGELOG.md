@@ -7,8 +7,9 @@
 - Rewrote `README.md` so ARC is explained as the portable reproduction package for the **whole proven TBHRC/iMPLEMENTAi human + AI operating ecosystem**, not merely as the ARC repository or its final build window.
 - Added `ECOSYSTEM-EVIDENCE.md` to preserve the 27 Aug–4 Sep 2026 GitHub-era measurement snapshot with exact / derived / estimated confidence labels, business outcomes, infrastructure proof and transformation timeline.
 - Aligned `ARCHITECTURE.md`, `ATLAS.md`, `BOOTSTRAP.md`, the TBHRC reference profile and starter owner/workflow Skills with the current Repository Router model.
+- Removed routine `plan → review → explicit approval → apply` friction from active deployment guidance. Ordinary already-authorised bounded work now executes directly; `--apply` is a mutation-mode selector, while fresh human authority is reserved for real destructive/root/private-data/spend/legal/client-commitment boundaries.
 - Proved the normal Agent OS cold-start paths remain comfortably within the <=200 physical Markdown-line budget; the generated ARC Router is 26 lines.
-- Re-proved deployment/adoption behaviour: plan/no-apply causes zero writes, existing repositories remain REUSE/unchanged, and the full suite passed 23/23.
+- Re-proved deployment/adoption behaviour: non-mutating inspection causes zero writes, existing repositories remain REUSE/unchanged, and the full suite passed 23/23.
 - Re-proved Safe Harbour recovery with destructive local reconstruction of a missing Router surface; recovered `AGENTS.md` byte-matched the pre-loss/generated contract and the full suite passed 23/23.
 - Ran a real end-to-end cold-start workflow proof using the Python support question: root Router → Atlas audit route → executable/source truth → Level 0 Direct → one verification → durable evidence → stop, without loading Sniper or Multi-Agent Orchestrator unnecessarily.
 - Clarified Python compatibility: current covered behaviour passes 23/23 tests on Python 3.9.6, but official ARC support remains Python 3.10+ because `doctor` rejects `<3.10` and CI currently validates Python 3.12 only.
@@ -31,8 +32,8 @@
 - Added provider-neutral agent capability contracts so ChatGPT, Codex, Claude, GitHub Copilot or other capable agents can satisfy the same ARC ownership/verification model without becoming architectural canon.
 - Added runtime portability guidance for GitHub-hosted Actions, local CLI/profile execution, self-hosted Mac/Linux and VPS/trusted-runtime paths.
 - Added a generic first-day Skills foundation with starter Skills for owner routing, GitHub work control, Skill authoring and Research escalation.
-- Added `scripts/seed_foundation.py`, which is plan-first and creates only missing target Skill files after explicit `--apply` authority.
-- Added unit tests and CI coverage for the Skills foundation plan.
+- Added `scripts/seed_foundation.py`, which previews by default and creates only missing target Skill files when `--apply` selects mutating mode.
+- Added unit tests and CI coverage for the Skills foundation path.
 - Extended the generic business profile with optional `modules`, `providers` and `runtimes` selections.
 - Expanded bootstrap, manifest and verification contracts so module selection, provider portability and least-privilege runtime choice are explicit deployment concerns.
 
@@ -68,6 +69,6 @@
 - Added architecture, manifest, bootstrap, verification and portability contracts.
 - Added generic-business and TBHRC-reference deployment profiles.
 - Added component guidance for GitHub, Skills, Research, agents, runtimes, memory, private files and specialist systems.
-- Added a conservative plan-first bootstrap/verification CLI and CI validation.
+- Added a conservative preview-first bootstrap/verification CLI and CI validation.
 
 Origin: the architecture emerged from the GitHub learning-to-operation migration documented in `tbhrc/gh-course`.
