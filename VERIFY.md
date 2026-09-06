@@ -90,6 +90,18 @@ A cold agent should be able to enter the deployed environment and answer:
 - Which external owners require separate backup/recovery?
 - How is deployment or recovery completion verified?
 
+## Repository Router cold-start acceptance
+
+For ordinary deployed-repository work, root `AGENTS.md` is the first-hop Repository Router. Verification must prove progressive loading rather than broad preload:
+
+- a known bounded task reaches the smallest relevant Skill/owner directly;
+- owner lookup is loaded only when the owner/source is unclear;
+- Workflow is loaded only when execution-level selection genuinely requires it;
+- Multi-Agent Orchestrator is loaded only when delegation, specialist work or genuine parallelism is required;
+- Fast Links are pointers, not mandatory reads;
+- the normal cold-start instruction path stays within the current <=200-line Agent OS budget;
+- unnecessary reads, routing hops or duplicated operating instructions are treated as verification failures, not as harmless overhead.
+
 ## Required gates
 
 ### Gate A — navigation
