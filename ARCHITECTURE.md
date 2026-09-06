@@ -78,7 +78,7 @@ ARC packages the **mechanism** and operating contracts. The target organisation 
 - North-Star ownership mechanism;
 - repository/domain topology pattern;
 - Skills-first method;
-- machine-first routing;
+- root `AGENTS.md` Repository Router with progressive Fast Links;
 - durable Issue / Anti-Drift structure;
 - source-of-truth boundaries;
 - provider/runtime-neutral execution rules;
@@ -161,7 +161,7 @@ Appropriate GitHub-owned material includes:
 - automation/configuration;
 - durable evidence and decisions.
 
-A machine-first operational front door should make these destinations directly reachable:
+Root `AGENTS.md` is the repository first-hop Router. It should make the following destinations directly reachable through progressive Fast Links without broad rediscovery:
 
 ```text
 North Star
@@ -171,7 +171,7 @@ owner / system map
 Issues / work queue
 ```
 
-Use compact Fast Links where they reduce rediscovery. Fast Links are guidance, not a numeric quota.
+Known bounded work should follow only the needed Fast Link to the smallest relevant Skill/owner. Owner/source lookup is conditional when the Router cannot resolve the route. Fast Links are pointers, not preload instructions or a numeric quota.
 
 ---
 
@@ -306,9 +306,9 @@ North-Star ownership contract
 + architecture contract
 + repository topology
 + Skills strategy
-+ machine-first agent entrypoints
++ root AGENTS.md Repository Router entrypoint
 + durable Issue template
-+ useful Fast-Link navigation
++ useful progressive Fast-Link navigation
 + non-secret configuration
 + credential metadata/reference only
 + external-system owner map
