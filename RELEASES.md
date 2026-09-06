@@ -1,6 +1,6 @@
 # ARC Release Contract
 
-Formal ARC releases are the known-good upstream anchors used by deployment, upgrade and safe-harbour recovery.
+Formal ARC releases are known-good upstream anchors for deployment, upgrade and safe-harbour recovery. Release publication is distribution integrity, not runtime permission.
 
 ## Tag convention
 
@@ -8,21 +8,23 @@ Formal ARC releases are the known-good upstream anchors used by deployment, upgr
 vMAJOR.MINOR.PATCH
 ```
 
-A formal release must point to an exact merged `main` commit and must not be created from an unmerged branch.
+A formal release points to an exact `main` commit that passed normal executable ARC verification.
 
 ## What a release guarantees
 
 At publication time, the tagged ARC repository state:
 
-- passed the normal ARC repository verification/CI gates;
-- has a declared ARC semantic version in `VERSION`;
+- passed normal ARC repository verification/CI;
+- has a declared semantic version in `VERSION`;
 - states the estate-manifest schema(s) it supports;
-- contains aligned Repository Router, Atlas, manifest, bootstrap, verification and compatibility contracts;
-- has release notes identifying material architecture changes and known boundaries.
+- contains aligned Router, Atlas, manifest, bootstrap and verification contracts;
+- records material changes and genuine known limitations.
 
-A release is an architecture/recovery anchor, not a guarantee that a particular client's external systems or backups are healthy.
+A release is an architecture/recovery anchor, not a guarantee that a client's external systems or backups are healthy.
 
-## What release notes must record
+## Release notes
+
+Record only useful facts:
 
 ```text
 ARC version/tag
@@ -31,7 +33,7 @@ estate-manifest schema support
 material architecture changes
 compatibility / migration notes
 verification evidence
-known limitations / external-owner responsibilities
+genuine known limitations / external-owner responsibilities
 ```
 
 ## Safe-harbour relationship
@@ -44,11 +46,12 @@ formal ARC release/tag
 validated non-secret estate manifest
 +
 external owner backups/reprovisioning
--> recovery plan
--> explicit repository restore apply
--> external owner restoration/reconnection
--> full ARC verification
+→ bounded repository reconstruction
+→ external owner restoration/reconnection
+→ verification
 ```
+
+Current `restore --apply` leaves existing configured repositories unchanged and creates only missing configured repositories.
 
 See [contracts/safe-harbour.md](contracts/safe-harbour.md).
 
@@ -59,20 +62,22 @@ See [contracts/safe-harbour.md](contracts/safe-harbour.md).
 
 ## Current release candidate
 
-ARC `v1.1.0` is the Repository Router alignment release candidate.
+ARC `v1.1.0` is the Repository Router and zero-friction alignment release candidate.
 
-It materially aligns ARC with the current TBHRC Agent Operating System while preserving the existing portability/recovery model:
+It aligns ARC with the current operating model:
 
 - root `AGENTS.md` is the first-hop Repository Router;
-- generated repositories receive the compact Router contract rather than the legacy ARC Agent Contract;
+- generated repositories receive the compact Router contract;
 - Fast Links are progressive pointers;
 - owner lookup is conditional;
-- Workflow owns Direct / Hybrid / Controlled execution level;
-- Multi-Agent Orchestrator owns delegation and genuine parallel coordination only;
-- deployment/adoption, destructive recovery, public-proof and real end-to-end workflow proofs have been re-run and accepted;
+- Workflow and Multi-Agent Orchestrator load only when their functions are genuinely needed;
+- ordinary authorised mutation executes directly;
+- Issues/PRs are continuity/evidence surfaces when useful, not runtime permission;
+- recovery is bounded reconstruction rather than a separate approval class;
+- generic least-privilege, redundant-provider and approval-control-plane doctrine is not core ARC architecture;
 - estate-manifest schema remains `1.0`;
 - private/live external state and credential recovery remain external-owner responsibilities.
 
-Known compatibility boundary: current covered behaviour passes the full 23-test suite on Python 3.9.6, but official ARC support remains Python 3.10+ because `doctor` rejects `<3.10` and CI currently validates Python 3.12 only.
+Compatibility evidence: the covered ARC behavior passed the then-current full 23-test suite on Python **3.9.6**. ARC no longer invents a Python 3.10 requirement through `doctor`; compatibility claims must follow executable evidence.
 
-The formal `v1.1.0` release must point to the final reconciled `main` commit after normal ARC CI passes. Do not retag or rewrite `v1.0.0`.
+The formal `v1.1.0` release should point to the final reconciled `main` commit after normal ARC verification passes. Do not retag or rewrite `v1.0.0`.
