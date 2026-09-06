@@ -12,7 +12,8 @@ A mature ARC estate may separate:
 
 - an organisation-level North Star / mission / directives owner;
 - shared Skills;
-- machine-first routing and Fast Links;
+- a root `AGENTS.md` Repository Router with progressive Fast Links;
+- conditional owner/source lookup when the Router cannot resolve ownership;
 - durable GitHub Issues carrying **Anti-Drift — Original Objective** for specific work;
 - Research;
 - business/domain hubs;
