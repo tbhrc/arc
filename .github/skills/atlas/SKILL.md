@@ -1,245 +1,114 @@
 ---
 name: atlas
-description: "ARC's universal front-door onboarding, adoption, audit, health, upgrade, recovery, deployment and navigation Skill. Use when a founder, operator or AI agent asks to install, bootstrap, deploy, reproduce, onboard to, adopt, understand, diagnose, audit, check health, upgrade, export a safe-harbour estate manifest, recover/redeploy, decide the next ARC action, migrate toward or operate the ARC architecture; when the user invokes or refers to `/atlas` or Atlas; or when an existing business must be assessed against ARC. Atlas reads current ARC truth, selects the right mode, reuses existing owners where appropriate, asks only for irreducible missing business inputs, executes ordinary already-authorised bounded work directly, and never treats credentials as authority to mutate."
+description: "ARC front door for onboarding, adoption, audit, health, upgrade, recovery, deployment and next-action guidance. Use when a founder, operator or AI agent asks to install, bootstrap, deploy, reproduce, adopt, diagnose, audit, upgrade, recover or operate ARC, invokes `/atlas`, or needs to assess an existing business against ARC. Atlas uses current repository truth, reuses existing owners, asks only for irreducible missing facts, and executes ordinary already-authorised bounded work directly."
 ---
 
 # Atlas
 
-Atlas is ARC's single front door. Use current repository truth; never rely on a remembered or chat-only copy of ARC.
+Atlas helps reproduce useful operating capability without turning ARC into the work.
 
 ## Start
 
-Always read:
+Read root `/AGENTS.md`, then load only the smallest ARC surface needed for the request:
 
-1. `/AGENTS.md`
-2. `/ATLAS.md`
-3. `/ARCHITECTURE.md`
-4. `/MANIFEST.md`
-5. `/BOOTSTRAP.md`
-6. the selected deployment profile.
+- onboarding/adoption → `/BOOTSTRAP.md`;
+- architecture/ownership → `/ARCHITECTURE.md`;
+- recovery → `/contracts/safe-harbour.md`;
+- verification → `/VERIFY.md`;
+- mode detail only when needed → [`references/modes.md`](references/modes.md).
 
-Read [`references/modes.md`](references/modes.md) before choosing an operating mode. For recovery, also read `/contracts/safe-harbour.md`. Read other `/contracts/`, `/components/` and `/VERIFY.md` only as the current decision requires.
+Do not preload ARC documentation.
 
-## Select the mode
+## Modes
 
-Choose one dominant mode automatically:
+Choose the mode automatically:
 
-- `onboard` — create a first ARC profile for a new estate;
-- `adopt` — map an existing business into ARC without forced replacement;
-- `audit` — inspect architecture and ownership without mutation;
-- `health` — diagnose current verified state;
-- `upgrade` — plan movement toward a newer ARC release;
-- `recover` — export/recover/redeploy from known-good ARC evidence;
-- `next` — determine the smallest safe next action from current durable state.
+- `onboard` — create a first ARC profile;
+- `adopt` — integrate an existing estate without unnecessary replacement;
+- `audit` — inspect current architecture/owners;
+- `health` — verify current real state;
+- `upgrade` — apply the smallest justified migration;
+- `recover` — reconstruct from durable non-secret state;
+- `next` — return the smallest useful next action.
 
-Do not make the user choose a mode unless ambiguity materially changes the action.
+Do not ask the user to select a mode unless the ambiguity changes the action.
 
-## Default operating loop
-
-```text
-understand target and current intent
--> inspect only what is needed
--> choose Atlas mode
--> map truth owners
--> identify required core vs optional components
--> classify existing owners when useful
--> ask only unresolved inputs
--> current instruction authorises ordinary bounded mutation? execute directly
--> stop only at a real destructive/root/private-data/spend/legal/client-commitment boundary
--> verify real state
--> run/prove one real workflow where deployment is involved
--> promote reusable learning
-```
-
-Do not turn onboarding into a long questionnaire or approval ceremony. Infer from connected systems and durable repository truth when safe. If the user already supplied an answer or authority, do not ask again.
-
-## New-estate onboarding
-
-Prefer the deterministic first-run path where useful:
-
-```bash
-python3 scripts/arc.py onboard --output arc.json
-python3 scripts/arc.py doctor --config arc.json
-python3 scripts/arc.py plan --config arc.json --inspect-target
-```
-
-`onboard`, `doctor` and `plan` do not mutate the target. They are inspection/validation tools, not mandatory human approval checkpoints.
-
-For agent-driven/non-interactive onboarding, use the current `arc.py onboard --non-interactive` arguments rather than asking a human to hand-edit JSON when the facts are already known.
-
-## Existing-business adoption
-
-Inventory only what matters:
+## Operating loop
 
 ```text
-GitHub repositories
-SOP / knowledge owners
-existing automations
-CRM / ERP / ATS / accounting
-private file stores
-AI/provider/runtime routes
-identity / permission boundaries
+understand the requested outcome
+→ read only needed current truth
+→ reuse the correct existing owner/route
+→ ask only irreducible missing facts
+→ execute ordinary authorised bounded work directly
+→ verify the real result once
+→ preserve continuity only when useful
+→ stop
 ```
 
-Classify each relevant owner when useful:
+## Existing estates
 
-```text
-KEEP
-INTEGRATE
-MIGRATE
-RESEARCH
-RETIRE
-```
+Prefer **KEEP / INTEGRATE**. Use `MIGRATE`, `RESEARCH` or `RETIRE` only when a concrete objective requires it.
 
-Prefer **KEEP** or **INTEGRATE** when the existing owner is already correct. Do not destroy or overwrite working systems merely to resemble an ARC example.
+For configured repositories, use **REUSE / CREATE** when observable. Existing repositories remain unchanged unless a deliberate separate change is requested.
 
-Use `python3 scripts/arc.py plan --config arc.json --inspect-target` when it materially helps classify configured repositories as **REUSE / CREATE**. Do not force it as a ceremonial gate before ordinary authorised work.
+## Authority
 
-## Skills-first operating model
+The current authorised instruction is sufficient for ordinary bounded work.
 
-For substantive work, use the relevant reusable HOW before inventing process. A deployed ARC environment should have one canonical Skills home and should not maintain competing editable copies of the same workflow.
+- `--apply` selects mutation mode; it is not another approval request.
+- `doctor`, `plan`, `export` and `restore-plan` are optional inspection tools.
+- `bootstrap --apply` creates missing configured repositories and reuses existing ones unchanged.
+- `seed_foundation.py --apply` creates only missing starter files.
+- current `restore --apply` reuses existing configured repositories unchanged and creates only missing configured repositories.
 
-## One owner, one truth
+Ask for fresh authority only if the next action actually crosses a consequential boundary such as destructive overwrite/delete/force, root/super-admin use, material spend, private/confidential data disclosure or movement, legal/compliance commitment, or material external/client commitment.
 
-Declare the correct owner:
+Never add credential values or private live records to ARC.
 
-- reusable HOW -> Skills canon;
-- external research -> Research;
-- business/product facts -> domain owner;
-- private documents -> private file store;
-- CRM/ERP/ATS/accounting state -> declared specialist system;
-- privileged runtime -> trusted-runtime owner;
-- memory -> derived context only;
-- ARC portable deployment/recovery contract -> this repository.
+## Execution route
 
-Do not move a fact into GitHub merely because an agent can read GitHub more easily.
+Use the simplest existing authorised capability that can complete the job. Do not require redundant providers, weaker routes, extra runtime hops or new infrastructure for appearance of safety.
 
-## Research reflex
+Use trusted/local/self-hosted/VPS execution only when its capability is actually needed.
 
-If a repeated failure/workaround suggests a broader tooling gap:
+## Skills and owners
 
-```text
-contain immediate safe issue if needed
--> symptom
--> workflow
--> capability
--> platform/system
--> compare native / existing / open-source / paid
--> Research / Watch / Test / Reject
--> test in the correct owner
--> promote proven reusable capability
-```
+- reusable HOW → Skills canon;
+- external research → Research;
+- business/product facts → domain owner;
+- private documents → private file store;
+- CRM/ERP/ATS/accounting state → owning specialist system;
+- privileged runtime → trusted-runtime owner;
+- memory → derived context only;
+- ARC portable deployment/recovery contract → this repository.
 
-Do not over-engineer one-off incidents.
+Do not duplicate live truth into GitHub for agent convenience.
 
-## Execution routing
+## Recovery
 
-Prefer:
-
-```text
-normal connected capability / API / MCP / browser / CLI
--> owning system
--> trusted runtime only if a genuine machine/profile/privilege gap remains
-```
-
-Never infer production or root authority from repository write access or the presence of credentials.
-
-## Authority rule
-
-For ordinary bounded work, the current authorised instruction is sufficient authority. Do not ask for a second approval merely because the operation mutates state.
-
-- `doctor`, `onboard`, `plan`, `export` and `restore-plan` are non-mutating inspection tools.
-- `bootstrap` is non-mutating without `--apply`; when ordinary bounded bootstrap is already authorised, select `--apply` directly.
-- `seed_foundation.py` is non-mutating without `--apply`; when ordinary bounded seeding is already authorised, select `--apply` directly.
-- `--apply` is a deliberate mutation-mode selector, not a request for another human confirmation.
-- Existing repositories are reused and not overwritten by bootstrap.
-- Never add secret values to `arc.json` or an estate manifest.
-- Never mutate solely because credentials exist.
-
-Fresh authority is required only at a real boundary: destructive overwrite/delete/force/recovery, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
-
-Founder approval is exceptional, not precautionary. Do not request founder approval simply because an action changes something.
-
-## Deployment view
-
-Before mutation, understand enough to avoid accidental replacement or scope drift. When useful, a compact deployment view can contain:
-
-```text
-Target
-Purpose
-Atlas mode
-Core repositories
-Domain owners
-Existing owners: KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE
-Configured repositories: REUSE / CREATE where observable
-Skills strategy
-Research strategy
-Agent entrypoints
-Private-file owner
-Specialist-system owners
-Trusted-runtime requirement
-Manual/credential inputs (names/purpose only, never values)
-Bootstrap command / recovery command
-Verification gates
-First real workflow to prove
-```
-
-Distinguish **required core**, **optional component**, **existing owner to keep/integrate**, and **future improvement**. If the current instruction already authorises the ordinary bounded mutation, proceed after resolving necessary facts; do not pause for ritual review.
-
-## Safe-harbour recovery
-
-A healthy estate can export a non-secret architecture snapshot:
+Useful path:
 
 ```bash
 python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
-```
-
-The manifest contains ARC topology/ownership metadata and external owner **names/references only**. It does not contain private-file contents, CRM/ERP/ATS/accounting records, database contents, credential values, trusted-runtime machine state or derived memory contents.
-
-To plan recovery without mutation:
-
-```bash
 python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
-```
-
-Destructive recovery is a real risk boundary. After GitHub repository reconstruction is explicitly authorised:
-
-```bash
 python3 scripts/arc.py restore --manifest arc-estate.json --apply
 ```
 
-`restore --apply` is deliberately bounded to ARC's existing conservative GitHub repository bootstrap. External owners must be restored/reconnected through their own approved backup/identity processes, then the full ARC verification contract must pass.
+The manifest contains topology and non-secret owner references only. External owners restore their own data/credentials.
 
-## Health and upgrade honesty
-
-Use the capabilities actually present in the current ARC release.
-
-- `health` uses current `/VERIFY.md`, CLI verification and observable target evidence.
-- `upgrade` identifies the current formal ARC release and manifest schema, then makes the smallest justified migration and verifies it.
-- `recover` uses the implemented safe-harbour export/restore-plan/bounded-restore path plus the external-owner backup responsibilities in `/contracts/safe-harbour.md`.
-
-If a requested capability is not implemented, identify the current safe route rather than pretending success or inventing machinery.
-
-## Portable distribution
-
-The editable Atlas canon is this directory: `.github/skills/atlas/`.
-
-Use `scripts/package_atlas.py` to package that same directory as `dist/skill.zip`. Do not maintain a second editable Atlas Skill body for portable distribution. Generated target repositories receive a thin pointer back to current ARC Atlas rather than a copied mutable canon.
-
-## Learning route
-
-If the user wants to learn the method rather than only deploy it, route them to:
-
-https://github.com/tbhrc/gh-course
-
-Course = learning and operator capability. ARC = deployable/recovery architecture.
+If a future recovery operation actually deletes, overwrites or force-updates material state, protect that specific action only.
 
 ## Completion
 
-Do not call deployment or recovery complete until the relevant `/VERIFY.md` gates pass and one real workflow proves:
+Prove the requested outcome through the shortest relevant chain:
 
 ```text
-request -> Skill -> owner truth -> execution -> verification -> durable evidence
+request → Skill / owner truth → authorised execution → real-state verification
 ```
 
-For ongoing Stage/programme work, do not leave execution state only in chat. Update the controlling Issue with evidence and exact next action so a cold agent can continue from GitHub alone.
+An Issue, PR, file or owner-system record may preserve continuity when useful. No specific object is mandatory merely because the work is substantive.
+
+## KISSS
+
+Do not add approval loops, policy engines, validators, mandatory repositories, provider hierarchies, duplicate control planes, credentials, bridges or agent routes unless real evidence proves they are required for the requested capability.
