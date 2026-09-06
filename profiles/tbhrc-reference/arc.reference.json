@@ -1,5 +1,5 @@
 {
-  "arc_version": "0.1.0",
+  "arc_version": "1.0.0",
   "reference_only": true,
   "target": {
     "owner": "tbhrc",
