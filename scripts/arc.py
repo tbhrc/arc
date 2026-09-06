@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ARC plan-first onboarding, deployment, export and recovery CLI.
+"""ARC onboarding, deployment, export and recovery CLI.
 
 ARC intentionally handles portable architecture metadata, never secret values or copied
 external business data.
@@ -349,7 +349,7 @@ def command_onboard(args: argparse.Namespace) -> int:
     )
     path = write_config(data, args.output, overwrite=args.overwrite)
     print(f"ARC onboarding profile written: {path}")
-    print("No remote mutation performed. Next: doctor, then plan --inspect-target.")
+    print("No remote mutation performed. Doctor and plan remain available when useful.")
     return 0
 
 
@@ -419,15 +419,15 @@ def generated_readme(owner: str, repo: dict[str, Any], navigation: dict[str, str
 def generated_agents(owner: str, repo: dict[str, Any], navigation: dict[str, str]) -> str:
     skills = navigation.get("skills", "skills")
     research = navigation.get("research", "research")
-    return f"""# AGENTS.md — Repository Router\n\nThis file is the repository **Router** and cold-start contract. Read it first. Follow only the Fast Link needed for the task; do not preload linked material.\n\n**Repository role:** {role_label(repo['role'])}\n\n**Core Fast Links:** [Skills](https://github.com/{owner}/{skills}) · [Research](https://github.com/{owner}/{research}) · [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) · [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md) · [Multi-Agent Orchestrator](https://github.com/tbhrc/skills/tree/main/github-multi-agent-orchestrator)\n\n**Repository Fast Links:** [README](README.md) · [Atlas](.github/skills/atlas/SKILL.md) · [Issues](https://github.com/{owner}/{repo['name']}/issues) · [ARC](https://github.com/tbhrc/arc)\n\n## Route\n\n- **Known owner + bounded task** → use the most-specific repository Fast Link / Skill and execute.\n- **Owner or source unclear** → use [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md).\n- **Normal authorised durable GitHub work** → Level 0 Direct; load [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) only when Hybrid or Controlled may be needed.\n- **Multiple agents, specialist delegation or genuine parallel work** → use [Multi-Agent Orchestrator](https://github.com/tbhrc/skills/tree/main/github-multi-agent-orchestrator).\n- **Onboarding, adoption or recovery** → use [Atlas](.github/skills/atlas/SKILL.md); it is not the daily routing layer.\n\n## Rules\n\n- Fast Links are pointers, not preload instructions.\n- This repository owns only the facts/state declared by its role.\n- Reusable HOW belongs in `{owner}/{skills}`; external research/proving belongs in `{owner}/{research}`.\n- Preserve existing systems and owners unless a deliberate change is required.\n- Never place secrets, credentials or unnecessary private data in repository surfaces.\n- Verify the requested outcome in the correct owner before claiming completion.\n"""
+    return f"""# AGENTS.md — Repository Router\n\nThis file is the repository **Router** and cold-start contract. Read it first. Follow only the Fast Link needed for the task; do not preload linked material.\n\n**Repository role:** {role_label(repo['role'])}\n\n**Core Fast Links:** [Skills](https://github.com/{owner}/{skills}) · [Research](https://github.com/{owner}/{research}) · [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) · [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md) · [Multi-Agent Orchestrator](https://github.com/tbhrc/skills/tree/main/github-multi-agent-orchestrator)\n\n**Repository Fast Links:** [README](README.md) · [Atlas](.github/skills/atlas/SKILL.md) · [Issues](https://github.com/{owner}/{repo['name']}/issues) · [ARC](https://github.com/tbhrc/arc)\n\n## Route\n\n- **Known owner + bounded task** → use the most-specific repository Fast Link / Skill and execute.\n- **Owner or source unclear** → use [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md).\n- **Normal authorised durable GitHub work** → Level 0 Direct. Ordinary already-authorised bounded work executes directly; do not ask twice. Load [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) only when Hybrid or Controlled may be needed.\n- **Multiple agents, specialist delegation or genuine parallel work** → use [Multi-Agent Orchestrator](https://github.com/tbhrc/skills/tree/main/github-multi-agent-orchestrator).\n- **Onboarding, adoption or recovery** → use [Atlas](.github/skills/atlas/SKILL.md); it is not the daily routing layer.\n\n## Rules\n\n- Fast Links are pointers, not preload instructions.\n- This repository owns only the facts/state declared by its role.\n- Reusable HOW belongs in `{owner}/{skills}`; external research/proving belongs in `{owner}/{research}`.\n- Preserve existing systems and owners unless a deliberate change is required.\n- Never place secrets, credentials or unnecessary private data in repository surfaces.\n- Verify the requested outcome in the correct owner before claiming completion.\n"""
 
 
 def generated_atlas_pointer() -> str:
-    return """---\nname: atlas\ndescription: \"ARC front-door pointer. Use for ARC onboarding, adoption, audit, health, upgrade, recovery, next-action guidance, deployment, diagnosis or `/atlas`. Load and follow the current upstream Atlas Skill from tbhrc/arc; start in plan mode and never mutate solely because credentials exist.\"\n---\n\n# Atlas Pointer\n\nCurrent canonical Atlas: https://github.com/tbhrc/arc/blob/main/.github/skills/atlas/SKILL.md\n\nLoad the current upstream Skill and ARC repository contract before acting. If upstream cannot be accessed, fail closed rather than inventing a stale deployment method.\n"""
+    return """---\nname: atlas\ndescription: \"ARC front-door pointer. Use for ARC onboarding, adoption, audit, health, upgrade, recovery, next-action guidance, deployment, diagnosis or `/atlas`. Load and follow the current upstream Atlas Skill from tbhrc/arc; inspect/plan when useful and never mutate solely because credentials exist.\"\n---\n\n# Atlas Pointer\n\nCurrent canonical Atlas: https://github.com/tbhrc/arc/blob/main/.github/skills/atlas/SKILL.md\n\nLoad the current upstream Skill and ARC repository contract before acting. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries. If upstream cannot be accessed, fail closed rather than inventing a stale deployment method.\n"""
 
 
 def generated_atlas_prompt() -> str:
-    return """Use the local `atlas` project Skill. Load the current ARC upstream contract from https://github.com/tbhrc/arc and start in non-mutating plan mode unless the user has explicitly authorised an apply step. Atlas supports onboard, adopt, audit, health, upgrade, recover and next modes.\n"""
+    return """Use the local `atlas` project Skill and load the current ARC upstream contract from https://github.com/tbhrc/arc. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries. Atlas supports onboard, adopt, audit, health, upgrade, recover and next modes.\n"""
 
 
 def put_content(full: str, path: str, content: str, *, sha: str | None = None) -> None:
@@ -470,7 +470,7 @@ def create_repo(owner: str, owner_type: str, repo: dict[str, Any], navigation: d
 
 def command_bootstrap(data: dict[str, Any], apply: bool) -> int:
     if not apply:
-        print("ARC bootstrap is in PLAN-ONLY mode. Add --apply to create missing repositories.")
+        print("ARC bootstrap preview: no mutation selected. Use --apply to create missing repositories.")
         return command_plan(data)
     if not gh_authenticated():
         raise ArcError("GitHub CLI (gh) must be available and authenticated for --apply")
@@ -709,7 +709,7 @@ def command_restore_plan(manifest: dict[str, Any], inspect_target: bool = False)
 def command_restore(manifest: dict[str, Any], *, apply: bool, inspect_target: bool = False) -> int:
     data = config_from_manifest(manifest)
     if not apply:
-        print("ARC restore is in PLAN-ONLY mode. Add --apply only after the restore plan is accepted.")
+        print("ARC recovery preview: no mutation selected. Destructive repository reconstruction requires explicit authority before `restore --apply`.")
         return command_restore_plan(manifest, inspect_target=inspect_target)
     print("ARC restore apply boundary: GitHub repository reconstruction only.")
     result = command_bootstrap(data, True)
@@ -745,7 +745,7 @@ def command_verify_self() -> int:
 
 
 def parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="ARC plan-first deployment and recovery utility")
+    p = argparse.ArgumentParser(description="ARC deployment and recovery utility")
     sub = p.add_subparsers(dest="command", required=True)
 
     onboard = sub.add_parser("onboard", help="Create a valid ARC profile without remote mutation")

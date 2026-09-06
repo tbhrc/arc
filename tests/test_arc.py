@@ -3,6 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "arc.py"
 spec = importlib.util.spec_from_file_location("arc_cli", MODULE_PATH)
@@ -101,9 +102,17 @@ class ArcConfigTests(unittest.TestCase):
             {"onboard", "adopt", "audit", "health", "upgrade", "recover", "next"},
         )
 
-    def test_bootstrap_without_apply_is_plan_only(self):
+    def test_bootstrap_without_apply_is_preview(self):
         data = self.base()
-        self.assertEqual(arc.command_bootstrap(data, False), 0)
+        with mock.patch("builtins.print") as print_mock:
+            self.assertEqual(arc.command_bootstrap(data, False), 0)
+        messages = [call.args[0] for call in print_mock.call_args_list]
+        self.assertEqual(
+            messages[0],
+            "ARC bootstrap preview: no mutation selected. Use --apply to create missing repositories.",
+        )
+        self.assertNotIn("approval", " ".join(messages).lower())
+        self.assertNotIn("plan-only", " ".join(messages).lower())
 
     def test_generated_repository_router_links_core_owners_and_routes_conditionally(self):
         repo = {"name": "sales", "role": "business-domain", "description": "Sales owner.", "required": True, "visibility": "private"}
@@ -117,12 +126,33 @@ class ArcConfigTests(unittest.TestCase):
         self.assertIn("https://github.com/acme/sales/issues", agents)
         self.assertIn("Known owner + bounded task", agents)
         self.assertIn("Owner or source unclear", agents)
+        self.assertIn("Level 0 Direct", agents)
+        self.assertIn("Ordinary already-authorised bounded work executes directly; do not ask twice", agents)
         self.assertIn("only when Hybrid or Controlled may be needed", agents)
         self.assertIn("Multiple agents, specialist delegation or genuine parallel work", agents)
         self.assertIn("Onboarding, adoption or recovery", agents)
         self.assertIn("it is not the daily routing layer", agents)
         self.assertNotIn("ARC Agent Contract", agents)
         self.assertNotIn("## Operating loop", agents)
+
+    def test_generated_atlas_surfaces_use_direct_authority_semantics(self):
+        pointer = arc.generated_atlas_pointer()
+        prompt = arc.generated_atlas_prompt()
+        for surface in (pointer, prompt):
+            self.assertIn("Inspect/plan when useful", surface)
+            self.assertIn("current instruction is sufficient authority for ordinary bounded work", surface)
+            self.assertIn("`--apply` is a deliberate mutation-mode selector", surface)
+            self.assertIn(
+                "Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries",
+                surface,
+            )
+            self.assertNotIn("start in plan mode", surface)
+            self.assertNotIn("start in non-mutating plan mode", surface)
+
+    def test_cli_description_is_not_plan_first(self):
+        description = arc.parser().description
+        self.assertEqual(description, "ARC deployment and recovery utility")
+        self.assertNotIn("plan-first", description.lower())
 
 
 class ArcSafeHarbourTests(unittest.TestCase):
@@ -184,9 +214,16 @@ class ArcSafeHarbourTests(unittest.TestCase):
             saved = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(saved["manifest_schema"], "1.0")
 
-    def test_restore_without_apply_is_plan_only(self):
+    def test_restore_without_apply_is_destructive_boundary_preview(self):
         manifest = arc.manifest_from_config(self.base())
-        self.assertEqual(arc.command_restore(manifest, apply=False), 0)
+        with mock.patch("builtins.print") as print_mock:
+            self.assertEqual(arc.command_restore(manifest, apply=False), 0)
+        messages = [call.args[0] for call in print_mock.call_args_list]
+        self.assertEqual(
+            messages[0],
+            "ARC recovery preview: no mutation selected. Destructive repository reconstruction requires explicit authority before `restore --apply`.",
+        )
+        self.assertIn("destructive", messages[0].lower())
 
 
 if __name__ == "__main__":
