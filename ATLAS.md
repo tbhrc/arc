@@ -32,7 +32,7 @@ what authority is required,
 and what real workflow will prove the deployment.
 ```
 
-Atlas is **not** the deployed estate's permanent day-to-day router. After deployment, normal work should route directly through the estate's North Star, Skills, owner/system map, workflow and Issues.
+Atlas is **not** the deployed estate's permanent day-to-day router. After deployment, normal work starts at root `AGENTS.md` as the Repository Router, then follows only the relevant Fast Link to the smallest Skill/owner needed.
 
 ---
 
@@ -216,7 +216,7 @@ Domain owners
 Existing owners: KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE
 Configured repositories: REUSE / CREATE where observable
 Skills strategy
-Machine-first operational front door/router
+Repository Router / first-hop operational front door
 Useful Fast Links
 Durable Issue / Anti-Drift strategy
 Private-file owner
@@ -303,7 +303,7 @@ After bootstrap:
 
 1. establish the target North Star route;
 2. establish the Skills owner;
-3. establish the machine-first operational router/front door;
+3. establish root `AGENTS.md` as the Repository Router / first-hop front door;
 4. establish durable Issue/Anti-Drift control;
 5. reconnect only the external systems required for actual work;
 6. run one real workflow;
@@ -466,7 +466,7 @@ read ARC README
 → bootstrap --apply
 → seed foundation
 → verify base estate
-→ establish machine-first operational routing
+→ establish root AGENTS.md Repository Router and progressive Fast Links
 → establish Skills owner
 → reconnect required external systems
 → run one real workflow with Anti-Drift
