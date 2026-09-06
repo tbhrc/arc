@@ -105,14 +105,24 @@ class ArcConfigTests(unittest.TestCase):
         data = self.base()
         self.assertEqual(arc.command_bootstrap(data, False), 0)
 
-    def test_generated_repository_contract_links_core_owners(self):
+    def test_generated_repository_router_links_core_owners_and_routes_conditionally(self):
         repo = {"name": "sales", "role": "business-domain", "description": "Sales owner.", "required": True, "visibility": "private"}
         navigation = {"skills": "playbooks", "research": "lab"}
         readme = arc.generated_readme("acme", repo, navigation)
         agents = arc.generated_agents("acme", repo, navigation)
         self.assertIn("acme/playbooks", readme)
+        self.assertTrue(agents.startswith("# AGENTS.md — Repository Router\n"))
+        self.assertIn("https://github.com/acme/playbooks", agents)
         self.assertIn("acme/lab", agents)
-        self.assertIn("Atlas", agents)
+        self.assertIn("https://github.com/acme/sales/issues", agents)
+        self.assertIn("Known owner + bounded task", agents)
+        self.assertIn("Owner or source unclear", agents)
+        self.assertIn("only when Hybrid or Controlled may be needed", agents)
+        self.assertIn("Multiple agents, specialist delegation or genuine parallel work", agents)
+        self.assertIn("Onboarding, adoption or recovery", agents)
+        self.assertIn("it is not the daily routing layer", agents)
+        self.assertNotIn("ARC Agent Contract", agents)
+        self.assertNotIn("## Operating loop", agents)
 
 
 class ArcSafeHarbourTests(unittest.TestCase):
