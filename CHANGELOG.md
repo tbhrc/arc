@@ -1,15 +1,18 @@
 # Changelog
 
-## Unreleased — Public Front-Door Clarification
+## 1.1.0 — 2026-09-06 — Repository Router Alignment
 
+- Rebuilt ARC around the current TBHRC Agent Operating System: root `AGENTS.md` is the first-hop Repository Router, Fast Links are progressive pointers, owner lookup is conditional, Workflow owns Direct / Hybrid / Controlled execution, and Multi-Agent Orchestrator owns delegation/genuine parallelism only.
+- Replaced the generated legacy ARC Agent Contract with the compact generated Repository Router and added focused acceptance coverage.
 - Rewrote `README.md` so ARC is explained as the portable reproduction package for the **whole proven TBHRC/iMPLEMENTAi human + AI operating ecosystem**, not merely as the ARC repository or its final build window.
-- Rewrote root `AGENTS.md` so a cold coding agent can understand ARC's Primary Objective, ecosystem model, current v1 proof, source-of-truth boundaries, deployment/recovery rules, historical statistics interpretation and KISSS guardrails without hidden chat context.
 - Added `ECOSYSTEM-EVIDENCE.md` to preserve the 27 Aug–4 Sep 2026 GitHub-era measurement snapshot with exact / derived / estimated confidence labels, business outcomes, infrastructure proof and transformation timeline.
-- Aligned `ARCHITECTURE.md` and `ATLAS.md` to distinguish the measured TBHRC/iMPLEMENTAi reference ecosystem from what a generic ARC deployment is actually required to reproduce.
-- Added the concise founder/origin story and linked the canonical Founder Story / Mission / Vision rather than copying mutable doctrine into ARC.
-- Added a complete public feature/capability map, before/after operating model, independent v1 proof and explicit statement that historical ecosystem statistics are provenance — not mandatory target scale.
-- Aligned the TBHRC reference profile and starter owner/workflow Skills with the current Repository Router model: root `AGENTS.md` is first-hop routing, owner lookup is conditional, and Workflow uses Level 0 Direct / Level 1 Hybrid / Level 2 Controlled.
-- No executable architecture, validator, schema, daemon, service or release behaviour changed.
+- Aligned `ARCHITECTURE.md`, `ATLAS.md`, `BOOTSTRAP.md`, the TBHRC reference profile and starter owner/workflow Skills with the current Repository Router model.
+- Proved the normal Agent OS cold-start paths remain comfortably within the <=200 physical Markdown-line budget; the generated ARC Router is 26 lines.
+- Re-proved deployment/adoption behaviour: plan/no-apply causes zero writes, existing repositories remain REUSE/unchanged, and the full suite passed 23/23.
+- Re-proved Safe Harbour recovery with destructive local reconstruction of a missing Router surface; recovered `AGENTS.md` byte-matched the pre-loss/generated contract and the full suite passed 23/23.
+- Ran a real end-to-end cold-start workflow proof using the Python support question: root Router → Atlas audit route → executable/source truth → Level 0 Direct → one verification → durable evidence → stop, without loading Sniper or Multi-Agent Orchestrator unnecessarily.
+- Clarified Python compatibility: current covered behaviour passes 23/23 tests on Python 3.9.6, but official ARC support remains Python 3.10+ because `doctor` rejects `<3.10` and CI currently validates Python 3.12 only.
+- Preserved KISSS throughout: no new router service, validator, daemon, queue, provider hierarchy, policy engine or control plane was added.
 
 ## 1.0.0 — 2026-09-04 — Blank-Slate Reproduction Proven
 
