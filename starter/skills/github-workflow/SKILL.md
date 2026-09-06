@@ -33,8 +33,11 @@ Rules:
 
 - `North Star` points to the organisation-level canonical mission / vision / directives;
 - `Anti-Drift — Original Objective` preserves the founder/user's requested outcome while implementation evolves;
+- ordinary already-authorised bounded work executes directly; do not ask for a second confirmation merely because state will change;
+- `--apply` or equivalent mutating mode is an execution selector, not a ceremonial human approval step;
+- founder approval is exceptional, not precautionary;
 - keep one active writer per unresolved mutation scope;
 - check current owner truth before writing;
 - verify the material result once unless evidence is stale or ambiguous;
 - update/close the controlling Issue after acceptance, then stop;
-- root/security, production/destructive, spend, private-data, legal/compliance and material client-commitment gates remain binding when crossed.
+- fresh authority is reserved for real boundaries: root/security, destructive/irreversible or production-destructive mutation, material spend, private-data disclosure/movement, legal/compliance commitment, or material external/client commitment.
