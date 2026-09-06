@@ -60,7 +60,7 @@
     "minimum_reader": "0.3.0"
   },
   "recovery": {
-    "repository_reconstruction": "ARC bootstrap may recreate missing configured GitHub repositories only after explicit --apply authority.",
+    "repository_reconstruction": "ARC bootstrap may recreate missing configured GitHub repositories when --apply selects bounded mutation; existing repositories remain unchanged.",
     "excluded_material": [
       "credential values",
       "private-file contents",
