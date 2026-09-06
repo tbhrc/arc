@@ -4,14 +4,14 @@ This manifest defines the logical components required for an ARC deployment. Exa
 
 | Component | Required? | Default implementation | Owns | Verification |
 |---|---|---|---|---|
-| Operating desk | Yes | GitHub | durable work, architecture, Issues/PRs, automation evidence | repository access + Issue/PR path works |
+| Operating desk | Yes | GitHub | durable work, architecture and automation evidence | repository access works |
 | Skills canon | Yes | `skills` repository | reusable HOW | agent can find and read a canonical Skill |
 | Foundational Skills | Yes for new Skills repos | `starter/skills/` + `scripts/seed_foundation.py` | first-day routing, GitHub workflow, Skill authoring, Research escalation | inspection lists starter Skills; authorised apply creates only missing files without asking twice |
 | Research | Yes | `research` repository | external evidence, comparisons, proving | one research record can route to an owner |
 | Operations hub | Yes | `ops` repository | cross-business architecture/operating decisions | agent can identify domain owners |
 | Business modules | Optional | `modules/` catalogue | capability selection + ownership pattern | only selected modules appear in profile/plan |
-| Agent provider routes | At least one | provider-neutral capability contract | authorised agent execution route | at least two capable routes can satisfy same ARC owner/verification contract |
-| Runtime routes | At least one normal route | GitHub-hosted Actions by default | execution environment | ordinary work does not require privileged runtime |
+| Agent provider routes | At least one | provider-neutral capability contract | authorised agent execution route | one authorised capable route can complete the intended work and verify it |
+| Runtime routes | At least one capable route | simplest existing authorised route | execution environment | intended work completes without unnecessary hops or infrastructure |
 | Domain owners | Yes | configurable repositories/systems | current business/product facts | one source of truth per declared field/class |
 | Agent instructions | Yes | `AGENTS.md` + platform instructions | repository-wide operating behaviour | cold agent can route work correctly |
 | Atlas front door | Yes | ARC Atlas Skill + `/atlas` prompt | onboarding, adoption, audit, health, upgrade/recovery routing and next-action guidance | cold agent selects a mode and reaches execution without hidden context or ritual approval loops |
@@ -20,7 +20,7 @@ This manifest defines the logical components required for an ARC deployment. Exa
 | Atlas portable distribution | Recommended | `scripts/package_atlas.py` -> `dist/skill.zip` | transport of the same canonical Atlas Skill | package contains canonical Skill, metadata and mode reference; no second editable canon |
 | Private file store | Yes for confidential work | provider chosen by business | private/client/personnel files | private data does not need public repo storage |
 | Specialist systems | As needed | CRM/ERP/ATS/accounting/etc. | declared structured state | ownership map identifies each live field owner |
-| Research escalation | Yes | research + operating rule | recurring problem-to-platform investigation | agent can recognise a broader capability gap |
+| Research escalation | As needed | research + operating rule | recurring problem-to-platform investigation | agent can recognise a broader capability gap when one exists |
 | Trusted runtime | Optional | `ai-engine` repository/runtime | privileged machine/runtime access | only used when normal execution is insufficient |
 | Memory | Optional | chosen memory layer | derived context | memory is treated as non-canonical |
 | CI/verification | Yes | GitHub Actions + local checks | deterministic repository health | validation runs without secrets |
@@ -45,7 +45,7 @@ It may also declare business-neutral selections:
 "runtimes": ["github-hosted-actions"]
 ```
 
-The module/provider/runtime fields describe capability choices without making any vendor the source of truth. See [modules](modules/README.md), [providers](providers/README.md) and [runtimes](runtimes/README.md).
+The module/provider/runtime fields describe capability choices without making any vendor or route architectural canon. See [modules](modules/README.md), [providers](providers/README.md) and [runtimes](runtimes/README.md).
 
 Domain repositories are configured per business. Atlas can generate the profile through `scripts/arc.py onboard`; `plan --inspect-target` is available when useful to distinguish configured repositories that already exist (**REUSE**) from missing ones (**CREATE**). It is not a mandatory human approval checkpoint before ordinary already-authorised deployment.
 
@@ -95,17 +95,16 @@ Use:
 ```bash
 python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
 python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
-# destructive recovery is a real risk boundary; after that boundary is authorised:
 python3 scripts/arc.py restore --manifest arc-estate.json --apply
 ```
 
-The recovery apply boundary is conservative GitHub repository reconstruction only. External owners remain responsible for their own backup/restore and credential reprovisioning. See [Safe-Harbour Contract](contracts/safe-harbour.md).
+Current restore apply is bounded GitHub repository reconstruction: existing configured repositories remain unchanged and only missing configured repositories are created. External owners remain responsible for their own backup/restore and credential reprovisioning. See [Safe-Harbour Contract](contracts/safe-harbour.md).
 
 ## Authority rule
 
 Ordinary authorised bounded work executes directly. ARC must not convert ordinary mutation into a precautionary approval loop.
 
-Fresh authority is reserved for real boundaries: destructive overwrite/delete/force/recovery, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
+Fresh authority is reserved for actions that actually cross a consequential boundary: destructive overwrite/delete/force, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
 
 ## Atlas lifecycle boundary
 
@@ -124,4 +123,4 @@ When the deployed architecture gains a foundational capability:
 3. update ARC only when the portable architecture/bootstrap/recovery contract materially changes;
 4. update the Course when the learning path materially changes.
 
-Material ARC programme progress must be durable in the controlling GitHub Issue rather than a chat-only handoff.
+Preserve continuity only when it materially helps future work. An Issue is one available surface, not a mandatory runtime prerequisite.
