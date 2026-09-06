@@ -28,7 +28,7 @@ into:
 I know what ARC should create,
 what should stay where it already is,
 what must be connected,
-what authority is required,
+what authority is already present,
 and what real workflow will prove the deployment.
 ```
 
@@ -73,9 +73,9 @@ Use the Atlas skill in this repository.
 Understand my business and current environment.
 Identify where my organisation should own its North Star.
 Work out which existing systems and repositories should be kept rather than replaced.
-Start in plan mode.
 Ask only for facts or authority you cannot resolve.
-Do not mutate anything until the target ownership map and apply authority are explicit.
+If my current instruction already authorises ordinary bounded mutation, execute it without asking me again.
+Stop only when a real destructive, root/credential, private-data, spend, legal/compliance, production-destructive or material external/client-commitment boundary is crossed.
 Tell me what first real workflow will prove the deployment.
 ```
 
@@ -124,7 +124,7 @@ Atlas needs enough information to resolve:
 7. **Private files** — where must confidential evidence remain?
 8. **Specialist systems** — what owns CRM, finance, HR, ATS, service delivery or other structured live state?
 9. **Execution** — can normal connected tools perform the required work, or is trusted runtime actually needed?
-10. **Authority** — what may the current agent inspect, plan and apply?
+10. **Authority** — what does the current instruction already authorise, and is any real risk boundary crossed?
 11. **Proof workflow** — what real work will demonstrate that the deployed estate actually operates?
 
 If the user already supplied an answer or a connected owner proves it, do not ask again.
@@ -141,7 +141,7 @@ python3 scripts/arc.py doctor --config arc.json
 python3 scripts/arc.py plan --config arc.json --inspect-target
 ```
 
-These are non-mutating.
+These are non-mutating inspection tools. They are useful for clarity, not mandatory human approval ceremonies.
 
 For capable agents with the required facts already available, non-interactive onboarding may be used where supported rather than forcing a questionnaire.
 
@@ -202,9 +202,9 @@ The default is **reuse/integrate**, not replacement.
 
 ---
 
-## Atlas plan before mutation
+## Atlas deployment view
 
-Before making changes, return a compact plan containing:
+Before making changes, understand enough of the target to avoid accidental replacement or scope drift. A compact deployment view may contain:
 
 ```text
 Target
@@ -231,14 +231,9 @@ Verification plan
 First real workflow to prove
 ```
 
-Clearly distinguish:
+Clearly distinguish required core, optional components, existing owners to keep/integrate and future improvements. Do not build future improvements before the core deployment needs them.
 
-- required core;
-- optional component;
-- existing owner to keep/integrate;
-- future improvement.
-
-Do not build future improvements before the core deployment needs them.
+If the current instruction already authorises ordinary bounded mutation, continue directly after resolving the necessary facts. Do not manufacture a second review/approval round-trip.
 
 ---
 
@@ -269,33 +264,38 @@ The implementation route may evolve. The original objective must not silently ch
 
 ---
 
-## Authority gate
+## Authority rule — no ceremonial second approval
 
-ARC separates understanding from mutation:
+ARC separates **authority** from **mutation mode**.
 
 ```text
-inspect / understand
-→ plan
-→ explicit apply authority
-→ bounded mutation
+current instruction authorises ordinary bounded work
+→ select the required mutating command deliberately (`--apply` where applicable)
+→ execute
 → verify
 ```
 
-Credentials or connected capabilities do not imply apply authority.
+`--apply` means the tool is intentionally entering mutation mode. It does **not** mean the agent must return to the human for another approval when the current instruction already grants authority.
 
-`bootstrap` and `restore` remain non-mutating without `--apply`.
+Stop for fresh authority only when the next step crosses a real boundary such as destructive overwrite/delete/force/recovery, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
+
+Credentials or connected capabilities alone still do not create authority.
+
+`bootstrap` and `restore` remain non-mutating without `--apply`; destructive recovery remains separately gated because its risk is materially different from ordinary bounded creation.
 
 ---
 
 ## Apply route
 
-Once the plan is accepted and authority exists:
+When ordinary bounded mutation is already authorised by the current instruction:
 
 ```bash
 python3 scripts/arc.py bootstrap --config arc.json --apply
 python3 scripts/seed_foundation.py --config arc.json --apply
 python3 scripts/arc.py verify --config arc.json
 ```
+
+Do not ask for another confirmation merely because these commands mutate state.
 
 Existing repositories should be reused rather than overwritten.
 
@@ -399,7 +399,7 @@ python3 scripts/arc.py restore-plan \
   --inspect-target
 ```
 
-Only after the plan is accepted:
+Recovery may overwrite/reconstruct missing operating surfaces and is a genuine destructive-risk boundary. After that boundary is explicitly authorised:
 
 ```bash
 python3 scripts/arc.py restore \
@@ -418,7 +418,7 @@ ARC v1 destructive proof deliberately removed a deployed `AGENTS.md` and success
 ARC v1 intentionally avoids speculative lifecycle machinery.
 
 - **health** = use current `VERIFY.md`, CLI checks and owner-state inspection;
-- **upgrade** = compare release/contracts and create an ordinary reviewed migration plan;
+- **upgrade** = compare release/contracts, make the smallest justified migration and verify it;
 - **recover** = use export → restore-plan → bounded restore + external-owner reconnection.
 
 Do not invent a dedicated health/upgrade service unless real deployment evidence proves the simpler methods insufficient.
@@ -443,6 +443,7 @@ Do not add:
 - mandatory repositories;
 - integrations;
 - agent routes;
+- precautionary approval loops;
 
 unless the target actually needs them.
 
@@ -456,15 +457,13 @@ The measured TBHRC/iMPLEMENTAi ecosystem is a **reference implementation and pro
 read ARC README
 → Atlas selects mode
 → identify organisation North Star owner
-→ inspect current target
+→ inspect current target only as much as needed
 → reconcile existing owners
 → generate/reconcile arc.json
-→ doctor
-→ plan --inspect-target
-→ operator reviews plan
-→ explicit apply authority
+→ doctor / plan when useful for validation
+→ current instruction already authorises ordinary bounded mutation? execute directly
 → bootstrap --apply
-→ seed foundation
+→ seed foundation --apply
 → verify base estate
 → establish root AGENTS.md Repository Router and progressive Fast Links
 → establish Skills owner
@@ -474,6 +473,8 @@ read ARC README
 → export safe-harbour manifest
 → capture reusable learning
 ```
+
+If a real risk boundary is crossed, stop at that boundary only. Do not turn ordinary mutation into a security ritual.
 
 ---
 
