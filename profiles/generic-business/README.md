@@ -10,10 +10,12 @@ Use this profile to deploy ARC into a new business or client without importing T
 4. Select only the optional business modules that have a real owner/use case.
 5. Declare at least one normal capable-agent route and one normal runtime route.
 6. Keep the trusted runtime optional unless a genuine machine/privilege gap exists.
-7. Run `doctor`, `plan --inspect-target`, then `bootstrap --apply` only after review.
-8. Seed the first-day Skills foundation with `scripts/seed_foundation.py` after reviewing its plan.
-9. Use Atlas to complete owner mapping, specialist-system integration and agent onboarding.
+7. Use `doctor` and `plan --inspect-target` when useful for validation; if the current instruction already authorises ordinary bounded deployment, run `bootstrap --apply` directly without asking again.
+8. Seed the first-day Skills foundation with `scripts/seed_foundation.py --apply` when ordinary bounded seeding is already authorised; the non-mutating form remains available for inspection.
+9. Use Atlas to complete only the owner mapping, specialist-system integration and agent onboarding actually required.
 10. Run one real workflow and verify durable evidence before calling the deployment useful.
+
+`--apply` selects mutating mode. It is not a ceremonial second approval step. Fresh authority is required only at a real destructive/root/private-data/spend/legal/client-commitment boundary.
 
 ## Module selection
 
@@ -38,13 +40,13 @@ Provider names are deployment choices, not architecture canon. Runtime choice fo
 
 ## Skills-first foundation
 
-Plan:
+Inspect when useful:
 
 ```bash
 python3 scripts/seed_foundation.py --config arc.json
 ```
 
-Apply only after review:
+Execute ordinary authorised seeding directly:
 
 ```bash
 python3 scripts/seed_foundation.py --config arc.json --apply
