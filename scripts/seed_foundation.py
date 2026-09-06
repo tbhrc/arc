@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Seed ARC's minimal generic Skills foundation into a target Skills repository.
 
-Plan-first by default. Mutation requires --apply. Existing target files are never overwritten.
+Without --apply this command previews missing files. --apply deliberately selects bounded mutation.
+Existing target files are never overwritten.
 """
 from __future__ import annotations
 
@@ -89,10 +90,10 @@ def put_new_file(full_repo: str, path: str, content: str) -> None:
 
 def command_plan(data: dict[str, Any]) -> int:
     owner, skills_repo = resolve_target(data)
-    print(f"ARC Skills foundation plan for {owner}/{skills_repo}")
+    print(f"ARC Skills foundation preview for {owner}/{skills_repo}")
     for path, _ in starter_files():
         print(f"- {path}: create only if missing")
-    print("No mutation performed.")
+    print("No mutation selected. Use --apply when the current instruction authorises bounded seeding.")
     return 0
 
 
