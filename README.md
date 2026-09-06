@@ -14,22 +14,22 @@ ARC should let a capable founder, operator or AI agent take a blank or existing 
 - root `AGENTS.md` is the first-hop Repository Router;
 - reusable HOW lives in Skills;
 - current facts stay with their real owners;
-- GitHub carries durable work, decisions and architecture evidence;
+- GitHub carries durable work, decisions and architecture evidence where useful;
 - Fast Links are progressive pointers rather than preload instructions;
 - owner/source lookup is conditional only when the Router cannot resolve the route;
 - normal authorised work executes directly at the lowest sufficient level;
 - specialist agents/runtime are used only when genuinely needed;
 - private files, credentials and structured live systems remain external owners;
 - deployment is inspectable before mutation without requiring ceremonial second approval;
-- destructive recovery remains explicitly gated;
-- real work is verified and leaves durable evidence.
+- recovery reuses existing repositories unchanged and creates only missing configured repositories;
+- real work is verified and leaves only useful durable evidence.
 
 ## Why ARC exists
 
 The reference TBHRC/iMPLEMENTAi operating estate evolved rapidly once GitHub became the durable operating desk for both humans and AI agents. The useful pattern was not the number of repositories or agents. It was the separation of concerns:
 
 1. **North Star ownership** — the organisation keeps one canonical direction source.
-2. **GitHub durable work** — Issues, PRs, decisions and architecture survive individual chats.
+2. **GitHub durable work** — useful Issues, PRs, decisions and architecture survive individual chats.
 3. **Skills-first architecture** — reusable HOW becomes versioned, discoverable operating intelligence rather than repeated prompting.
 4. **Repository Router** — root `AGENTS.md` gives a small cold-start surface and routes known bounded work directly to the smallest relevant Skill/owner.
 5. **Progressive Fast Links** — agents load only what the current task needs.
@@ -58,7 +58,7 @@ Multi-Agent Orchestrator
   ↓
 verify real state once
   ↓
-update controlling Issue / durable evidence
+record continuity only when useful
   ↓
 stop
 ```
@@ -71,7 +71,7 @@ For ordinary bounded work, the current authorised instruction is the authority. 
 
 `--apply` is a deliberate CLI mutation-mode selector. It does not mean “ask the human again.”
 
-Fresh authority is required only when the next step crosses a real boundary such as destructive overwrite/delete/force/recovery, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
+Fresh authority is required only when the next step actually crosses a consequential boundary such as destructive overwrite/delete/force, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
 
 ## What ARC reproduces
 
@@ -82,7 +82,7 @@ ARC reproduces portable architecture and contracts such as:
 - root `AGENTS.md` Repository Router;
 - Skills-first method;
 - progressive Fast Links;
-- durable Issue / Anti-Drift control;
+- optional durable continuity/evidence patterns;
 - source-of-truth boundaries;
 - provider/runtime-neutral execution rules;
 - inspectable bootstrap and bounded recovery;
@@ -107,7 +107,7 @@ ARC records only the minimum non-secret references required to reconstruct the o
 
 ## Blank-environment route
 
-A new deployment can inspect first:
+A new deployment can inspect first when useful:
 
 ```bash
 python3 scripts/arc.py onboard --output arc.json
@@ -139,7 +139,7 @@ Read [BOOTSTRAP.md](BOOTSTRAP.md) for the full deployment contract.
 
 ARC is reuse-first.
 
-Before structural change, classify existing systems and owners as appropriate:
+Before structural change, classify existing systems and owners as appropriate when useful:
 
 ```text
 KEEP
@@ -184,7 +184,7 @@ organisation North Star
 → relevant Skill / owner truth
 → authorised execution
 → real-state verification
-→ durable evidence
+→ durable evidence when useful
 ```
 
 That proof should use actual work but remain proportionate and bounded.
@@ -202,7 +202,7 @@ python3 scripts/arc.py export \
 
 The resulting estate manifest is a **map, not a data dump**. It may contain topology, repository roles and non-secret owner references. It must not contain private files, live CRM/ATS/ERP data, credentials, machine state or memory contents.
 
-Plan recovery without mutation:
+Inspect recovery without mutation when useful:
 
 ```bash
 python3 scripts/arc.py restore-plan \
@@ -210,7 +210,7 @@ python3 scripts/arc.py restore-plan \
   --inspect-target
 ```
 
-Destructive recovery is a real risk boundary. After that boundary is explicitly authorised:
+For ordinary authorised bounded reconstruction:
 
 ```bash
 python3 scripts/arc.py restore \
@@ -218,7 +218,9 @@ python3 scripts/arc.py restore \
   --apply
 ```
 
-External owners are then restored or reconnected through their own approved backup and identity mechanisms.
+Current restore reuses existing configured repositories unchanged and creates only missing configured repositories. External owners are restored or reconnected through their own backup and identity mechanisms.
+
+If a future recovery operation actually deletes, overwrites or force-updates material state, protect that specific action only.
 
 ## Measured reference evidence
 
@@ -282,4 +284,4 @@ precautionary approval loop
 - Recovery boundaries: [Manifest](MANIFEST.md) and [Reconnections](RECONNECTIONS.md)
 - Historical proof: [Ecosystem Evidence](ECOSYSTEM-EVIDENCE.md)
 
-**Issue keeps continuity. `main` keeps progress. KISSS keeps speed.**
+**`main` keeps progress. Useful evidence keeps continuity. KISSS keeps speed.**
