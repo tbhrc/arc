@@ -6,7 +6,7 @@ This manifest defines the logical components required for an ARC deployment. Exa
 |---|---|---|---|---|
 | Operating desk | Yes | GitHub | durable work, architecture, Issues/PRs, automation evidence | repository access + Issue/PR path works |
 | Skills canon | Yes | `skills` repository | reusable HOW | agent can find and read a canonical Skill |
-| Foundational Skills | Yes for new Skills repos | `starter/skills/` + `scripts/seed_foundation.py` | first-day routing, GitHub workflow, Skill authoring, Research escalation | plan lists starter Skills; apply creates only missing files |
+| Foundational Skills | Yes for new Skills repos | `starter/skills/` + `scripts/seed_foundation.py` | first-day routing, GitHub workflow, Skill authoring, Research escalation | inspection lists starter Skills; authorised apply creates only missing files without asking twice |
 | Research | Yes | `research` repository | external evidence, comparisons, proving | one research record can route to an owner |
 | Operations hub | Yes | `ops` repository | cross-business architecture/operating decisions | agent can identify domain owners |
 | Business modules | Optional | `modules/` catalogue | capability selection + ownership pattern | only selected modules appear in profile/plan |
@@ -14,8 +14,8 @@ This manifest defines the logical components required for an ARC deployment. Exa
 | Runtime routes | At least one normal route | GitHub-hosted Actions by default | execution environment | ordinary work does not require privileged runtime |
 | Domain owners | Yes | configurable repositories/systems | current business/product facts | one source of truth per declared field/class |
 | Agent instructions | Yes | `AGENTS.md` + platform instructions | repository-wide operating behaviour | cold agent can route work correctly |
-| Atlas front door | Yes | ARC Atlas Skill + `/atlas` prompt | onboarding, adoption, audit, health, upgrade/recovery routing and next-action guidance | cold agent selects a mode and produces a plan without hidden context |
-| ARC profile | Yes | generated `arc.json` | non-secret target topology/ownership configuration | `onboard` produces valid config and refuses implicit overwrite |
+| Atlas front door | Yes | ARC Atlas Skill + `/atlas` prompt | onboarding, adoption, audit, health, upgrade/recovery routing and next-action guidance | cold agent selects a mode and reaches execution without hidden context or ritual approval loops |
+| ARC profile | Yes | generated `arc.json` | non-secret target topology/ownership configuration | `onboard` produces valid config and refuses implicit destructive overwrite |
 | Estate safe harbour | Recommended after healthy deployment | `arc.py export` + formal ARC release | non-secret architecture snapshot + recovery references | manifest schema validates and round-trips into a restore plan |
 | Atlas portable distribution | Recommended | `scripts/package_atlas.py` -> `dist/skill.zip` | transport of the same canonical Atlas Skill | package contains canonical Skill, metadata and mode reference; no second editable canon |
 | Private file store | Yes for confidential work | provider chosen by business | private/client/personnel files | private data does not need public repo storage |
@@ -47,19 +47,25 @@ It may also declare business-neutral selections:
 
 The module/provider/runtime fields describe capability choices without making any vendor the source of truth. See [modules](modules/README.md), [providers](providers/README.md) and [runtimes](runtimes/README.md).
 
-Domain repositories are configured per business. Atlas can generate the profile through `scripts/arc.py onboard`, then `plan --inspect-target` distinguishes configured repositories that already exist (**REUSE**) from missing ones (**CREATE**) before apply.
+Domain repositories are configured per business. Atlas can generate the profile through `scripts/arc.py onboard`; `plan --inspect-target` is available when useful to distinguish configured repositories that already exist (**REUSE**) from missing ones (**CREATE**). It is not a mandatory human approval checkpoint before ordinary already-authorised deployment.
 
-For an established business, repository existence alone does not decide ownership. Atlas additionally classifies existing systems and process owners as **KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE**.
+For an established business, repository existence alone does not decide ownership. Atlas may additionally classify existing systems and process owners as **KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE** when that materially helps the decision.
 
 ## First-day Skills foundation
 
-A newly created Skills repository should not remain empty. After repository bootstrap, use:
+A newly created Skills repository should not remain empty. Inspection is available:
 
 ```bash
 python3 scripts/seed_foundation.py --config arc.json
-# review the plan, then explicitly:
+```
+
+When ordinary bounded seeding is already authorised, execute directly:
+
+```bash
 python3 scripts/seed_foundation.py --config arc.json --apply
 ```
+
+`--apply` selects mutating mode. It does not require a second human confirmation.
 
 The foundation contains generic starter Skills for owner routing, GitHub work control, Skill authoring and Research escalation. Existing target Skill files are never overwritten. After deployment, the target organisation's Skills repository becomes its editable canon; ARC does not continuously sync these starter templates over local improvements.
 
@@ -89,11 +95,17 @@ Use:
 ```bash
 python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
 python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
-# only after explicit authority:
+# destructive recovery is a real risk boundary; after that boundary is authorised:
 python3 scripts/arc.py restore --manifest arc-estate.json --apply
 ```
 
-The apply boundary is conservative GitHub repository reconstruction only. External owners remain responsible for their own backup/restore and credential reprovisioning. See [Safe-Harbour Contract](contracts/safe-harbour.md).
+The recovery apply boundary is conservative GitHub repository reconstruction only. External owners remain responsible for their own backup/restore and credential reprovisioning. See [Safe-Harbour Contract](contracts/safe-harbour.md).
+
+## Authority rule
+
+Ordinary authorised bounded work executes directly. ARC must not convert ordinary mutation into a precautionary approval loop.
+
+Fresh authority is reserved for real boundaries: destructive overwrite/delete/force/recovery, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
 
 ## Atlas lifecycle boundary
 
@@ -101,8 +113,7 @@ ARC exposes the seven Atlas modes: onboard, adopt, audit, health, upgrade, recov
 
 - current health uses `VERIFY.md` and observable state;
 - formal releases + manifest schema give `upgrade` a known version/compatibility anchor;
-- recovery uses the safe-harbour export/restore-plan/bounded-restore contract;
-- ARC.7 owns richer estate drift, health and automated release-to-estate upgrade lifecycle.
+- recovery uses the safe-harbour export/restore-plan/bounded-restore contract.
 
 ## Promotion rule
 
