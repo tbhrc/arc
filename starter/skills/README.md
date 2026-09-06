@@ -10,23 +10,25 @@ ARC seeds a **small generic foundation**, not a copy of TBHRC's live Skill Bank.
 
 | Skill | Purpose |
 |---|---|
-| `owner-router` | start from the organisation North Star, then find the correct owner/source of truth before acting |
-| `github-workflow` | preserve Anti-Drift and choose the lowest sufficient durable GitHub work path |
+| `owner-router` | conditional owner/source lookup only when the repository Router cannot resolve ownership |
+| `github-workflow` | preserve Anti-Drift and choose the lowest sufficient durable GitHub execution level |
 | `skill-authoring` | turn repeatable operating method into a reusable Skill |
 | `research-escalation` | turn recurring friction into problem-to-platform research |
 
-Atlas remains ARC's architecture/onboarding/lifecycle front door and is already seeded by ARC repository bootstrap. It is separate from the deployed estate's operational machine-first routing layer.
+Atlas remains ARC's architecture/onboarding/lifecycle front door and is already seeded by ARC repository bootstrap. It is separate from the deployed estate's day-to-day Repository Router at root `AGENTS.md`.
 
 ## First-day operating model
 
 ```text
-organisation North Star
--> reusable Skill
--> correct owner truth
--> lowest sufficient authorised execution path
+repository root AGENTS.md Router
+-> one relevant Fast Link
+-> smallest relevant Skill / owner
+-> execute
 -> verify real state
 -> durable Issue evidence when work needs continuity
 ```
+
+If the Router cannot resolve the correct owner/source, use `owner-router` as the conditional fallback, then return to the resolved repository/Skill and execute.
 
 For substantive durable GitHub work, the controlling Issue should distinguish:
 
