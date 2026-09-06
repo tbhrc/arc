@@ -9,10 +9,12 @@ An ARC-capable agent route should be able to:
 - read current repository/Skill truth;
 - follow repository `AGENTS.md` and Atlas routing;
 - work with Issues/branches/PRs or an equivalent authorised GitHub capability;
-- use connected business systems only within granted authority;
+- use connected business systems within the authority required for the intended function;
 - verify real resulting state;
 - leave durable evidence in the correct owner;
-- fail closed when required current canon or authority is unavailable.
+- recover current canon or choose another already-authorised route when one provider/path is unavailable.
+
+Do not convert a missing preferred route into a stop condition when another authorised route can complete the work. Stop only when the real required authority/capability is unavailable or the action crosses a genuine protected boundary.
 
 ## Representative provider routes
 
@@ -30,10 +32,10 @@ Provider-specific wrappers should remain thin. Do not duplicate ARC architecture
 
 ```text
 required work
-→ preferred authorised provider if available
-→ equivalent authorised provider when unavailable/quota-limited
-→ deterministic checks remain mandatory
-→ record substitution in durable work evidence
+→ use an authorised capable provider/route
+→ if unavailable or quota-limited, use an equivalent authorised provider/route
+→ preserve only real authority/data/destructive boundaries
+→ verify the outcome once
 ```
 
-Provider substitution never lowers ownership, security, verification or approval requirements.
+Provider substitution must not bypass genuine protected boundaries, but it also must not inherit unnecessary restrictions from the unavailable provider. **Keep the work moving through existing authorised capability.**
