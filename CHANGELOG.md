@@ -8,6 +8,7 @@
 - Aligned `ARCHITECTURE.md` and `ATLAS.md` to distinguish the measured TBHRC/iMPLEMENTAi reference ecosystem from what a generic ARC deployment is actually required to reproduce.
 - Added the concise founder/origin story and linked the canonical Founder Story / Mission / Vision rather than copying mutable doctrine into ARC.
 - Added a complete public feature/capability map, before/after operating model, independent v1 proof and explicit statement that historical ecosystem statistics are provenance — not mandatory target scale.
+- Aligned the TBHRC reference profile and starter owner/workflow Skills with the current Repository Router model: root `AGENTS.md` is first-hop routing, owner lookup is conditional, and Workflow uses Level 0 Direct / Level 1 Hybrid / Level 2 Controlled.
 - No executable architecture, validator, schema, daemon, service or release behaviour changed.
 
 ## 1.0.0 — 2026-09-04 — Blank-Slate Reproduction Proven
