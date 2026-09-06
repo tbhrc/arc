@@ -9,7 +9,7 @@ Use this profile to deploy ARC into a new business or client without importing T
 3. Rename/add domain repositories to match how the business actually owns work.
 4. Select only the optional business modules that have a real owner/use case.
 5. Declare at least one normal capable-agent route and one normal runtime route.
-6. Keep the trusted runtime optional unless a genuine machine/privilege gap exists.
+6. Add a trusted runtime only when the required work genuinely needs that capability.
 7. Use `doctor` and `plan --inspect-target` when useful for validation; if the current instruction already authorises ordinary bounded deployment, run `bootstrap --apply` directly without asking again.
 8. Seed the first-day Skills foundation with `scripts/seed_foundation.py --apply` when ordinary bounded seeding is already authorised; the non-mutating form remains available for inspection.
 9. Use Atlas to complete only the owner mapping, specialist-system integration and agent onboarding actually required.
@@ -36,7 +36,9 @@ Example:
 "runtimes": ["github-hosted-actions"]
 ```
 
-Provider names are deployment choices, not architecture canon. Runtime choice follows the least-privilege ladder. See [`providers/`](../../providers/README.md) and [`runtimes/`](../../runtimes/README.md).
+Provider names are deployment choices, not architecture canon. Runtime choice follows the **simplest authorised route that can actually complete the work**, with purpose-fit authority sufficient for its intended function. See [`providers/`](../../providers/README.md) and [`runtimes/`](../../runtimes/README.md).
+
+Do not choose a weaker route merely because it appears more restrictive, and do not create an extra credential/bridge when an existing authorised route can do the job.
 
 ## Skills-first foundation
 
