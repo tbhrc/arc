@@ -87,9 +87,9 @@ The bootstrap remains conservative:
 - no private business data is migrated;
 - the script does not grant broad organisation permissions.
 
-Stop for fresh authority only when a real boundary is crossed: destructive overwrite/delete/force/recovery, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
+Stop for fresh authority only when the next action actually crosses a consequential boundary: destructive overwrite/delete/force, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
 
-## 6. Confirm repository seeding, navigation and durable work control
+## 6. Confirm repository seeding and navigation
 
 For each **new** repository, bootstrap seeds a role-aware README, root `AGENTS.md`, Atlas Skill pointer and `/atlas` prompt-file entrypoint. Existing repositories are deliberately left unchanged.
 
@@ -100,14 +100,14 @@ North Star
 Skills
 workflow / durable work method
 owner / system map
-Issues
+Issues when useful
 ```
 
 Known bounded work should follow only the needed Fast Link to the smallest relevant Skill/owner. Owner/source lookup is conditional when the Router cannot resolve the route. Workflow and Multi-Agent Orchestrator are loaded only when their execution/delegation responsibilities are genuinely needed.
 
 Important active front doors should use compact **Fast Links**. Fast Links are pointers, not preload instructions. Do not manufacture decorative links or add Fast Links to raw evidence/generated/archive material unless a canonical return/replacement link materially helps.
 
-Durable GitHub work should use the canonical Issue structure:
+When an Issue materially improves continuity, a concise structure is useful:
 
 ```text
 North Star
@@ -121,10 +121,10 @@ Exact Next Action
 
 North Star is organisation-level direction. **Anti-Drift** is the founder/user's original requested outcome for the specific work item. The route may change; the destination must not silently change.
 
-Atlas should then guide the operator/agent to establish or reconcile:
+Atlas should then guide the operator/agent to establish or reconcile only what is needed:
 
 - declared owner/boundary;
-- Issue/PR workflow;
+- continuity/evidence method when useful;
 - initial Skills canon;
 - Research front door;
 - private-file and specialist-system ownership map.
@@ -182,7 +182,7 @@ organisation North Star
 -> authorised provider/runtime
 -> agent execution
 -> verification
--> durable evidence
+-> durable evidence when useful
 ```
 
 Capture what failed. Promote reusable corrections into the correct owner rather than patching only a chat session.
@@ -204,20 +204,22 @@ Read [contracts/safe-harbour.md](contracts/safe-harbour.md) and ensure each exte
 
 ## 11. Recovery / redeployment
 
-To understand recovery without mutation:
+To inspect recovery without mutation when useful:
 
 ```bash
 python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
 ```
 
-Recovery is a real destructive-risk boundary. After GitHub repository reconstruction is explicitly authorised:
+For ordinary authorised bounded reconstruction:
 
 ```bash
 python3 scripts/arc.py restore --manifest arc-estate.json --apply
 ```
 
-`restore --apply` recreates missing configured GitHub repositories through the same conservative bootstrap contract. It does not restore external owner contents. Reconnect/restore those owners separately, then rerun the complete ARC verification contract before declaring recovery complete.
+`restore --apply` reuses existing configured repositories unchanged and creates only missing configured GitHub repositories through the same conservative bootstrap contract. It does not restore external owner contents. Reconnect/restore those owners separately, then rerun the complete ARC verification contract before declaring recovery complete.
 
-## 12. Preserve durable continuation state
+If a future recovery operation actually deletes, overwrites or force-updates material state, protect that specific action as the real destructive boundary.
 
-For material ARC Stage/programme work, update the controlling GitHub Issue before stopping. It must contain current branch/state, verification evidence, blockers and the exact next action so a cold agent can resume without chat history.
+## 12. Preserve continuation state when useful
+
+When continuity materially helps future work, preserve only what is needed to resume: objective, current state, evidence and exact next action. An Issue is one available surface, not a mandatory runtime prerequisite.
