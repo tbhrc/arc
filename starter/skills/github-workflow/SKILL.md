@@ -1,39 +1,29 @@
 ---
 name: github-workflow
-description: Govern GitHub execution proportionately after repository routing is known. Start Level 0 Direct, escalate only for genuine parallelism or material execution risk, execute authorised work directly, verify once, and stop.
+description: Thin bootstrap pointer for GitHub execution. Use when a newly deployed ARC estate needs a Workflow entrypoint before its own canonical Skills repository has adopted or authored the current execution Skill.
 ---
 
-# GitHub Workflow
+# GitHub Workflow Pointer
 
-Root `AGENTS.md` is the repository Router. This Skill owns only HOW GitHub work executes.
+Root `AGENTS.md` is the repository Router.
 
-Use the lowest sufficient level:
+This starter exists only to make a blank ARC estate usable. It is **not** a second editable operating canon.
+
+For the TBHRC reference implementation, use the current canonical Workflow:
+
+https://github.com/tbhrc/skills/tree/main/github-agent-workflow
+
+For another organisation, adopt or author the equivalent Workflow in that organisation's canonical Skills repository, then treat that Skills-owned version as current truth.
+
+Minimum invariant while bootstrapping:
 
 ```text
-Level 0 Direct — one authorised execution stream
-Level 1 Hybrid — genuinely independent workstreams
-Level 2 Controlled — material execution risk requiring stronger controls
+authorised objective
+→ simplest sufficient execution route
+→ execute
+→ verify once
+→ preserve continuity only when useful
+→ stop
 ```
 
-Start at Level 0. Escalate only for a concrete reason.
-
-## Continuity
-
-Issues are optional continuity/evidence records. They are not runtime permission.
-
-When a durable Issue is genuinely useful, keep only the context needed to recover the objective and current state. Do not require an Issue, label, comment, checklist or approval ritual merely to execute an already-authorised bounded action.
-
-## Rules
-
-- ordinary authorised bounded work executes directly;
-- `--apply` or equivalent mutating mode is an execution selector, not a ceremonial human approval step;
-- use **purpose-fit authority sufficient for the intended function**;
-- do not narrow repository/system access merely because “least privilege” sounds safer;
-- founder approval is exceptional and tied only to a genuine consequential boundary;
-- avoid concurrent writes only where they could actually collide;
-- verify the material result once unless evidence is stale or ambiguous;
-- record/close a controlling Issue only when one genuinely owns the durable work;
-- if one provider/route is unavailable, use another already-authorised route before creating credentials or infrastructure;
-- fresh authority is reserved for real boundaries: root/super-admin changes, destructive/irreversible mutation, material spend, private-data disclosure, legal/compliance commitment, or material external/client commitment.
-
-**Security protects real boundaries, not paperwork.**
+Do not add local approval, Issue, review, provider, security or orchestration doctrine here. Those rules belong in their actual canonical owner.
