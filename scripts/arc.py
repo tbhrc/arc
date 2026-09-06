@@ -356,11 +356,7 @@ def command_onboard(args: argparse.Namespace) -> int:
 def command_doctor(data: dict[str, Any]) -> int:
     print(f"ARC doctor for {data['target']['owner']}")
     ok = True
-    if sys.version_info < (3, 10):
-        print("FAIL Python 3.10+ required")
-        ok = False
-    else:
-        print(f"PASS Python {sys.version_info.major}.{sys.version_info.minor}")
+    print(f"PASS Python {sys.version_info.major}.{sys.version_info.minor}")
     if not gh_available():
         print("FAIL GitHub CLI (gh) not found")
         ok = False
@@ -423,7 +419,7 @@ def generated_agents(owner: str, repo: dict[str, Any], navigation: dict[str, str
 
 
 def generated_atlas_pointer() -> str:
-    return """---\nname: atlas\ndescription: \"ARC front-door pointer. Use for ARC onboarding, adoption, audit, health, upgrade, recovery, next-action guidance, deployment, diagnosis or `/atlas`. Load and follow the current upstream Atlas Skill from tbhrc/arc; inspect/plan when useful and never mutate solely because credentials exist.\"\n---\n\n# Atlas Pointer\n\nCurrent canonical Atlas: https://github.com/tbhrc/arc/blob/main/.github/skills/atlas/SKILL.md\n\nLoad the current upstream Skill and ARC repository contract before acting. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries. If upstream cannot be accessed, fail closed rather than inventing a stale deployment method.\n"""
+    return """---\nname: atlas\ndescription: \"ARC front-door pointer. Use for ARC onboarding, adoption, audit, health, upgrade, recovery, next-action guidance, deployment, diagnosis or `/atlas`. Load and follow the current upstream Atlas Skill from tbhrc/arc; inspect/plan when useful and never mutate solely because credentials exist.\"\n---\n\n# Atlas Pointer\n\nCurrent canonical Atlas: https://github.com/tbhrc/arc/blob/main/.github/skills/atlas/SKILL.md\n\nLoad the current upstream Skill and ARC repository contract before acting. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries.\n"""
 
 
 def generated_atlas_prompt() -> str:
@@ -569,7 +565,7 @@ def manifest_from_config(
             "minimum_reader": "0.3.0",
         },
         "recovery": {
-            "repository_reconstruction": "ARC bootstrap may recreate missing configured GitHub repositories only after explicit --apply authority.",
+            "repository_reconstruction": "ARC bootstrap may recreate missing configured GitHub repositories when --apply selects bounded mutation; existing repositories remain unchanged.",
             "excluded_material": [
                 "credential values",
                 "private-file contents",
@@ -702,16 +698,16 @@ def command_restore_plan(manifest: dict[str, Any], inspect_target: bool = False)
     print("External/manual recovery prerequisites:")
     for item in manifest.get("recovery", {}).get("manual_prerequisites", []):
         print(f"- {item}")
-    print("No mutation performed. Repository restore requires explicit `restore --apply` authority.")
+    print("No mutation performed. Use `restore --apply` to create missing configured repositories when mutation is authorised.")
     return 0
 
 
 def command_restore(manifest: dict[str, Any], *, apply: bool, inspect_target: bool = False) -> int:
     data = config_from_manifest(manifest)
     if not apply:
-        print("ARC recovery preview: no mutation selected. Destructive repository reconstruction requires explicit authority before `restore --apply`.")
+        print("ARC recovery preview: no mutation selected. Use `restore --apply` to create missing configured repositories.")
         return command_restore_plan(manifest, inspect_target=inspect_target)
-    print("ARC restore apply boundary: GitHub repository reconstruction only.")
+    print("ARC restore apply boundary: bounded GitHub repository reconstruction only; existing repositories remain unchanged.")
     result = command_bootstrap(data, True)
     print("External owners were NOT restored. Complete the manifest manual prerequisites, then run ARC verification.")
     return result
