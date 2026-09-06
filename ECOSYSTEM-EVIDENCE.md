@@ -77,6 +77,14 @@ Derived impact:
 
 This is a targeted benchmark, not a claim that every ecosystem task is 5.1× faster.
 
+## Current Repository Router proof
+
+On **6 September 2026**, [`tbhrc/skills#394`](https://github.com/tbhrc/skills/issues/394) recorded a point-in-time acceptance across **11 registered repository-root `AGENTS.md` files**: the shared Router body matched, only repository Fast Links differed, and all remained below the 80-line Router limit.
+
+This is direct reference-ecosystem proof that multiple live repositories can use **one shared Router contract rather than separate agent manuals**. It is not an ARC deployment requirement and does not imply every future repository has already passed the same validation.
+
+The central [`templates/agents-repositories.json`](https://github.com/tbhrc/skills/blob/main/templates/agents-repositories.json) registry has since expanded beyond that acceptance sample. Therefore **11 is the verified sample recorded by #394, not a claim about the current registry total**.
+
 ## Repository creation cohort
 
 The measured post-`gh-course` cohort was:
@@ -231,7 +239,7 @@ The targeted router regression reached 5 calls / 18 seconds; the Skill Bank stoo
 - GitHub owns durable work and governance;
 - Skills own reusable methods;
 - domain repositories/specialist systems own current truth;
-- machine-first routing reduces rediscovery;
+- repository-root `AGENTS.md` Routers + progressive Fast Links reduce rediscovery and unnecessary preload;
 - multi-agent orchestration avoids permanent provider dependence;
 - normal connected capability executes directly when sufficient;
 - Mac/VPS/trusted runtime fills bounded gaps;
@@ -244,7 +252,7 @@ These statistics describe the **proven ecosystem ARC was created to reproduce**.
 ARC itself then underwent an independent clean-room proof on 4 September 2026 and demonstrated:
 
 - target-specific North Star;
-- machine-first routing;
+- the historical machine-first routing proof that evolved into today's root `AGENTS.md` Repository Router + progressive Fast Links;
 - independent Skills owner;
 - durable Issue / Anti-Drift workflow;
 - minimal external-system reconnection;
