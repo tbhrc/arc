@@ -1,6 +1,6 @@
 # Bootstrap ARC
 
-ARC bootstrap is deliberately **plan-first**. The goal is reproducibility without surprise mutation.
+ARC bootstrap is deliberately **inspectable before mutation**, but inspection is not a mandatory second approval ceremony. The goal is reproducibility without surprise mutation or operational drag.
 
 **Fast links:** [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Manifest](MANIFEST.md) · [Verify](VERIFY.md) · [Starter Skills](starter/skills/README.md) · [Repository Router](AGENTS.md) · [ARC Issues](https://github.com/tbhrc/arc/issues)
 
@@ -18,9 +18,9 @@ The generic example remains available at `profiles/generic-business/arc.example.
 
 `onboard` writes local configuration only. It does not mutate GitHub or any specialist system.
 
-## 2. Review the generated ownership configuration and North Star
+## 2. Resolve the ownership configuration and North Star
 
-Confirm at minimum:
+Establish at minimum:
 
 - the target organisation's canonical **North Star** location — its mission, vision and/or directives owner;
 - `target.business_name` and `target.owner`;
@@ -37,9 +37,9 @@ ARC reproduces the **North-Star mechanism**, not TBHRC's editable mission wordin
 
 Do not put secret values or secret-like fields in `arc.json`. ARC rejects common secret-field names and known credential-value patterns by design.
 
-If `arc.json` already exists, onboarding refuses to overwrite it unless `--overwrite` is explicitly supplied.
+If `arc.json` already exists, onboarding refuses to overwrite it unless `--overwrite` is deliberately supplied because overwrite is a genuine destructive boundary.
 
-Read [modules](modules/README.md), [providers](providers/README.md) and [runtimes](runtimes/README.md) before adding optional capability selections. ARC modules are ownership patterns, not mandatory software bundles.
+Read [modules](modules/README.md), [providers](providers/README.md) and [runtimes](runtimes/README.md) only when adding optional capability selections. ARC modules are ownership patterns, not mandatory software bundles.
 
 ## 3. Doctor
 
@@ -49,7 +49,7 @@ python3 scripts/arc.py doctor --config arc.json
 
 Doctor checks local prerequisites and authentication. It does not create repositories.
 
-## 4. Inspect and plan
+## 4. Inspect and plan when useful
 
 ```bash
 python3 scripts/arc.py plan --config arc.json --inspect-target
@@ -59,35 +59,26 @@ Where authenticated GitHub CLI access is available, the plan classifies each con
 
 ```text
 REUSE  — repository already exists; leave it unchanged during bootstrap
-CREATE — repository is missing and would be created only after apply authority
+CREATE — repository is missing and will be created when mutating mode is selected
 ```
 
 If GitHub CLI is unavailable or unauthenticated, ARC reports `UNKNOWN` rather than guessing that a repository is missing.
 
-Review:
+The plan is a visibility tool. It is useful for checking ownership, repository roles/visibility, modules, existing repositories, external owners and manual integrations. It is **not** a required human approval checkpoint when the current instruction already authorises ordinary bounded deployment.
 
-- organisation North Star owner/location;
-- target owner;
-- repository roles and visibility;
-- required vs optional components;
-- domain owners;
-- modules selected by the business;
-- authorised provider/runtime routes;
-- existing repositories to reuse;
-- private files and specialist systems that remain external owners;
-- manual integrations that remain outside repository bootstrap.
+For an established business, Atlas should classify existing owners as **KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE** before structural change when that classification is materially useful.
 
-For an established business, Atlas should additionally classify existing owners as **KEEP / INTEGRATE / MIGRATE / RESEARCH / RETIRE** before recommending structural change.
+## 5. Apply ordinary authorised deployment directly
 
-## 5. Apply
-
-A plan is not permission to mutate. Only after the target plan is accepted:
+If the current instruction already authorises ordinary bounded deployment, execute without asking the human again:
 
 ```bash
 python3 scripts/arc.py bootstrap --config arc.json --apply
 ```
 
-The bootstrap is intentionally conservative:
+`--apply` deliberately selects mutating mode. It does not create a second approval requirement.
+
+The bootstrap remains conservative:
 
 - existing repositories are reused, not overwritten;
 - missing configured repositories are created;
@@ -95,6 +86,8 @@ The bootstrap is intentionally conservative:
 - no production specialist system is modified;
 - no private business data is migrated;
 - the script does not grant broad organisation permissions.
+
+Stop for fresh authority only when a real boundary is crossed: destructive overwrite/delete/force/recovery, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
 
 ## 6. Confirm repository seeding, navigation and durable work control
 
@@ -144,17 +137,19 @@ Use the [GitHub Course](https://github.com/tbhrc/gh-course) when a human needs t
 
 A newly created ARC Skills repository should be usable immediately rather than empty.
 
-First inspect the non-mutating plan:
+Inspection is available when useful:
 
 ```bash
 python3 scripts/seed_foundation.py --config arc.json
 ```
 
-The plan resolves the configured repository with role `skills` and lists the generic starter Skills that are missing. After explicit approval:
+It resolves the configured repository with role `skills` and lists the generic starter Skills that are missing. When ordinary bounded seeding is already authorised, execute directly:
 
 ```bash
 python3 scripts/seed_foundation.py --config arc.json --apply
 ```
+
+Do not ask for a second approval merely because mutating mode is selected.
 
 ARC creates only missing files for:
 
@@ -173,7 +168,7 @@ Existing target Skills are never overwritten. After this first seed, the target 
 python3 scripts/arc.py verify --config arc.json
 ```
 
-Then complete the non-automatable acceptance in [VERIFY.md](VERIFY.md).
+Then complete only the relevant non-automatable acceptance in [VERIFY.md](VERIFY.md).
 
 ## 9. Run one real workflow
 
@@ -215,7 +210,7 @@ To understand recovery without mutation:
 python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
 ```
 
-Only after the recovery plan is understood and GitHub repository reconstruction is explicitly authorised:
+Recovery is a real destructive-risk boundary. After GitHub repository reconstruction is explicitly authorised:
 
 ```bash
 python3 scripts/arc.py restore --manifest arc-estate.json --apply
