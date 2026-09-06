@@ -140,9 +140,9 @@ A proof Issue or elaborate acceptance programme is not required when one decisiv
 
 ## Recovery
 
-Recovery that overwrites/reconstructs material state is a genuine destructive-risk boundary. Protect **that action**, not ordinary operation around it.
+Current ARC recovery is bounded reconstruction: existing repositories are reused unchanged and missing configured repositories may be created when `--apply` selects mutation.
 
-Use non-mutating restore planning only when useful; once destructive recovery is explicitly authorised, execute and verify.
+Use restore planning only when useful. If a future recovery operation actually deletes, overwrites, force-updates or crosses another genuine consequential boundary, protect that specific action only.
 
 ## KISSS test
 
