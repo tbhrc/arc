@@ -7,12 +7,16 @@
 - Rewrote `README.md` so ARC is explained as the portable reproduction package for the **whole proven TBHRC/iMPLEMENTAi human + AI operating ecosystem**, not merely as the ARC repository or its final build window.
 - Added `ECOSYSTEM-EVIDENCE.md` to preserve the 27 Aug–4 Sep 2026 GitHub-era measurement snapshot with exact / derived / estimated confidence labels, business outcomes, infrastructure proof and transformation timeline.
 - Aligned `ARCHITECTURE.md`, `ATLAS.md`, `BOOTSTRAP.md`, the TBHRC reference profile and starter owner/workflow Skills with the current Repository Router model.
-- Removed routine `plan → review → explicit approval → apply` friction from active deployment guidance. Ordinary already-authorised bounded work now executes directly; `--apply` is a mutation-mode selector, while fresh human authority is reserved for real destructive/root/private-data/spend/legal/client-commitment boundaries.
+- Removed routine `plan → review → explicit approval → apply` friction. Ordinary already-authorised bounded work executes directly; `--apply` is a mutation selector, while fresh authority is reserved for actions that actually cross consequential destructive/root/private-data/spend/legal/client-commitment boundaries.
+- Removed the founder-approval workflow and label/security control-plane workflow.
+- Closed the dormant Gate-E security/governance expansion unmerged and removed generic least-privilege/read-only/redundant-provider doctrine from active ARC architecture.
+- Removed issue-first execution doctrine: Issues/PRs are optional continuity/evidence surfaces, never runtime permission.
+- Removed the false destructive-recovery class. Current `restore --apply` reuses existing configured repositories unchanged and creates only missing configured repositories.
+- Removed the arbitrary Python 3.10 `doctor` gate after executable evidence proved the then-current full 23-test suite on Python 3.9.6.
 - Proved the normal Agent OS cold-start paths remain comfortably within the <=200 physical Markdown-line budget; the generated ARC Router is 26 lines.
 - Re-proved deployment/adoption behaviour: non-mutating inspection causes zero writes, existing repositories remain REUSE/unchanged, and the full suite passed 23/23.
-- Re-proved Safe Harbour recovery with destructive local reconstruction of a missing Router surface; recovered `AGENTS.md` byte-matched the pre-loss/generated contract and the full suite passed 23/23.
+- Re-proved Safe Harbour recovery with local reconstruction of a missing Router surface; recovered `AGENTS.md` byte-matched the pre-loss/generated contract and the full suite passed 23/23.
 - Ran a real end-to-end cold-start workflow proof using the Python support question: root Router → Atlas audit route → executable/source truth → Level 0 Direct → one verification → durable evidence → stop, without loading Sniper or Multi-Agent Orchestrator unnecessarily.
-- Clarified Python compatibility: current covered behaviour passes 23/23 tests on Python 3.9.6, but official ARC support remains Python 3.10+ because `doctor` rejects `<3.10` and CI currently validates Python 3.12 only.
 - Preserved KISSS throughout: no new router service, validator, daemon, queue, provider hierarchy, policy engine or control plane was added.
 
 ## 1.0.0 — 2026-09-04 — Blank-Slate Reproduction Proven
