@@ -11,7 +11,8 @@ Read this first. Follow only the link needed for the task; do not preload docume
 - **Known owner + bounded task** → execute with the most-specific Skill/tool.
 - **Owner/source unclear** → use Sniper once, then execute.
 - **Ordinary authorised work** → Level 0 Direct.
-- **Creating/materially restructuring agent-consumed operational documentation** → use Workflow + [Document Strategy](https://github.com/tbhrc/skills/blob/main/governance/strategies/strategy-cold-start-context-reduction.md); preserve the complete decision map and progressive-load conditional depth.
+- **Creating/updating/reviewing a Skill** → use [Skill Builder](https://github.com/tbhrc/skills/tree/main/github-skill-builder) first; it owns Skill lifecycle and loads Document Strategy/Policies conditionally.
+- **Creating/materially restructuring non-Skill agent-consumed operational documentation** → use Workflow + [Document Strategy](https://github.com/tbhrc/skills/blob/main/governance/strategies/strategy-cold-start-context-reduction.md); preserve the complete decision map and progressive-load conditional depth.
 - **Cross-repository work** → use any existing authorised cross-repository route that can perform the task; do not invent another credential.
 - **Genuine specialist/parallel need** → use the Multi-Agent Orchestrator only when one direct stream is insufficient.
 - **Real consequential boundary** → apply only the smallest effective control protecting that boundary.
