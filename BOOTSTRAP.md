@@ -2,7 +2,7 @@
 
 ARC bootstrap is deliberately **plan-first**. The goal is reproducibility without surprise mutation.
 
-**Fast links:** [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Manifest](MANIFEST.md) · [Verify](VERIFY.md) · [Starter Skills](starter/skills/README.md) · [Root Contract](AGENTS.md) · [ARC Issues](https://github.com/tbhrc/arc/issues)
+**Fast links:** [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Manifest](MANIFEST.md) · [Verify](VERIFY.md) · [Starter Skills](starter/skills/README.md) · [Repository Router](AGENTS.md) · [ARC Issues](https://github.com/tbhrc/arc/issues)
 
 ## 1. Create a business profile through Atlas
 
@@ -100,19 +100,19 @@ The bootstrap is intentionally conservative:
 
 For each **new** repository, bootstrap seeds a role-aware README, root `AGENTS.md`, Atlas Skill pointer and `/atlas` prompt-file entrypoint. Existing repositories are deliberately left unchanged.
 
-Before substantive durable work begins, root `AGENTS.md` must act as the compact **Repository Router** and make the following directly reachable through progressive Fast Links without broad rediscovery or preloading linked material:
+Root `AGENTS.md` is the first-hop Repository Router. It should make these destinations directly reachable through progressive Fast Links without broad rediscovery:
 
 ```text
 North Star
 Skills
 workflow / durable work method
-owner / system map when ownership is unclear
+owner / system map
 Issues
 ```
 
-Known bounded work should route straight from root `AGENTS.md` to the smallest relevant Skill/owner. Owner/source lookup is conditional only when the Router cannot already resolve the destination. Workflow chooses the execution level/method; Multi-Agent Orchestrator is loaded only for delegation, specialist gaps, deliberate review or genuine parallel work.
+Known bounded work should follow only the needed Fast Link to the smallest relevant Skill/owner. Owner/source lookup is conditional when the Router cannot resolve the route. Workflow and Multi-Agent Orchestrator are loaded only when their execution/delegation responsibilities are genuinely needed.
 
-Important active front doors should use compact **Fast Links**. Do not manufacture decorative links or add Fast Links to raw evidence/generated/archive material unless a canonical return/replacement link materially helps.
+Important active front doors should use compact **Fast Links**. Fast Links are pointers, not preload instructions. Do not manufacture decorative links or add Fast Links to raw evidence/generated/archive material unless a canonical return/replacement link materially helps.
 
 Durable GitHub work should use the canonical Issue structure:
 
@@ -163,7 +163,7 @@ ARC creates only missing files for:
 - `skill-authoring`;
 - `research-escalation`.
 
-`owner-router` is a conditional fallback only when the root Repository Router cannot resolve the correct owner/source; when used, it starts from the organisation North Star before resolving owner truth. `github-workflow` preserves Anti-Drift and chooses the lowest sufficient durable GitHub execution lane.
+`owner-router` is a conditional fallback for unresolved owner/source questions after root `AGENTS.md` cannot already route the task. `github-workflow` preserves Anti-Drift and chooses the lowest sufficient durable GitHub execution lane.
 
 Existing target Skills are never overwritten. After this first seed, the target organisation's Skills repository owns its editable reusable HOW. ARC does not continuously overwrite those Skills from upstream templates.
 
@@ -182,8 +182,8 @@ The first meaningful proof is not an empty architecture. Select one real busines
 ```text
 organisation North Star
 -> request / Anti-Drift objective
--> Skill
--> owner truth
+-> Repository Router
+-> relevant Skill / owner truth
 -> authorised provider/runtime
 -> agent execution
 -> verification
