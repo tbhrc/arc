@@ -20,7 +20,8 @@ ARC should let a capable founder, operator or AI agent take a blank or existing 
 - normal authorised work executes directly at the lowest sufficient level;
 - specialist agents/runtime are used only when genuinely needed;
 - private files, credentials and structured live systems remain external owners;
-- deployment and recovery are plan-first and explicit-apply;
+- deployment is inspectable before mutation without requiring ceremonial second approval;
+- destructive recovery remains explicitly gated;
 - real work is verified and leaves durable evidence.
 
 ## Why ARC exists
@@ -64,6 +65,14 @@ stop
 
 The Router is deliberately small. Fast Links are pointers, not mandatory reads. There is no separate routing service, daemon, queue or provider hierarchy.
 
+## Authority without friction
+
+For ordinary bounded work, the current authorised instruction is the authority. ARC must not manufacture a second human confirmation merely because a command changes state.
+
+`--apply` is a deliberate CLI mutation-mode selector. It does not mean “ask the human again.”
+
+Fresh authority is required only when the next step crosses a real boundary such as destructive overwrite/delete/force/recovery, root or credential use, material spend, private/confidential data movement, legal/compliance commitment, production-destructive action, or material external/client commitment.
+
 ## What ARC reproduces
 
 ARC reproduces portable architecture and contracts such as:
@@ -76,7 +85,7 @@ ARC reproduces portable architecture and contracts such as:
 - durable Issue / Anti-Drift control;
 - source-of-truth boundaries;
 - provider/runtime-neutral execution rules;
-- plan-first bootstrap and recovery;
+- inspectable bootstrap and bounded recovery;
 - verification contracts;
 - non-secret estate manifests and external-owner references.
 
@@ -98,7 +107,7 @@ ARC records only the minimum non-secret references required to reconstruct the o
 
 ## Blank-environment route
 
-A new deployment starts in plan mode:
+A new deployment can inspect first:
 
 ```bash
 python3 scripts/arc.py onboard --output arc.json
@@ -106,13 +115,15 @@ python3 scripts/arc.py doctor --config arc.json
 python3 scripts/arc.py plan --config arc.json --inspect-target
 ```
 
-After explicit apply authority:
+When the current instruction already authorises ordinary bounded deployment, execute directly:
 
 ```bash
 python3 scripts/arc.py bootstrap --config arc.json --apply
 python3 scripts/seed_foundation.py --config arc.json --apply
 python3 scripts/arc.py verify --config arc.json
 ```
+
+No second approval round-trip is required.
 
 Bootstrap is conservative:
 
@@ -199,7 +210,7 @@ python3 scripts/arc.py restore-plan \
   --inspect-target
 ```
 
-Only after explicit authority:
+Destructive recovery is a real risk boundary. After that boundary is explicitly authorised:
 
 ```bash
 python3 scripts/arc.py restore \
@@ -258,6 +269,7 @@ queue
 policy engine
 provider hierarchy
 new control plane
+precautionary approval loop
 ```
 
 ## Start here
