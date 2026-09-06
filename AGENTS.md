@@ -5,7 +5,7 @@ This file is the repository **Router** and cold-start contract. Read it first. F
 **Core Fast Links:** [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) · [Governance](https://github.com/tbhrc/skills/tree/main/governance) · [Terminology](https://github.com/tbhrc/skills/blob/main/governance/policies/agent-operating-system-terminology.md) · [Context Budget](https://github.com/tbhrc/skills/blob/main/governance/policies/agent-operating-system-context-budget.md) · [Issue Template](https://github.com/tbhrc/skills/blob/main/.github/ISSUE_TEMPLATE/durable-work.md) · [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md) · [Multi-Agent Orchestrator](https://github.com/tbhrc/skills/tree/main/github-multi-agent-orchestrator)
 
 <!-- REPOSITORY_FAST_LINKS_START -->
-**Repository Fast Links:** [README](README.md) · [Atlas](.github/skills/atlas/SKILL.md) · [Architecture](ARCHITECTURE.md) · [Ecosystem Evidence](ECOSYSTEM-EVIDENCE.md) · [Manifest](MANIFEST.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Reconnections](RECONNECTIONS.md) · [Releases](RELEASES.md) · [Issues](https://github.com/tbhrc/arc/issues)
+**Repository Fast Links:** [README](README.md) · [Atlas](.github/skills/atlas/SKILL.md) · [Architecture](ARCHITECTURE.md) · [Manifest](MANIFEST.md) · [Verify](VERIFY.md) · [Releases](RELEASES.md) · [Issues](https://github.com/tbhrc/arc/issues)
 <!-- REPOSITORY_FAST_LINKS_END -->
 
 ## Route
