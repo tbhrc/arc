@@ -20,21 +20,29 @@ At publication time, the tagged ARC repository state:
 - contains aligned Router, Atlas, manifest, bootstrap and verification contracts;
 - records material changes and genuine known limitations.
 
-A release is an architecture/recovery anchor, not a guarantee that a client's external systems or backups are healthy.
+## Published releases
 
-## Release notes
+- `v0.3.0` — Safe Harbour.
+- `v1.0.0` — Blank-Slate Reproduction Proven.
 
-Record only useful facts:
+`v1.1.0` was an internal unreleased alignment candidate and is superseded by `v1.2.0`; do not create or backfill a release for it.
 
-```text
-ARC version/tag
-exact source commit
-estate-manifest schema support
-material architecture changes
-compatibility / migration notes
-verification evidence
-genuine known limitations / external-owner responsibilities
-```
+## Current release candidate — v1.2.0
+
+ARC `v1.2.0` aligns the portable architecture with the current zero-friction operating model while reducing duplicated canon.
+
+Material changes:
+
+- Anti-Drift/durable-evidence is optional continuity, not architecture or runtime admission;
+- no named Anti-Drift Issue structure is required by ARC;
+- README/Architecture/Bootstrap now describe the minimum route only;
+- starter Workflow and owner-router Skills are thin bootstrap pointers, not competing operating doctrine;
+- TBHRC reference doctrine points to current `tbhrc/skills` canon;
+- each deployed organisation still owns its own evolving Skills canon;
+- ordinary authorised work executes directly and verifies once;
+- estate-manifest schema remains `1.0`;
+- current restore reuses existing configured repositories unchanged and creates only missing configured repositories;
+- private/live external state and credential recovery remain external-owner responsibilities.
 
 ## Safe-harbour relationship
 
@@ -51,33 +59,18 @@ external owner backups/reprovisioning
 → verification
 ```
 
-Current `restore --apply` leaves existing configured repositories unchanged and creates only missing configured repositories.
+## Release notes
 
-See [contracts/safe-harbour.md](contracts/safe-harbour.md).
+Record only useful facts:
 
-## Published releases
+```text
+ARC version/tag
+exact source commit
+estate-manifest schema support
+material architecture changes
+compatibility / migration notes
+verification evidence
+genuine known limitations / external-owner responsibilities
+```
 
-- `v0.3.0` — Safe Harbour; first formal safe-harbour release.
-- `v1.0.0` — Blank-Slate Reproduction Proven; first formal 1.x public release.
-
-## Current release candidate
-
-ARC `v1.1.0` is the Repository Router and zero-friction alignment release candidate.
-
-It aligns ARC with the current operating model:
-
-- root `AGENTS.md` is the first-hop Repository Router;
-- generated repositories receive the compact Router contract;
-- Fast Links are progressive pointers;
-- owner lookup is conditional;
-- Workflow and Multi-Agent Orchestrator load only when their functions are genuinely needed;
-- ordinary authorised mutation executes directly;
-- Issues/PRs are continuity/evidence surfaces when useful, not runtime permission;
-- recovery is bounded reconstruction rather than a separate approval class;
-- generic least-privilege, redundant-provider and approval-control-plane doctrine is not core ARC architecture;
-- estate-manifest schema remains `1.0`;
-- private/live external state and credential recovery remain external-owner responsibilities.
-
-Compatibility evidence: the covered ARC behavior passed the then-current full 23-test suite on Python **3.9.6**. ARC no longer invents a Python 3.10 requirement through `doctor`; compatibility claims must follow executable evidence.
-
-The formal `v1.1.0` release should point to the final reconciled `main` commit after normal ARC verification passes. Do not retag or rewrite `v1.0.0`.
+The formal `v1.2.0` release must point to the final reconciled `main` commit after normal ARC verification passes.
