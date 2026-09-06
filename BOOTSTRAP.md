@@ -100,15 +100,17 @@ The bootstrap is intentionally conservative:
 
 For each **new** repository, bootstrap seeds a role-aware README, root `AGENTS.md`, Atlas Skill pointer and `/atlas` prompt-file entrypoint. Existing repositories are deliberately left unchanged.
 
-Before substantive durable work begins, the estate must also have a machine-first route that makes the following directly reachable without broad rediscovery:
+Before substantive durable work begins, root `AGENTS.md` must act as the compact **Repository Router** and make the following directly reachable through progressive Fast Links without broad rediscovery or preloading linked material:
 
 ```text
 North Star
 Skills
 workflow / durable work method
-owner / system map
+owner / system map when ownership is unclear
 Issues
 ```
+
+Known bounded work should route straight from root `AGENTS.md` to the smallest relevant Skill/owner. Owner/source lookup is conditional only when the Router cannot already resolve the destination. Workflow chooses the execution level/method; Multi-Agent Orchestrator is loaded only for delegation, specialist gaps, deliberate review or genuine parallel work.
 
 Important active front doors should use compact **Fast Links**. Do not manufacture decorative links or add Fast Links to raw evidence/generated/archive material unless a canonical return/replacement link materially helps.
 
@@ -161,7 +163,7 @@ ARC creates only missing files for:
 - `skill-authoring`;
 - `research-escalation`.
 
-`owner-router` starts from the organisation North Star before resolving owner truth. `github-workflow` preserves Anti-Drift and chooses the lowest sufficient durable GitHub execution lane.
+`owner-router` is a conditional fallback only when the root Repository Router cannot resolve the correct owner/source; when used, it starts from the organisation North Star before resolving owner truth. `github-workflow` preserves Anti-Drift and chooses the lowest sufficient durable GitHub execution lane.
 
 Existing target Skills are never overwritten. After this first seed, the target organisation's Skills repository owns its editable reusable HOW. ARC does not continuously overwrite those Skills from upstream templates.
 
