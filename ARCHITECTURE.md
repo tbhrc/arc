@@ -12,7 +12,7 @@ organisation direction
 → smallest relevant Skill / owner
 → simplest authorised execution route
 → verify real state once
-→ preserve continuity only when useful
+→ preserve material durable context when needed
 → stop
 ```
 
@@ -64,11 +64,11 @@ For the TBHRC reference implementation, current operating doctrine lives in `tbh
 
 ARC should point to those current owners where appropriate rather than restating their full rules.
 
-## Continuity is optional
+## Durable context without Issue ceremony
 
-Issues, PRs, plans and evidence may preserve continuity, coordination, review or recovery when useful. They are not part of the minimum execution path and are never runtime permission for ordinary authorised work.
+Issues, PRs, plans and evidence are not part of the minimum execution path and are never runtime permission for ordinary authorised work. ARC does not require a named `Anti-Drift` section, controlling Issue, checklist or evidence object merely to execute.
 
-The only invariant is to preserve the requested outcome when continuity is genuinely needed. ARC does not require a named `Anti-Drift` section, controlling Issue, checklist or evidence object.
+When substantive work changes a material objective, scope, acceptance condition, architecture/decision, blocker or continuation state, preserve that change once in the appropriate durable owner record before handoff, closure or the end of the meaningful work unit. Do not interrupt authorised execution for pre-mutation documentation ceremony.
 
 ## One owner / one truth
 
@@ -119,7 +119,7 @@ ARC is healthy when a fresh capable human or agent can:
 3. execute ordinary authorised work directly;
 4. use extra routing/coordination only when genuinely needed;
 5. verify the requested real-world result once;
-6. preserve continuity only when it materially helps.
+6. preserve material durable context when needed without turning it into execution permission.
 
 ## KISSS
 

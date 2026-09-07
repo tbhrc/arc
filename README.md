@@ -14,7 +14,7 @@ request
 → smallest relevant Skill / owner
 → simplest authorised execution route
 → verify real state once
-→ preserve continuity only when useful
+→ preserve material durable context when needed
 → stop
 ```
 
@@ -58,11 +58,11 @@ Additional human authority is reserved for genuine consequential boundaries such
 
 Security, governance and continuity mechanisms must protect a concrete current boundary and earn their friction.
 
-## Continuity is optional
+## Durable context without Issue ceremony
 
-Issues, PRs, plans and durable evidence are useful when they materially help continuity, coordination, review or recovery. They are not part of the minimum execution path and are never runtime permission for ordinary authorised work.
+Issues, PRs, plans and durable evidence are not runtime permission for ordinary authorised work, and ARC does not require a named Anti-Drift field, controlling Issue, checklist or evidence object merely to execute.
 
-ARC does not require a named Anti-Drift field, controlling Issue, checklist or evidence object.
+When substantive work changes a material objective, scope, acceptance condition, architecture/decision, blocker or continuation state, preserve that change once in the appropriate durable owner record before handoff, closure or the end of the meaningful work unit. Do not interrupt authorised execution for pre-mutation documentation ceremony.
 
 ## Deploy
 
@@ -115,7 +115,7 @@ ARC is healthy when a fresh capable human or agent can:
 3. execute ordinary authorised work directly;
 4. use extra routing/coordination only when genuinely needed;
 5. verify the requested real-world result once;
-6. preserve continuity only when it materially helps.
+6. preserve material durable context when needed without turning it into execution permission.
 
 ## Evidence
 

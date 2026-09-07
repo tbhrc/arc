@@ -2,6 +2,8 @@
 
 Read this first. Follow only the link needed for the task; do not preload documentation.
 
+**ARC owns the portable, non-secret deployment and recovery architecture for reproducing a working human + AI operating ecosystem; mutable live business/system truth stays with its current owner.**
+
 **Core Fast Links:** [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) · [LIB1 Librarian](https://github.com/tbhrc/skills/tree/main/ecosystem-librarian) · [Document Strategy](https://github.com/tbhrc/skills/blob/main/governance/strategies/strategy-cold-start-context-reduction.md) · [Founder Output](https://github.com/tbhrc/skills/blob/main/github-agent-workflow/SKILL.md#founder-facing-output) · [Anti-Friction Security](https://github.com/tbhrc/skills/blob/main/governance/policies/real-boundary-security-and-friction.md) · [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md)
 
 **Repository Fast Links:** [README](README.md) · [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Issues](https://github.com/tbhrc/arc/issues)
@@ -23,6 +25,8 @@ Read this first. Follow only the link needed for the task; do not preload docume
 - **Execution first.** Do not create/update/check an Issue, label, comment, approval, plan, benchmark, proof workflow or documentation merely to unlock execution.
 - Issues are optional continuity/evidence records, never runtime permission.
 - Do not require a controlling Issue for ordinary bounded work. Create/use one when durable continuity, coordination or recovery actually benefits from it.
+- Material founder/user changes to objective, scope, acceptance, architecture/decision, blocker or continuation state must not remain trapped only in chat; capture them once in the Issue or better owner truth at the natural checkpoint.
+- Do not pause authorised execution merely to synchronise Issue metadata. If a controlling Issue exists or was warranted, reconcile it before completion or handoff.
 - **Founder scan speed.** Follow the [Workflow founder-facing output convention](https://github.com/tbhrc/skills/blob/main/github-agent-workflow/SKILL.md#founder-facing-output): concise `🟢 GREEN` / `🟠 AMBER` / `🔴 RED` status, `✅` for confirmed completed items, evidence-backed percentages only, and a clickable `Issue: #N` footer when applicable.
 - **Friction masquerading as security is prohibited.**
 - Use authenticated identity, **purpose-fit authority sufficient for the intended function**, real validation/secret/data protections, and one decisive outcome verification.
@@ -31,6 +35,6 @@ Read this first. Follow only the link needed for the task; do not preload docume
 - Production-specific controls apply only to actual production-impacting actions.
 - Preserve unrelated newer work and avoid concurrent mutation collisions where they are real.
 - Never expose secrets, credentials or unnecessary private data.
-- Verify the requested outcome once, record continuity only when useful, then stop.
+- Verify the requested outcome once, reconcile material durable state when applicable, then stop.
 
 **`main` keeps progress. KISSS keeps speed. Security protects real boundaries, not paperwork.**
