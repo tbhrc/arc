@@ -18,7 +18,7 @@ jobs:
           python-version: '3.12'
       - name: Compile and test
         run: |
-          python3 -m py_compile scripts/arc.py scripts/package_atlas.py scripts/seed_foundation.py
+          python3 -m py_compile scripts/arc.py scripts/package_atlas.py scripts/seed_foundation.py scripts/sync_public_skills.py
           python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Blank-slate smoke proof
         run: |
