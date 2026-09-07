@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   reconcile:
-    runs-on: [self-hosted, Linux, tbhrc, ai-engine]
+    runs-on: [self-hosted, Linux, tbhrc, arc]
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
