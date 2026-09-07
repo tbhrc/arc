@@ -35,8 +35,9 @@ jobs:
         if: steps.allowlist.outputs.count == '0'
         shell: bash
         run: |
-          rm -rf /tmp/arc-public-skill-source
-          mkdir -p /tmp/arc-public-skill-source
+          source_dir="$RUNNER_TEMP/arc-public-skill-source"
+          rm -rf "$source_dir"
+          mkdir -p "$source_dir"
 
       - name: Checkout canonical private Skills for approved exports
         if: steps.allowlist.outputs.count != '0'
@@ -49,12 +50,13 @@ jobs:
             echo "SKILLS_READ_TOKEN is required only when public-skill-export.json selects one or more private source Skills." >&2
             exit 2
           fi
-          rm -rf /tmp/arc-public-skill-source
-          gh repo clone tbhrc/skills /tmp/arc-public-skill-source -- --quiet
+          source_dir="$RUNNER_TEMP/arc-public-skill-source"
+          rm -rf "$source_dir"
+          gh repo clone tbhrc/skills "$source_dir" -- --quiet
 
       - name: Sync allowlisted Skills and verify public boundary
         shell: bash
-        run: python3 scripts/sync_public_skills.py --source /tmp/arc-public-skill-source --apply
+        run: python3 scripts/sync_public_skills.py --source "$RUNNER_TEMP/arc-public-skill-source" --apply
 
       - name: Commit deterministic parity update
         shell: bash
