@@ -1,0 +1,8 @@
+{
+  "source_repository": "tbhrc/skills",
+  "destination": ".github/skills",
+  "preserve": [
+    "atlas"
+  ],
+  "skills": []
+}
