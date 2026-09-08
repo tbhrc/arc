@@ -1,0 +1,35 @@
+name: Issue 51 document intake once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/issue-51-document-intake-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  implement:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply default document-intake patch
+        run: python scripts/issue51_document_intake_once.py
+      - name: Verify FolderDesk
+        run: |
+          python scripts/arc.py verify-self
+          python -m unittest discover -s tests
+      - name: Commit implementation and remove temporary execution files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/issue-51-document-intake-once.yml scripts/issue51_document_intake_once.py
+          git add AGENTS.md README.md BOOTSTRAP.md FEATURES.md scripts/arc.py scripts/seed_foundation.py starter/skills/document-intake/SKILL.md tests/test_issue_51_document_intake.py
+          git commit -m "feat: make document filing and recall a FolderDesk default (#51)"
+          git push
