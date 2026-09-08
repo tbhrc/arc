@@ -1,5 +1,10 @@
 # AGENTS.md — Repository Router
 
+<!-- ROUTER_SHARED_LIFECYCLE_START -->
+**Issue Gate:** Every substantive or durable work unit requires a master controlling Issue; create new substantive Issues from the canonical [Durable Work template](https://github.com/tbhrc/skills/blob/main/.github/ISSUE_TEMPLATE/durable-work.md).
+
+**Close Gate:** Before closing any Issue, read and reconcile its current body; every required `## Checklist` and `## Acceptance Criteria` item must be `[x]`, otherwise keep the Issue open.
+<!-- ROUTER_SHARED_LIFECYCLE_END -->
 Read this first. Follow only the link needed for the task; do not preload documentation.
 
 **FolderDesk by iMPLEMENTAi owns the portable, non-secret deployment and recovery architecture for reproducing a working Business AI Operating System; mutable live business/system truth stays with its current owner.**
