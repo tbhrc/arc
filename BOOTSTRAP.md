@@ -52,22 +52,58 @@ Infer from the conversation and examples first, then ask only what remains uncle
 
 Record the useful preferences durably in the client-owned operating estate so they are reused instead of repeatedly re-asked.
 
-## 3. Infer, then connect, the systems the client already uses
+## 3. Infer, then connect, wherever the client's data already lives
 
-**Do not start with a generic app questionnaire when the client has already supplied a clue.** Convert explicit business context into the obvious connector recommendation immediately.
+**Do not start with a generic app questionnaire when the client has already supplied a clue.** Treat any named data/work location as a routing signal. The goal is to connect the existing owner system and learn from authorised source data before asking the client to manually reproduce context.
 
-Canonical example:
+Examples:
 
 ```text
-client: "our documents are in Google"
-→ infer Google Workspace / Google Drive
-→ explain that connecting it lets FolderDesk inspect authorised existing documents, learn business/brand context, file and retrieve work, and avoid redundant manual uploads
-→ connect/authorise it using the lowest-friction native/dedicated route available
-→ inventory/ingest only the relevant authorised scope
-→ ask only about remaining systems that are still unknown
+"our documents are in Google"
+→ Google Workspace / Google Drive
+
+"everything is in Microsoft / SharePoint / OneDrive"
+→ Microsoft 365 / SharePoint / OneDrive
+
+"our sales data is in HubSpot / Salesforce"
+→ the matching CRM connector
+
+"finance is in Zoho Books / Xero / QuickBooks"
+→ the matching accounting connector
+
+"our knowledge is in Notion / Confluence"
+→ the matching knowledge connector
+
+"files are on Dropbox / Box"
+→ the matching file-store connector
+
+"the data is on our server / NAS / shared drive / database"
+→ use the authorised mounted-filesystem, database, API, SFTP or other purpose-fit route
 ```
 
-Apply the same principle to Microsoft 365/OneDrive/SharePoint, email/calendar, CRM, ERP/accounting, messaging and other named systems.
+Google Workspace / Drive is a canonical example, **not a special-case dependency**. Apply the same inference rule to any named system, including systems not listed above.
+
+### Connector resolution order
+
+For every named source:
+
+1. **Reuse an existing authorised native/dedicated connector** if one is already available.
+2. Otherwise use the platform's normal connector/plugin/app connection path and ask the client only for the unavoidable sign-in/authorisation action.
+3. If no native connector exists, use an already-authorised API, MCP, mounted filesystem, database route or governed specialist tool/gateway that can access the source safely.
+4. If the source is genuinely not connectable, ask for the **smallest useful export** or representative document set rather than making the client manually reconstruct the business in chat. Record the missing connector as a capability gap for later improvement.
+
+Once connected:
+
+```text
+identify owner/source
+→ inspect/inventory authorised scope
+→ ingest only relevant useful content
+→ preserve provenance
+→ route durable knowledge/tasks to the correct owners
+→ verify retrieval
+```
+
+Do **not** migrate or ingest an entire source blindly. Keep the existing system as owner truth where appropriate and pull only the context required for useful work.
 
 Only after using existing clues, ask what still owns:
 
@@ -76,6 +112,8 @@ Only after using existing clues, ask what still owns:
 - CRM/sales;
 - ERP/accounting;
 - messaging/collaboration;
+- knowledge/wiki;
+- databases/shared drives;
 - other business-critical systems.
 
 Recommend the **smallest useful connector set for real work now**, prioritising connectors that unlock the most existing context with the least client effort. Prefer native/dedicated authorised connectors. Reuse existing systems rather than replacing them. If a named source can supply documents/context directly once authorised, connect it before asking the client to manually reproduce that context.
