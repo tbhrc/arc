@@ -6,16 +6,31 @@ Use this profile to deploy ARC into a new business or client without importing T
 
 1. Use Atlas or `scripts/arc.py onboard` to generate `arc.json`.
 2. Set/confirm the target GitHub owner and visibility.
-3. Rename/add domain repositories to match how the business actually owns work.
-4. Select only the optional business modules that have a real owner/use case.
-5. Declare at least one normal capable-agent route and one normal runtime route.
-6. Add a trusted runtime only when the required work genuinely needs that capability.
-7. Use `doctor` and `plan --inspect-target` when useful for validation; if the current instruction already authorises ordinary bounded deployment, run `bootstrap --apply` directly without asking again.
-8. Seed the first-day Skills foundation with `scripts/seed_foundation.py --apply` when ordinary bounded seeding is already authorised; the non-mutating form remains available for inspection.
-9. Use Atlas to complete only the owner mapping, specialist-system integration and agent onboarding actually required.
-10. Run one real workflow and verify durable evidence before calling the deployment useful.
+3. For a managed-client deployment, set `deployment_context.scope` to `tenant` and supply the canonical `tenant_id`; for shared architecture use `scope: shared`.
+4. Rename/add domain repositories to match how the business actually owns work.
+5. Select only the optional business modules that have a real owner/use case.
+6. Declare at least one normal capable-agent route and one normal runtime route.
+7. Add a trusted runtime only when the required work genuinely needs that capability.
+8. Use `doctor` and `plan --inspect-target` when useful for validation; if the current instruction already authorises ordinary bounded deployment, run `bootstrap --apply` directly without asking again.
+9. Seed the first-day Skills foundation with `scripts/seed_foundation.py --apply` when ordinary bounded seeding is already authorised; the non-mutating form remains available for inspection.
+10. Use Atlas to complete only the owner mapping, specialist-system integration and agent onboarding actually required.
+11. Run one real workflow and verify durable evidence before calling the deployment useful.
 
 `--apply` selects mutating mode. It is not a ceremonial second approval step. Fresh authority is required only at a real destructive/root/private-data/spend/legal/client-commitment boundary.
+
+## Multi-tenant deployment context
+
+Managed-client profiles must carry explicit deployment context:
+
+```json
+"deployment_context": {
+  "scope": "tenant",
+  "tenant_id": "<canonical-tenant-id>",
+  "entity_ref": "<optional-canonical-owner-entity-ref>"
+}
+```
+
+`tenant_id` and `entity_ref` are references supplied by the canonical organisation/DB owners; FolderDesk does not allocate a parallel client/identity code system. A non-client shared architecture profile uses `"scope": "shared"` and no `tenant_id`. Safe-harbour export/recovery preserves this context.
 
 ## Module selection
 

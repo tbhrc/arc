@@ -1,12 +1,15 @@
 {
   "manifest_schema": "1.0",
-  "arc_version": "0.3.0",
+  "arc_version": "1.3.0",
   "exported_at": "2026-09-03T00:00:00Z",
   "target": {
     "business_name": "Example Business",
     "owner": "example-org",
     "owner_type": "org",
     "default_visibility": "private"
+  },
+  "deployment_context": {
+    "scope": "shared"
   },
   "repositories": [
     {
@@ -56,7 +59,7 @@
   },
   "compatibility": {
     "manifest_schema": "1.0",
-    "exported_by_arc": "0.3.0",
+    "exported_by_arc": "1.3.0",
     "minimum_reader": "0.3.0"
   },
   "recovery": {

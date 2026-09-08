@@ -21,6 +21,7 @@ The exported manifest may contain only portable architecture metadata:
 - manifest schema version;
 - ARC version/release reference;
 - target business name and GitHub owner/type/visibility metadata;
+- deployment context (`shared` or canonical tenant ID, plus optional canonical entity reference);
 - repository/domain names, roles, descriptions, required/optional state and visibility;
 - declared private-file provider/owner by name only;
 - declared specialist systems by name only;
@@ -28,7 +29,7 @@ The exported manifest may contain only portable architecture metadata:
 - optional observed repository existence state;
 - compatibility and recovery-boundary metadata.
 
-It must not contain copied live records or credential values.
+It must not contain copied live records or credential values. Tenant/entity values are references only; FolderDesk does not become their registry or source of truth.
 
 ## External owners remain external
 
@@ -54,6 +55,7 @@ The manifest is architecture evidence, not proof that external backups exist.
 `arc.py restore-plan` is non-mutating. It must identify:
 
 - target GitHub owner;
+- deployment scope and tenant/entity context when tenant-scoped;
 - repositories that are already present versus missing where observable;
 - repository roles and visibility;
 - external owners that must be restored/reconnected separately;

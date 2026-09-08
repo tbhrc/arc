@@ -39,6 +39,7 @@ REQUIRED_SELF_FILES = [
 ]
 VALID_VISIBILITY = {"public", "private", "internal"}
 VALID_OWNER_TYPES = {"org", "user"}
+VALID_DEPLOYMENT_SCOPES = {"shared", "tenant"}
 ATLAS_MODES = ("onboard", "adopt", "audit", "health", "upgrade", "recover", "next")
 SECRET_KEY_FRAGMENTS = (
     "password",
@@ -153,6 +154,22 @@ def validate_config(data: dict[str, Any]) -> None:
     visibility = target.get("default_visibility", "private")
     if visibility not in VALID_VISIBILITY:
         raise ArcError(f"target.default_visibility must be one of {sorted(VALID_VISIBILITY)}")
+
+    deployment_context = data.get("deployment_context", {"scope": "shared"})
+    if not isinstance(deployment_context, dict):
+        raise ArcError("deployment_context must be an object")
+    scope = deployment_context.get("scope", "shared")
+    if scope not in VALID_DEPLOYMENT_SCOPES:
+        raise ArcError(f"deployment_context.scope must be one of {sorted(VALID_DEPLOYMENT_SCOPES)}")
+    tenant_id = deployment_context.get("tenant_id")
+    if scope == "tenant":
+        if not isinstance(tenant_id, str) or not tenant_id.strip():
+            raise ArcError("tenant-scoped deployment requires deployment_context.tenant_id")
+    elif tenant_id not in (None, ""):
+        raise ArcError("shared deployment_context must not declare tenant_id")
+    entity_ref = deployment_context.get("entity_ref")
+    if entity_ref is not None and (not isinstance(entity_ref, str) or not entity_ref.strip()):
+        raise ArcError("deployment_context.entity_ref must be a non-empty string when provided")
 
     repos = data.get("repositories", [])
     if not isinstance(repos, list) or not repos:
@@ -376,6 +393,12 @@ def command_plan(data: dict[str, Any], inspect_target: bool = False) -> int:
         print(f"Business: {target['business_name']}")
     print(f"Target: {target['owner']} ({target.get('owner_type', 'org')})")
     print(f"Default visibility: {target.get('default_visibility', 'private')}")
+    deployment_context = data.get("deployment_context", {"scope": "shared"})
+    print(f"Deployment scope: {deployment_context.get('scope', 'shared')}")
+    if deployment_context.get("scope") == "tenant":
+        print(f"Tenant: {deployment_context['tenant_id']}")
+        if deployment_context.get("entity_ref"):
+            print(f"Canonical entity ref: {deployment_context['entity_ref']}")
     state_by_name = {}
     if inspect_target:
         state_by_name = {row["name"]: row["action"] for row in inspect_repository_state(data)}
@@ -526,6 +549,7 @@ def manifest_from_config(
         repositories.append(row)
 
     target = data["target"]
+    deployment_context = json.loads(json.dumps(data.get("deployment_context", {"scope": "shared"})))
     integrations = data.get("integrations", {})
     specialist_systems = list(integrations.get("specialist_systems", []))
     private_files = integrations.get("private_files", "not-declared")
@@ -550,6 +574,7 @@ def manifest_from_config(
             "default_visibility": target.get("default_visibility", "private"),
         },
         "repositories": repositories,
+        "deployment_context": deployment_context,
         "integrations": {
             "private_files": private_files,
             "specialist_systems": specialist_systems,
@@ -670,6 +695,7 @@ def config_from_manifest(manifest: dict[str, Any], _validated: bool = False) -> 
         },
         "repositories": repositories,
         "domains": domains,
+        "deployment_context": json.loads(json.dumps(manifest.get("deployment_context", {"scope": "shared"}))),
         "integrations": {
             "private_files": manifest.get("integrations", {}).get("private_files", "not-declared"),
             "specialist_systems": list(manifest.get("integrations", {}).get("specialist_systems", [])),

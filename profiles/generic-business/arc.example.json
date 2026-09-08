@@ -1,10 +1,13 @@
 {
-  "arc_version": "1.2.0",
+  "arc_version": "1.3.0",
   "target": {
     "business_name": "YOUR-BUSINESS",
     "owner": "YOUR-GITHUB-ORG",
     "owner_type": "org",
     "default_visibility": "private"
+  },
+  "deployment_context": {
+    "scope": "shared"
   },
   "repositories": [
     {

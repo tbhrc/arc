@@ -61,6 +61,18 @@ class ArcConfigTests(unittest.TestCase):
         with self.assertRaises(arc.ArcError):
             arc.validate_config(data)
 
+    def test_tenant_deployment_requires_tenant_id(self):
+        data = self.base()
+        data["deployment_context"] = {"scope": "tenant"}
+        with self.assertRaises(arc.ArcError):
+            arc.validate_config(data)
+
+    def test_shared_deployment_rejects_tenant_id(self):
+        data = self.base()
+        data["deployment_context"] = {"scope": "shared", "tenant_id": "should-not-be-here"}
+        with self.assertRaises(arc.ArcError):
+            arc.validate_config(data)
+
     def test_onboarding_config_is_valid_and_slugs_domains(self):
         data = arc.build_onboarding_config(
             business_name="Example Business",
@@ -183,6 +195,44 @@ class ArcSafeHarbourTests(unittest.TestCase):
         self.assertEqual(states["skills"], "REUSE")
         self.assertEqual(states["research"], "CREATE")
         self.assertEqual(states["sales"], "REUSE")
+
+    def test_tenant_context_round_trip_is_exact(self):
+        data = self.base()
+        data["deployment_context"] = {
+            "scope": "tenant",
+            "tenant_id": "synthetic-tenant-alpha",
+            "entity_ref": "synthetic-organisation-alpha",
+        }
+        manifest = arc.manifest_from_config(data)
+        restored = arc.config_from_manifest(manifest)
+        self.assertEqual(manifest["deployment_context"], data["deployment_context"])
+        self.assertEqual(restored["deployment_context"], data["deployment_context"])
+
+    def test_two_tenant_recovery_has_no_context_bleed(self):
+        alpha = self.base()
+        alpha["target"]["owner"] = "synthetic-alpha-org"
+        alpha["deployment_context"] = {
+            "scope": "tenant",
+            "tenant_id": "synthetic-tenant-alpha",
+            "entity_ref": "synthetic-organisation-alpha",
+        }
+        beta = self.base()
+        beta["target"]["owner"] = "synthetic-beta-org"
+        beta["deployment_context"] = {
+            "scope": "tenant",
+            "tenant_id": "synthetic-tenant-beta",
+            "entity_ref": "synthetic-organisation-beta",
+        }
+
+        restored_alpha = arc.config_from_manifest(arc.manifest_from_config(alpha))
+        restored_beta = arc.config_from_manifest(arc.manifest_from_config(beta))
+
+        self.assertEqual(restored_alpha["deployment_context"], alpha["deployment_context"])
+        self.assertEqual(restored_beta["deployment_context"], beta["deployment_context"])
+        self.assertEqual(restored_alpha["target"]["owner"], "synthetic-alpha-org")
+        self.assertEqual(restored_beta["target"]["owner"], "synthetic-beta-org")
+        self.assertNotEqual(restored_alpha["deployment_context"]["tenant_id"], restored_beta["deployment_context"]["tenant_id"])
+        self.assertNotEqual(restored_alpha["deployment_context"]["entity_ref"], restored_beta["deployment_context"]["entity_ref"])
 
     def test_manifest_has_explicit_recovery_exclusions(self):
         manifest = arc.manifest_from_config(self.base())
