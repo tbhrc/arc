@@ -265,6 +265,21 @@ class ArcSafeHarbourTests(unittest.TestCase):
             saved = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(saved["manifest_schema"], "1.0")
 
+    def test_restore_apply_receives_exact_tenant_context(self):
+        data = self.base()
+        data["target"]["owner"] = "synthetic-alpha-org"
+        data["deployment_context"] = {
+            "scope": "tenant",
+            "tenant_id": "synthetic-tenant-alpha",
+            "entity_ref": "synthetic-organisation-alpha",
+        }
+        manifest = arc.manifest_from_config(data)
+        with mock.patch.object(arc, "command_bootstrap", return_value=0) as bootstrap_mock:
+            self.assertEqual(arc.command_restore(manifest, apply=True), 0)
+        restored_config = bootstrap_mock.call_args.args[0]
+        self.assertEqual(restored_config["deployment_context"], data["deployment_context"])
+        self.assertEqual(restored_config["target"]["owner"], "synthetic-alpha-org")
+
     def test_restore_without_apply_is_simple_preview(self):
         manifest = arc.manifest_from_config(self.base())
         with mock.patch("builtins.print") as print_mock:
