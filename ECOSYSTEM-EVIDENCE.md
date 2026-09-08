@@ -2,7 +2,7 @@
 
 This document preserves the public-safe measurement snapshot behind ARC's origin story.
 
-It describes the **whole TBHRC / iMPLEMENTAi GitHub-era operating ecosystem that ARC packages for reproduction**, not only the `tbhrc/arc` repository.
+It describes the **whole TBHRC / iMPLEMENTAi GitHub-era operating ecosystem that FolderDesk packages for reproduction**, not only the `tbhrc/folderdesk` repository.
 
 ## Measurement window
 
@@ -260,7 +260,7 @@ ARC itself then underwent an independent clean-room proof on 4 September 2026 an
 - non-secret estate snapshot;
 - destructive recovery of the deployed `AGENTS.md` surface.
 
-See [ARC Core Proof #11](https://github.com/tbhrc/arc/issues/11).
+See [FolderDesk Core Proof #11](https://github.com/tbhrc/folderdesk/issues/11).
 
 ## Interpretation guardrail
 
