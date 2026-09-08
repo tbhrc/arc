@@ -10,13 +10,21 @@ spec.loader.exec_module(arc)
 
 
 class Issue52ClientExperienceTests(unittest.TestCase):
-    def test_readme_starts_from_agent_not_client_github_operation(self):
+    def test_readme_is_concise_front_door_and_handoff(self):
         text = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn("Start here — Give this to your agent", text)
         self.assertIn("You do not need GitHub experience", text)
-        self.assertIn("Assume I have never used GitHub", text)
-        self.assertIn("Do not teach me GitHub unless I ask", text)
-        self.assertNotIn("## Step 1 — Connect GitHub", text)
+        self.assertIn("Open https://github.com/tbhrc/folderdesk and help me deploy FolderDesk into my GitHub organisation.", text)
+        self.assertIn("Read the root AGENTS.md first", text)
+        self.assertIn("First confirm that you can access and operate on my target GitHub organisation/account.", text)
+        self.assertIn("showing the remaining-time estimate during bootstrap", text)
+        self.assertIn("Do not copy TBHRC private business data or secrets", text)
+        self.assertIn("treat it as a FolderDesk intake event", text)
+        self.assertIn("verification status, connection readiness and the next useful capability to activate", text)
+        self.assertIn("detailed deployment behaviour belongs in [Get Started / Bootstrap](BOOTSTRAP.md)", text)
+        self.assertNotIn("Assume I have never used GitHub", text)
+        self.assertNotIn("documents are in Google", text)
+        self.assertNotIn("Avoid status theatre", text)
 
     def test_bootstrap_discovers_brand_connectors_tone_and_output(self):
         text = (ROOT / "BOOTSTRAP.md").read_text(encoding="utf-8")
@@ -28,6 +36,7 @@ class Issue52ClientExperienceTests(unittest.TestCase):
         self.assertIn("Google Workspace / Google Drive", text)
         self.assertIn("before asking the client to manually reproduce that context", text)
         self.assertIn("polished DOCX and/or PDF", text)
+        self.assertIn("The client should not need to know or operate GitHub", text)
 
     def test_client_experience_starter_skill_is_seeded(self):
         skill = (ROOT / "starter/skills/client-experience/SKILL.md").read_text(encoding="utf-8")
