@@ -1,5 +1,5 @@
 {
-  "arc_version": "1.2.0",
+  "arc_version": "1.3.0",
   "reference_only": true,
   "target": {
     "owner": "tbhrc",
@@ -33,6 +33,11 @@
       "visibility": "private"
     },
     {
+      "name": "db",
+      "role": "specialist-system",
+      "visibility": "private"
+    },
+    {
       "name": "tb",
       "role": "business-domain",
       "visibility": "private"
@@ -58,6 +63,36 @@
       "visibility": "private"
     },
     {
+      "name": "meetings",
+      "role": "business-domain",
+      "visibility": "private"
+    },
+    {
+      "name": "marketing",
+      "role": "business-domain",
+      "visibility": "private"
+    },
+    {
+      "name": "hr",
+      "role": "business-domain",
+      "visibility": "private"
+    },
+    {
+      "name": "sales",
+      "role": "business-domain",
+      "visibility": "private"
+    },
+    {
+      "name": "legal",
+      "role": "business-domain",
+      "visibility": "private"
+    },
+    {
+      "name": "finance",
+      "role": "business-domain",
+      "visibility": "private"
+    },
+    {
       "name": "implementai.ae",
       "role": "product-website",
       "visibility": "private"
@@ -68,10 +103,10 @@
       "visibility": "public"
     },
     {
-      "name": "arc",
+      "name": "folderdesk",
       "role": "portable-architecture",
       "visibility": "public"
     }
   ],
-  "notes": "Private live business truth remains in its owners. ARC exposes architecture, not private state."
+  "notes": "Private live business truth remains in its owners. FolderDesk exposes architecture, not private state."
 }
