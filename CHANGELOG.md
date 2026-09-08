@@ -3,7 +3,7 @@
 ## 1.3.0 — 2026-09-08
 
 - Preserves explicit `deployment_context` through FolderDesk safe-harbour export and recovery.
-- Adds `shared|tenant` scope validation; tenant-scoped deployments require canonical `tenant_id`, with optional owner-system `entity_ref`.
+- Adds `shared|tenant` scope validation and `onboard --tenant-id/--entity-ref`; tenant-scoped deployments require canonical `tenant_id`, with optional owner-system `entity_ref`.
 - Proves two synthetic tenant profiles recover independently with distinct GitHub owner + tenant/entity context and no cross-tenant context bleed.
 - Keeps DB/business truth external: FolderDesk stores deployment/recovery references only and does not introduce a tenant registry or second business database.
 

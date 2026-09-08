@@ -162,14 +162,14 @@ def validate_config(data: dict[str, Any]) -> None:
     if scope not in VALID_DEPLOYMENT_SCOPES:
         raise ArcError(f"deployment_context.scope must be one of {sorted(VALID_DEPLOYMENT_SCOPES)}")
     tenant_id = deployment_context.get("tenant_id")
+    entity_ref = deployment_context.get("entity_ref")
     if scope == "tenant":
         if not isinstance(tenant_id, str) or not tenant_id.strip():
             raise ArcError("tenant-scoped deployment requires deployment_context.tenant_id")
-    elif tenant_id not in (None, ""):
-        raise ArcError("shared deployment_context must not declare tenant_id")
-    entity_ref = deployment_context.get("entity_ref")
-    if entity_ref is not None and (not isinstance(entity_ref, str) or not entity_ref.strip()):
-        raise ArcError("deployment_context.entity_ref must be a non-empty string when provided")
+        if entity_ref is not None and (not isinstance(entity_ref, str) or not entity_ref.strip()):
+            raise ArcError("deployment_context.entity_ref must be a non-empty string when provided")
+    elif tenant_id not in (None, "") or entity_ref not in (None, ""):
+        raise ArcError("shared deployment_context must not declare tenant_id or entity_ref")
 
     repos = data.get("repositories", [])
     if not isinstance(repos, list) or not repos:
@@ -225,11 +225,21 @@ def build_onboarding_config(
     private_files: str = "not-declared",
     specialist_systems: list[str] | None = None,
     memory: str = "optional",
+    tenant_id: str | None = None,
+    entity_ref: str | None = None,
 ) -> dict[str, Any]:
     domain_rows = [
         {"name": slugify(domain), "description": f"{domain.strip()} business/domain truth owner."}
         for domain in (domains or [])
     ]
+    deployment_context: dict[str, Any] = {"scope": "shared"}
+    if tenant_id:
+        deployment_context = {"scope": "tenant", "tenant_id": tenant_id.strip()}
+        if entity_ref:
+            deployment_context["entity_ref"] = entity_ref.strip()
+    elif entity_ref:
+        raise ArcError("entity_ref requires tenant_id for tenant-scoped deployment")
+
     data: dict[str, Any] = {
         "arc_version": read_arc_version(),
         "target": {
@@ -238,6 +248,7 @@ def build_onboarding_config(
             "owner_type": owner_type,
             "default_visibility": visibility,
         },
+        "deployment_context": deployment_context,
         "repositories": [
             {"name": "skills", "description": "Canonical reusable AI Skills and operating HOW.", "role": "skills", "required": True},
             {"name": "research", "description": "External research, technology discovery and proving evidence.", "role": "research", "required": True},
@@ -363,6 +374,8 @@ def command_onboard(args: argparse.Namespace) -> int:
         private_files=args.private_files,
         specialist_systems=specialist_systems,
         memory=args.memory,
+        tenant_id=args.tenant_id,
+        entity_ref=args.entity_ref,
     )
     path = write_config(data, args.output, overwrite=args.overwrite)
     print(f"ARC onboarding profile written: {path}")
@@ -782,6 +795,8 @@ def parser() -> argparse.ArgumentParser:
     onboard.add_argument("--private-files", default="not-declared")
     onboard.add_argument("--specialist-systems")
     onboard.add_argument("--memory", default="optional")
+    onboard.add_argument("--tenant-id", help="Canonical tenant identifier for a managed-client deployment")
+    onboard.add_argument("--entity-ref", help="Optional canonical owner-system entity reference; requires --tenant-id")
 
     doctor = sub.add_parser("doctor")
     doctor.add_argument("--config", required=True)

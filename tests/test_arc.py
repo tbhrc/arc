@@ -73,6 +73,12 @@ class ArcConfigTests(unittest.TestCase):
         with self.assertRaises(arc.ArcError):
             arc.validate_config(data)
 
+    def test_shared_deployment_rejects_entity_ref(self):
+        data = self.base()
+        data["deployment_context"] = {"scope": "shared", "entity_ref": "should-not-be-here"}
+        with self.assertRaises(arc.ArcError):
+            arc.validate_config(data)
+
     def test_onboarding_config_is_valid_and_slugs_domains(self):
         data = arc.build_onboarding_config(
             business_name="Example Business",
@@ -83,8 +89,26 @@ class ArcConfigTests(unittest.TestCase):
         )
         arc.validate_config(data)
         self.assertEqual(data["target"]["business_name"], "Example Business")
+        self.assertEqual(data["deployment_context"], {"scope": "shared"})
         self.assertEqual([row["name"] for row in data["domains"]], ["sales-marketing", "client-delivery"])
         self.assertEqual(data["integrations"]["specialist_systems"], ["HubSpot", "Xero"])
+
+    def test_onboarding_config_accepts_canonical_tenant_context(self):
+        data = arc.build_onboarding_config(
+            business_name="Managed Client",
+            owner="managed-client-org",
+            tenant_id="managed-client-001",
+            entity_ref="canonical-organisation-001",
+        )
+        self.assertEqual(
+            data["deployment_context"],
+            {
+                "scope": "tenant",
+                "tenant_id": "managed-client-001",
+                "entity_ref": "canonical-organisation-001",
+            },
+        )
+        arc.validate_config(data)
 
     def test_write_config_refuses_implicit_overwrite(self):
         data = self.base()

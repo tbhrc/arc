@@ -20,7 +20,13 @@ Use this profile to deploy ARC into a new business or client without importing T
 
 ## Multi-tenant deployment context
 
-Managed-client profiles must carry explicit deployment context:
+Managed-client profiles must carry explicit deployment context. Generate it directly when onboarding:
+
+```bash
+python3 scripts/arc.py onboard --non-interactive --business-name "Client Name" --owner client-github-org --tenant-id canonical-tenant-id --entity-ref canonical-owner-entity-ref
+```
+
+Equivalent profile contract:
 
 ```json
 "deployment_context": {
