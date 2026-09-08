@@ -1,3 +1,5 @@
+> **RETIRED / FROZEN.** FolderDesk is legacy. Do not treat this repository as active canon or start new work here. See `tbhrc/ai-ops` and `tbhrc/skills`.
+
 # AGENTS.md — Repository Router
 
 Read this first. Follow only the link needed for the task; do not preload documentation.
@@ -22,8 +24,7 @@ Read this first. Follow only the link needed for the task; do not preload docume
 
 ## Rules
 
-- **Execution first.** Do not create/update/check an Issue, label, comment, approval, plan, benchmark, proof workflow or documentation merely to unlock execution.
-- Issues are optional continuity/evidence records, never runtime permission.
+- **Issue-backed by default.** A master controlling Issue backs every substantive or durable unit of work. Reuse the existing master controlling Issue when it materially helps continuity; create additional Issues only when continuation, handoff, audit/founder visibility, cross-agent work or material chat-only decisions make it useful, and link every such Issue back to the master controlling Issue. If no controlling Issue exists anywhere org-wide for the work, create a new master controlling Issue before proceeding. Do not open or update an Issue for `go`/`continue`/`retry`/`next`, or before every mutation when nothing material changed — continuation against an existing Issue needs no new Issue and no ceremony update. Metadata is never runtime permission, and issue-less substantive work is not permitted.
 - Do not require a controlling Issue for ordinary bounded work. Create/use one when durable continuity, coordination or recovery actually benefits from it.
 - Material founder/user changes to objective, scope, acceptance, architecture/decision, blocker or continuation state must not remain trapped only in chat; capture them once in the Issue or better owner truth at the natural checkpoint.
 - Do not pause authorised execution merely to synchronise Issue metadata. If a controlling Issue exists or was warranted, reconcile it before completion or handoff.
