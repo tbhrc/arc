@@ -1,5 +1,3 @@
-> **RETIRED / FROZEN.** FolderDesk is legacy. Do not treat this repository as active canon or start new work here. See `tbhrc/ai-ops` and `tbhrc/skills`.
-
 # AGENTS.md — Repository Router
 
 Read this first. Follow only the link needed for the task; do not preload documentation.
