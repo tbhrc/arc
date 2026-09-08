@@ -23,6 +23,16 @@ FolderDesk is not one monolithic agent runtime. It is the portable architecture 
 |---|---|---|---|
 | Core harness | General-purpose human + AI operating harness | Core | FolderDesk Router + owners |
 | Work management | Durable task/work identity across agents and sessions | Core/Reference | GitHub Issues + owner state |
+| Client experience | Non-technical client onboarding with GitHub hidden as agent backend | Core | Atlas + Client Experience Skill |
+| Client experience | Lowest-friction GitHub establishment handled by agent | Core/Connected | Agent + authorised GitHub route |
+| Client experience | Brand learning from formal guidelines or representative documents | Core/Reference | Client Experience Skill + client-owned brand sources |
+| Client experience | Communication tone/terminology/detail adaptation | Core/Reference | Client Experience Skill + durable client profile |
+| Client experience | Preferred artifact-format learning and reuse | Core/Reference | Client Experience Skill + client-owned profile |
+| Client experience | Proactive connector inference from client clues; named source → high-value native connector | Core/Connected | Atlas + Client Experience Skill |
+| Client experience | Google Workspace / Drive priority when client says documents are in Google | Core/Connected | Google Workspace / Drive connector + document intake |
+| Client experience | Existing-system/connector discovery and smallest-useful-set activation | Core/Connected | Native/dedicated connectors + owner systems |
+| Client experience | Polished DOCX/PDF default for natural business-document outputs | Reference/Connected | Document tools + client brand/style |
+| Client experience | Backend technical evidence separated from normal client communication | Core | Router + Client Experience Skill |
 | Work management | Extract actions, decisions and follow-ups from received documents | Reference | Document Intake + domain/task owner |
 | Documents | Default client file/document intake | Core | `document-intake` starter Skill + Router |
 | Documents | File/preserve original source in declared private-file owner | Core/Connected | Private-file owner (for example OneDrive/SharePoint) |

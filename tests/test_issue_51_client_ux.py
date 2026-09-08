@@ -41,7 +41,7 @@ class Issue51ClientUxTests(unittest.TestCase):
 
     def test_public_front_door_is_human_first(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        self.assertIn("Step 1 — Connect GitHub", readme)
+        self.assertIn("You do not need GitHub experience", readme)
         self.assertIn("Give this to your agent", readme)
         self.assertIn("[Ultimate Features](FEATURES.md)", readme)
         self.assertIn("what you get", readme.lower())

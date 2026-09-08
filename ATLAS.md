@@ -1,172 +1,66 @@
-# Atlas — ARC Front Door
+# Atlas — FolderDesk Front Door
 
-Atlas is the onboarding, adoption, audit and recovery front door for ARC.
+Atlas is FolderDesk's onboarding, adoption, health and recovery guide for the **agent doing the setup**.
 
-Use Atlas to understand a target environment and reproduce a useful human + AI operating model **without turning the operating system into the work**.
+The client should experience normal business service. GitHub, repositories, Skills and verification evidence are backend mechanics unless the client asks for them.
 
-**Fast links:** [README](README.md) · [Architecture](ARCHITECTURE.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Agent Contract](AGENTS.md)
+**Fast links:** [README](README.md) · [Bootstrap](BOOTSTRAP.md) · [Ultimate Features](FEATURES.md) · [Architecture](ARCHITECTURE.md) · [Verify](VERIFY.md) · [Agent Contract](AGENTS.md)
 
 ## Primary objective
 
-> Reproduce a working human + AI operating ecosystem on a blank or existing environment, reconnect the required external owners, prove one real workflow works, and preserve enough non-secret architecture state to reproduce it again.
+> Give a non-technical client a working human + AI operating environment that fits their existing business, tone, documents and systems — then prove it with one useful finished outcome.
 
 ## Default route
 
 ```text
-understand the target
-→ keep/reuse working owners and systems
-→ identify North Star + Skills owner
-→ choose the simplest existing authorised execution route
-→ bootstrap ordinary authorised changes directly
-→ reconnect only systems required for real work
-→ run one real workflow
-→ verify once
-→ preserve useful non-secret continuity
-→ stop
+receive client request
+→ establish GitHub backend with minimum client friction
+→ learn brand/examples + communication/output preferences
+→ discover/connect only useful existing systems
+→ reuse existing owners
+→ bootstrap FolderDesk
+→ prove one real client-ready workflow
+→ file + verify retrieval
+→ report in normal client language
 ```
 
-## Operating principles
+## Client experience rules
 
-- Root `AGENTS.md` is the deployed estate's first-hop Router.
-- Skills own reusable HOW.
-- Existing CRM/ERP/ATS/file stores remain owner truth where appropriate.
-- **Issues are optional continuity/evidence records, never runtime permission.**
-- Do not require an Issue, branch, PR, approval label, proof workflow or plan merely to perform already-authorised bounded work.
-- Use **purpose-fit authority sufficient for the intended function**. Organisation-wide capability may legitimately require organisation-wide access.
-- Do not narrow access merely because “least privilege”, isolation or hardening sounds safer.
-- Reuse an existing authorised connection/credential/runtime before creating another one.
-- If one provider/route is unavailable, use another already-authorised route before building infrastructure.
-- Human approval is reserved for genuine consequential boundaries: root/super-admin changes, destructive/irreversible mutation, material spend, private-data disclosure, legal/compliance commitment or material external/client commitment.
+- Assume the client has never used GitHub and does not want to operate it.
+- Handle technical setup directly; ask the client only for unavoidable sign-in/authorisation or genuine business choices.
+- Ask for brand guidelines if available; otherwise use representative documents to infer house style.
+- Learn the client's tone, vocabulary, preferred detail level and artifact formats from conversation/examples.
+- Infer connectors from clues already supplied. If the client says their documents are in Google, prioritise Google Workspace / Drive immediately so authorised existing documents can provide filing, retrieval, business and brand context before requesting redundant uploads. Apply the same logic to other clearly named owner systems. Then ask only about systems still unknown.
+- Default client-facing business documents to polished DOCX/PDF when natural; backend Markdown is not the client deliverable.
+- Do not send raw repo lists, SHAs, CLI traces, routing internals or engineering status theatre unless requested or materially blocking.
+- Preserve useful preferences durably in the client's own estate so future agents reuse them.
 
-## Modes
+## Existing estates
 
-| Mode | Purpose |
-|---|---|
-| `onboard` | Create the first valid ARC profile for a new estate. |
-| `adopt` | Integrate an existing organisation without unnecessary replacement. |
-| `audit` | Inspect owners/routes/gaps without mutation. |
-| `health` | Check current real state. |
-| `upgrade` | Apply the smallest justified migration and verify it. |
-| `recover` | Reconstruct from durable non-secret state when actually needed. |
-| `next` | Return the smallest useful next action. |
+Prefer **KEEP / INTEGRATE**. Do not replace working file stores, CRM, ERP, accounting, email/calendar or other owner systems merely to make the estate resemble an example.
 
-## What Atlas must resolve
+## Authority
 
-Only resolve facts needed for the requested outcome:
-
-1. organisation/business purpose and North Star owner;
-2. GitHub owner/home;
-3. current repositories/domain owners;
-4. Skills owner;
-5. private-file and specialist-system owners;
-6. available authorised execution routes;
-7. any **real** consequential boundary crossed by the requested action;
-8. one real workflow that will prove usefulness.
-
-If the user or authoritative system already supplied a fact, do not ask again.
-
-## Existing estate
-
-Default to **KEEP / INTEGRATE**, not replacement.
-
-Use `MIGRATE`, `RESEARCH` or `RETIRE` only when the current objective provides a concrete reason.
-
-Do not rebuild working systems merely to resemble an ARC example.
-
-## Mutation and `--apply`
-
-`--apply` selects mutating mode. It is not a second human approval ritual.
-
-When the current instruction already authorises ordinary bounded mutation:
-
-```text
-select mutating mode
-→ execute
-→ verify
-```
-
-Ask for fresh authority only when the next action crosses a genuine protected boundary.
-
-Inspection commands such as `doctor` or `plan --inspect-target` are optional aids. Do not force them before every authorised mutation.
-
-## Bootstrap
-
-Typical authorised path:
-
-```bash
-python3 scripts/arc.py bootstrap --config arc.json --apply
-python3 scripts/seed_foundation.py --config arc.json --apply
-python3 scripts/arc.py verify --config arc.json
-```
-
-After bootstrap:
-
-1. establish the North Star owner;
-2. establish the Skills owner;
-3. establish root `AGENTS.md` as the Router;
-4. reconnect only external systems needed for actual work;
-5. run one real workflow;
-6. verify the real result;
-7. record continuity only if it materially helps future recovery/coordination.
-
-Do **not** establish mandatory Issue/Anti-Drift machinery as a prerequisite for execution.
-
-## External reconnection
-
-For each system genuinely needed by the real workflow, record only what helps operation:
-
-```text
-system/provider
-live owner
-connection/identity reference
-purpose-fit authority needed
-verification
-```
-
-Never copy secret values or private live records into ARC.
+The current authorised instruction is sufficient for ordinary bounded work. Ask for fresh authority only at genuine consequential boundaries such as destructive actions, root/super-admin authority changes, material spend, private-data disclosure, legal/compliance commitments or material external commitments.
 
 ## Real-work proof
 
-A deployment is useful when real work succeeds:
+A deployment is useful when the client gets a real outcome:
 
 ```text
-request
-→ Skill / owner truth
+client request
+→ correct Skill/owner/system
 → authorised execution
-→ real-state verification
+→ polished useful result
+→ filed/retrievable evidence
 ```
 
-A proof Issue or elaborate acceptance programme is not required when one decisive real workflow already proves the capability.
+For document-like work, the proof should normally include a finished Word/PDF artifact, not merely a Markdown file or GitHub commit.
 
 ## Recovery
 
-Current ARC recovery is bounded reconstruction: existing repositories are reused unchanged and missing configured repositories may be created when `--apply` selects mutation.
+FolderDesk Safe Harbour preserves non-secret architecture/owner references. External owners retain their own private data, credentials and runtime state.
 
-Use restore planning only when useful. If a future recovery operation actually deletes, overwrites, force-updates or crosses another genuine consequential boundary, protect that specific action only.
+## KISSS
 
-## KISSS test
-
-Before adding anything, ask:
-
-> What material failure does this prevent, and can the estate still do the authorised job without extra friction?
-
-Do not add validators, policy engines, services, schemas, mandatory repositories, approval loops, isolation, credentials, bridges or agent routes unless real deployment evidence shows they are needed.
-
-## Continuity
-
-When durable continuity is useful, preserve enough to resume:
-
-- objective;
-- current state;
-- evidence;
-- exact next action.
-
-That continuity may live in an Issue, PR, repository file or appropriate owner record. **No specific object is mandatory merely because the work is substantive.**
-
-## Learning
-
-- [README](README.md) — public ARC story
-- [Architecture](ARCHITECTURE.md) — ownership model
-- [GitHub Course](https://github.com/tbhrc/gh-course) — learn the operating method
-
-**Course = learn the method. ARC = reproduce useful capability. KISSS = keep it working.**
+The operating system must disappear behind better client work. If a technical detail does not help the client decide or act, keep it in operator evidence rather than the normal reply.

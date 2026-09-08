@@ -23,6 +23,7 @@ STARTER_SKILLS = (
     "skill-authoring",
     "research-escalation",
     "document-intake",
+    "client-experience",
 )
 
 

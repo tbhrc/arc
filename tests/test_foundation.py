@@ -36,11 +36,12 @@ class FoundationTests(unittest.TestCase):
 
     def test_starter_skill_files_exist(self):
         rows = foundation.starter_files()
-        self.assertEqual(len(rows), 5)
+        self.assertEqual(len(rows), 6)
         paths = {path for path, _ in rows}
         self.assertIn("owner-router/SKILL.md", paths)
         self.assertIn("research-escalation/SKILL.md", paths)
         self.assertIn("document-intake/SKILL.md", paths)
+        self.assertIn("client-experience/SKILL.md", paths)
 
     def test_plan_is_non_mutating(self):
         self.assertEqual(foundation.command_plan(self.config()), 0)
