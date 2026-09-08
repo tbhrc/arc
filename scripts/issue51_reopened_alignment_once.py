@@ -22,6 +22,10 @@ arc = arc.replace(
     '''    providers = data.get("providers", [])\n    runtimes = data.get("runtimes", [])\n    if providers:\n        for provider in providers:\n            print(f"- Provider: DECLARED {provider}; external wiring UNVERIFIED")\n    else:\n        print("- Provider: none declared")\n    if runtimes:\n        for runtime in runtimes:\n            print(f"- Runtime: DECLARED {runtime}; external wiring UNVERIFIED")\n    else:\n        print("- Runtime: none declared")\n''',
     1,
 )
+arc = arc.replace(
+    'print(f"GitHub target access: confirmed ({target_detail}).")',
+    'print(f"GitHub connection: confirmed. Target: {target[\'owner\']}.")\n        print(f"GitHub target access: confirmed ({target_detail}).")',
+)
 arc_path.write_text(arc, encoding="utf-8")
 
 bootstrap_path = ROOT / "BOOTSTRAP.md"
