@@ -1,8 +1,8 @@
-# ARC — Reproduce a Proven Human + AI Operating Ecosystem
+# FolderDesk by iMPLEMENTAi — Reproduce a Proven Business AI Operating System
 
-ARC is the public, non-secret architecture package for reproducing a working human + AI operating ecosystem without copying private business state or turning governance into the work.
+FolderDesk is the public, non-secret architecture package for reproducing a working human + AI operating ecosystem without copying private business state or turning governance into the work.
 
-ARC is the **reproducible DNA of the organisation**: routing, ownership, execution, verification, deployment and recovery patterns that can be recreated while live business truth stays with its real owners.
+FolderDesk is the **reproducible DNA of the organisation**: routing, ownership, execution, verification, deployment and recovery patterns that can be recreated while live business truth stays with its real owners.
 
 **Fast links:** [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Router](AGENTS.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Manifest](MANIFEST.md) · [Evidence](ECOSYSTEM-EVIDENCE.md) · [Releases](RELEASES.md)
 
@@ -25,7 +25,7 @@ Conditional only when genuinely needed:
 - specialist delegation or genuine parallelism → Multi-Agent Orchestrator;
 - consequential boundary → smallest proven control protecting that boundary.
 
-## What ARC reproduces
+## What FolderDesk reproduces
 
 - organisation direction ownership mechanism;
 - repository/domain ownership topology;
@@ -38,11 +38,11 @@ Conditional only when genuinely needed:
 - real-state verification;
 - non-secret estate manifest/reconnection model.
 
-ARC does **not** copy the target organisation's editable live truth, private files, specialist-system records, credentials, runtime machine state or memory contents.
+FolderDesk does **not** copy the target organisation's editable live truth, private files, specialist-system records, credentials, runtime machine state or memory contents.
 
 ## Skills-first, without duplicate canon
 
-ARC seeds only the minimum starter surface needed to make a blank estate usable.
+FolderDesk seeds only the minimum starter surface needed to make a blank estate usable.
 
 Starter `owner-router` and `github-workflow` assets are thin bootstrap pointers. They must not become competing copies of the organisation's live operating doctrine.
 
@@ -60,7 +60,7 @@ Security, governance and continuity mechanisms must protect a concrete current b
 
 ## Durable context without Issue ceremony
 
-Issues, PRs, plans and durable evidence are not runtime permission for ordinary authorised work, and ARC does not require a named Anti-Drift field, controlling Issue, checklist or evidence object merely to execute.
+Issues, PRs, plans and durable evidence are not runtime permission for ordinary authorised work, and FolderDesk does not require a named Anti-Drift field, controlling Issue, checklist or evidence object merely to execute.
 
 When substantive work changes a material objective, scope, acceptance condition, architecture/decision, blocker or continuation state, preserve that change once in the appropriate durable owner record before handoff, closure or the end of the meaningful work unit. Do not interrupt authorised execution for pre-mutation documentation ceremony.
 
@@ -108,7 +108,7 @@ Current restore reuses existing configured repositories unchanged and creates on
 
 ## Acceptance
 
-ARC is healthy when a fresh capable human or agent can:
+FolderDesk is healthy when a fresh capable human or agent can:
 
 1. enter through root `AGENTS.md`;
 2. reach the correct Skill/owner without broad preload;
@@ -119,7 +119,7 @@ ARC is healthy when a fresh capable human or agent can:
 
 ## Evidence
 
-ARC was extracted from the measured TBHRC/iMPLEMENTAi operating transformation. Historical scale and performance evidence is preserved in [ECOSYSTEM-EVIDENCE.md](ECOSYSTEM-EVIDENCE.md); it is reference evidence, not a deployment requirement.
+FolderDesk was extracted from the measured TBHRC/iMPLEMENTAi operating transformation. Historical scale and performance evidence is preserved in [ECOSYSTEM-EVIDENCE.md](ECOSYSTEM-EVIDENCE.md); it is reference evidence, not a deployment requirement.
 
 ## KISSS
 
