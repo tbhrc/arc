@@ -258,6 +258,32 @@ class ArcSafeHarbourTests(unittest.TestCase):
         self.assertNotEqual(restored_alpha["deployment_context"]["tenant_id"], restored_beta["deployment_context"]["tenant_id"])
         self.assertNotEqual(restored_alpha["deployment_context"]["entity_ref"], restored_beta["deployment_context"]["entity_ref"])
 
+    def test_two_tenants_share_one_architecture_without_context_bleed(self):
+        alpha = self.base()
+        beta = self.base()
+        for data in (alpha, beta):
+            data["target"]["owner"] = "shared-managed-service-org"
+        alpha["deployment_context"] = {
+            "scope": "tenant",
+            "tenant_id": "synthetic-tenant-alpha",
+            "entity_ref": "synthetic-organisation-alpha",
+        }
+        beta["deployment_context"] = {
+            "scope": "tenant",
+            "tenant_id": "synthetic-tenant-beta",
+            "entity_ref": "synthetic-organisation-beta",
+        }
+
+        restored_alpha = arc.config_from_manifest(arc.manifest_from_config(alpha))
+        restored_beta = arc.config_from_manifest(arc.manifest_from_config(beta))
+
+        self.assertEqual(restored_alpha["target"]["owner"], restored_beta["target"]["owner"])
+        self.assertEqual(restored_alpha["repositories"], restored_beta["repositories"])
+        self.assertEqual(restored_alpha["domains"], restored_beta["domains"])
+        self.assertNotEqual(restored_alpha["deployment_context"], restored_beta["deployment_context"])
+        self.assertEqual(restored_alpha["deployment_context"]["tenant_id"], "synthetic-tenant-alpha")
+        self.assertEqual(restored_beta["deployment_context"]["tenant_id"], "synthetic-tenant-beta")
+
     def test_manifest_has_explicit_recovery_exclusions(self):
         manifest = arc.manifest_from_config(self.base())
         exclusions = set(manifest["recovery"]["excluded_material"])

@@ -38,6 +38,8 @@ Equivalent profile contract:
 
 `tenant_id` and `entity_ref` are references supplied by the canonical organisation/DB owners; FolderDesk does not allocate a parallel client/identity code system. A non-client shared architecture profile uses `"scope": "shared"` and no `tenant_id`. Safe-harbour export/recovery preserves this context.
 
+For an iMPLEMENTAi managed-service estate, multiple tenant profiles may deliberately target the **same GitHub owner and same shared repository/Skills topology** while carrying distinct tenant context. A dedicated client-owned deployment may instead target that client's own GitHub owner. Tenant identity must never be encoded by cloning or renaming the shared architecture.
+
 ## Module selection
 
 Example:
