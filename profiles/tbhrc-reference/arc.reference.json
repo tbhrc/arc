@@ -93,6 +93,11 @@
       "visibility": "private"
     },
     {
+      "name": "design",
+      "role": "business-domain",
+      "visibility": "private"
+    },
+    {
       "name": "implementai.ae",
       "role": "product-website",
       "visibility": "private"
