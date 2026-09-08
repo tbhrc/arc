@@ -19,122 +19,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Patch bounded last-mile gaps
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          path = Path('scripts/arc.py')
-          text = path.read_text(encoding='utf-8')
-
-          replacement = r'''def generated_readme(owner: str, repo: dict[str, Any], navigation: dict[str, str]) -> str:
-    skills = navigation.get("skills", "skills")
-    research = navigation.get("research", "research")
-    return f"""# {repo['name']}\n\n**FolderDesk role:** {role_label(repo['role'])}\n\n{repo['description']}\n\nThis repository was bootstrapped from [FolderDesk](https://github.com/tbhrc/folderdesk). Its live facts and decisions belong here only where this repository is the declared owner. Reusable operating method belongs in `{owner}/{skills}`; external discovery/proving belongs in `{owner}/{research}`.\n\n## Start\n\n1. Read `AGENTS.md`.\n2. Use the local Atlas project Skill for onboarding/navigation.\n3. Create durable work as an Issue when the outcome needs tracking.\n4. Verify real state before claiming completion.\n\n## Navigation\n\n- Skills: `https://github.com/{owner}/{skills}`\n- Research: `https://github.com/{owner}/{research}`\n- FolderDesk upstream: https://github.com/tbhrc/folderdesk\n- Learning course: https://github.com/tbhrc/gh-course\n"""
-
-
-def generated_agents(owner: str, repo: dict[str, Any], navigation: dict[str, str]) -> str:
-    skills = navigation.get("skills", "skills")
-    research = navigation.get("research", "research")
-    skills_base = f"https://github.com/{owner}/{skills}"
-    workflow = f"{skills_base}/tree/main/github-agent-workflow"
-    sniper = f"{skills_base}/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md"
-    orchestrator = f"{skills_base}/tree/main/github-multi-agent-orchestrator"
-    return f"""# AGENTS.md — Repository Router\n\nThis file is the repository **Router** and cold-start contract. Read it first. Follow only the Fast Link needed for the task; do not preload linked material.\n\n**Repository role:** {role_label(repo['role'])}\n\n**Core Fast Links:** [Skills]({skills_base}) · [Research](https://github.com/{owner}/{research}) · [Workflow]({workflow}) · [Sniper]({sniper}) · [Multi-Agent Orchestrator]({orchestrator})\n\n**Repository Fast Links:** [README](README.md) · [Atlas](.github/skills/atlas/SKILL.md) · [Issues](https://github.com/{owner}/{repo['name']}/issues) · [FolderDesk](https://github.com/tbhrc/folderdesk)\n\n## Route\n\n- **Known owner + bounded task** → use the most-specific repository Fast Link / Skill and execute.\n- **Owner or source unclear** → use [Sniper]({sniper}).\n- **Normal authorised durable GitHub work** → Level 0 Direct. Ordinary already-authorised bounded work executes directly; do not ask twice. Load [Workflow]({workflow}) only when Hybrid or Controlled may be needed.\n- **Multiple agents, specialist delegation or genuine parallel work** → use [Multi-Agent Orchestrator]({orchestrator}).\n- **Onboarding, adoption or recovery** → use [Atlas](.github/skills/atlas/SKILL.md); it is not the daily routing layer.\n\n## Rules\n\n- Fast Links are pointers, not preload instructions.\n- This repository owns only the facts/state declared by its role.\n- Reusable HOW belongs in `{owner}/{skills}`; external research/proving belongs in `{owner}/{research}`.\n- If a referenced Skill has not yet been adopted into `{owner}/{skills}`, use the local Atlas starter guidance and adopt/author the missing equivalent. Authorised TBHRC operators may temporarily consult `tbhrc/skills`; external deployments must not depend on that private fallback.\n- Preserve existing systems and owners unless a deliberate change is required.\n- Never place secrets, credentials or unnecessary private data in repository surfaces.\n- Verify the requested outcome in the correct owner before claiming completion.\n"""
-
-
-def generated_atlas_pointer() -> str:
-    return """---\nname: atlas\ndescription: \"FolderDesk front-door pointer. Use for FolderDesk onboarding, adoption, audit, health, upgrade, recovery, next-action guidance, deployment, diagnosis or `/atlas`. Load and follow the current upstream Atlas Skill from tbhrc/folderdesk; inspect/plan when useful and never mutate solely because credentials exist.\"\n---\n\n# Atlas Pointer\n\nCurrent canonical Atlas: https://github.com/tbhrc/folderdesk/blob/main/.github/skills/atlas/SKILL.md\n\nLoad the current upstream Skill and FolderDesk repository contract before acting. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries.\n"""
-
-
-def generated_atlas_prompt() -> str:
-    return """Use the local `atlas` project Skill and load the current FolderDesk upstream contract from https://github.com/tbhrc/folderdesk. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries. Atlas supports onboard, adopt, audit, health, upgrade, recover and next modes.\n"""
-'''
-
-          pattern = re.compile(r'def generated_readme\(.*?\n\ndef put_content', re.S)
-          match = pattern.search(text)
-          if not match:
-              raise SystemExit('generated seed block not found')
-          text = text[:match.start()] + replacement + '\n\ndef put_content' + text[match.end():]
-
-          old_doctor = '''def command_doctor(data: dict[str, Any]) -> int:\n    print(f"ARC doctor for {data['target']['owner']}")\n    ok = True\n    print(f"PASS Python {sys.version_info.major}.{sys.version_info.minor}")\n    if not gh_available():\n        print("FAIL GitHub CLI (gh) not found")\n        ok = False\n    elif gh_authenticated():\n        print("PASS GitHub CLI found and authenticated")\n    else:\n        print("FAIL GitHub CLI is not authenticated for the intended target")\n        ok = False\n    print("PASS configuration schema")\n    return 0 if ok else 1\n'''
-          new_doctor = '''def command_connection_readiness(data: dict[str, Any]) -> int:\n    owner = data["target"]["owner"]\n    navigation = navigation_from_config(data)\n    skills = navigation.get("skills", "skills")\n    integrations = data.get("integrations", {})\n    print("Connection readiness (read-only; not a deployment gate)")\n    print("Selected modules:")\n    for repo in repos_from_config(data):\n        print(f"- {repo['name']} ({repo['role']}): GitHub repository + {owner}/{skills} Skills routing")\n    print("Observed portable surfaces:")\n    if gh_available() and gh_authenticated():\n        print("- GitHub: WIRED (gh authenticated)")\n    elif gh_available():\n        print("- GitHub: NOT WIRED (gh present but unauthenticated)")\n    else:\n        print("- GitHub: NOT WIRED (gh unavailable)")\n    private_files = integrations.get("private_files", "not-declared")\n    print(f"- Private files connector: DECLARED {private_files}; external wiring UNVERIFIED")\n    systems = integrations.get("specialist_systems", [])\n    if systems:\n        for system in systems:\n            print(f"- Specialist connector/MCP: DECLARED {system}; external wiring UNVERIFIED")\n    else:\n        print("- Specialist connector/MCP: none declared")\n    memory = integrations.get("memory", "optional")\n    print(f"- Memory: DECLARED {memory}; external wiring UNVERIFIED")\n    runtimes = data.get("runtimes", [])\n    if runtimes:\n        for runtime in runtimes:\n            print(f"- Runtime: DECLARED {runtime}; external wiring UNVERIFIED")\n    else:\n        print("- Runtime: none declared")\n    print("External connector/MCP/runtime credentials are intentionally not inspected. Confirm provider-side wiring before calling the deployment operationally ready.")\n    return 0\n\n\ndef command_doctor(data: dict[str, Any], *, connectors: bool = False) -> int:\n    print(f"ARC doctor for {data['target']['owner']}")\n    ok = True\n    print(f"PASS Python {sys.version_info.major}.{sys.version_info.minor}")\n    if not gh_available():\n        print("FAIL GitHub CLI (gh) not found")\n        ok = False\n    elif gh_authenticated():\n        print("PASS GitHub CLI found and authenticated")\n    else:\n        print("FAIL GitHub CLI is not authenticated for the intended target")\n        ok = False\n    print("PASS configuration schema")\n    if connectors:\n        command_connection_readiness(data)\n    return 0 if ok else 1\n'''
-          if old_doctor not in text:
-              raise SystemExit('doctor block not found')
-          text = text.replace(old_doctor, new_doctor, 1)
-          text = text.replace('''    doctor = sub.add_parser("doctor")\n    doctor.add_argument("--config", required=True)\n''', '''    doctor = sub.add_parser("doctor")\n    doctor.add_argument("--config", required=True)\n    doctor.add_argument("--connectors", action="store_true", help="Show read-only connector/MCP/runtime readiness without inspecting secrets")\n''', 1)
-          text = text.replace('''        if args.command == "doctor":\n            return command_doctor(data)\n''', '''        if args.command == "doctor":\n            return command_doctor(data, connectors=args.connectors)\n''', 1)
-          path.write_text(text, encoding='utf-8')
-
-          test_path = Path('tests/test_issue_50_last_mile.py')
-          test_path.write_text(r'''import contextlib
-import importlib.util
-import io
-import pathlib
-import unittest
-from unittest import mock
-
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("arc_issue50", ROOT / "scripts" / "arc.py")
-arc = importlib.util.module_from_spec(spec)
-assert spec.loader is not None
-spec.loader.exec_module(arc)
-
-
-class Issue50LastMileTests(unittest.TestCase):
-    def test_seeded_router_uses_target_owner_skills_and_folderdesk_upstream(self):
-        repo = {"name": "sales", "role": "business-domain", "description": "Sales owner.", "required": True, "visibility": "private"}
-        navigation = {"skills": "playbooks", "research": "lab"}
-        agents = arc.generated_agents("acme", repo, navigation)
-        self.assertIn("https://github.com/acme/playbooks/tree/main/github-agent-workflow", agents)
-        self.assertIn("https://github.com/acme/playbooks/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md", agents)
-        self.assertIn("https://github.com/acme/playbooks/tree/main/github-multi-agent-orchestrator", agents)
-        self.assertIn("https://github.com/tbhrc/folderdesk", agents)
-        self.assertNotIn("https://github.com/tbhrc/arc", agents)
-
-    def test_atlas_pointer_uses_folderdesk_upstream(self):
-        pointer = arc.generated_atlas_pointer()
-        self.assertIn("tbhrc/folderdesk", pointer)
-        self.assertNotIn("tbhrc/arc", pointer)
-
-    def test_doctor_connectors_exposes_declared_last_mile_without_gate(self):
-        data = arc.build_onboarding_config(
-            business_name="Acme",
-            owner="acme",
-            private_files="SharePoint",
-            specialist_systems=["HubSpot", "Composio MCP"],
-            memory="Hindsight",
-        )
-        data["runtimes"] = ["github-hosted-actions"]
-        out = io.StringIO()
-        with mock.patch.object(arc, "gh_available", return_value=True), mock.patch.object(arc, "gh_authenticated", return_value=True), contextlib.redirect_stdout(out):
-            rc = arc.command_doctor(data, connectors=True)
-        rendered = out.getvalue()
-        self.assertEqual(0, rc)
-        self.assertIn("Connection readiness (read-only; not a deployment gate)", rendered)
-        self.assertIn("GitHub: WIRED", rendered)
-        self.assertIn("DECLARED SharePoint", rendered)
-        self.assertIn("DECLARED HubSpot", rendered)
-        self.assertIn("DECLARED Composio MCP", rendered)
-        self.assertIn("DECLARED github-hosted-actions", rendered)
-        self.assertIn("external wiring UNVERIFIED", rendered)
-
-
-if __name__ == "__main__":
-    unittest.main()
-''', encoding='utf-8')
-          PY
+      - name: Apply bounded patch
+        run: python scripts/issue50_once.py
       - name: Verify
         run: |
           python scripts/arc.py verify-self
           python -m unittest discover -s tests
           python scripts/arc.py doctor --config profiles/generic-business/arc.example.json --connectors || true
-      - name: Commit fix and remove one-shot workflow
+      - name: Commit fix and remove temporary execution files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git rm .github/workflows/issue-50-last-mile-once.yml
+          git rm .github/workflows/issue-50-last-mile-once.yml scripts/issue50_once.py
           git add scripts/arc.py tests/test_issue_50_last_mile.py
           git commit -m "fix: close FolderDesk issue 50 last-mile gaps"
           git push
