@@ -4,7 +4,7 @@ FolderDesk is the public, non-secret architecture package for reproducing a work
 
 FolderDesk is the **reproducible DNA of the organisation**: routing, ownership, execution, verification, deployment and recovery patterns that can be recreated while live business truth stays with its real owners.
 
-**Fast links:** [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Router](AGENTS.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Manifest](MANIFEST.md) · [Evidence](ECOSYSTEM-EVIDENCE.md) · [Releases](RELEASES.md)
+**Fast links:** [Features](FEATURES.md) · [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Router](AGENTS.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Manifest](MANIFEST.md) · [Evidence](ECOSYSTEM-EVIDENCE.md) · [Releases](RELEASES.md)
 
 ## Core route
 
