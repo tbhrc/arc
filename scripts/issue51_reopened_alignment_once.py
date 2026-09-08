@@ -23,8 +23,14 @@ arc = arc.replace(
     1,
 )
 arc = arc.replace(
-    'print(f"GitHub target access: confirmed ({target_detail}).")',
-    'print(f"GitHub connection: confirmed. Target: {target[\'owner\']}.")\n        print(f"GitHub target access: confirmed ({target_detail}).")',
+    '        print(f"GitHub target access: confirmed ({target_detail}).")',
+    '        print(f"GitHub connection: confirmed. Target: {target[\'owner\']}.")\n        print(f"GitHub target access: confirmed ({target_detail}).")',
+    1,
+)
+arc = arc.replace(
+    '    print(f"GitHub target access: confirmed ({target_detail}).")',
+    '    print(f"GitHub connection: confirmed. Target: {target[\'owner\']}.")\n    print(f"GitHub target access: confirmed ({target_detail}).")',
+    1,
 )
 arc_path.write_text(arc, encoding="utf-8")
 
