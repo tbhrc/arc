@@ -22,6 +22,7 @@ STARTER_SKILLS = (
     "github-workflow",
     "skill-authoring",
     "research-escalation",
+    "document-intake",
 )
 
 
@@ -77,7 +78,7 @@ def remote_path_exists(full_repo: str, path: str) -> bool:
 
 def put_new_file(full_repo: str, path: str, content: str) -> None:
     payload = {
-        "message": f"Seed ARC foundational Skill {path}",
+        "message": f"Seed FolderDesk foundational Skill {path}",
         "content": base64.b64encode(content.encode("utf-8")).decode("ascii"),
     }
     result = run(
@@ -90,7 +91,7 @@ def put_new_file(full_repo: str, path: str, content: str) -> None:
 
 def command_plan(data: dict[str, Any]) -> int:
     owner, skills_repo = resolve_target(data)
-    print(f"ARC Skills foundation preview for {owner}/{skills_repo}")
+    print(f"FolderDesk Skills foundation preview for {owner}/{skills_repo}")
     for path, _ in starter_files():
         print(f"- {path}: create only if missing")
     print("No mutation selected. Use --apply when the current instruction authorises bounded seeding.")
@@ -111,12 +112,12 @@ def command_apply(data: dict[str, Any]) -> int:
             continue
         put_new_file(full_repo, path, content)
         print(f"CREATE {full_repo}/{path}")
-    print("ARC foundational Skills seeding complete. Existing target files were not overwritten.")
+    print("FolderDesk foundational Skills seeding complete. Existing target files were not overwritten.")
     return 0
 
 
 def parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="ARC foundational Skills seeder")
+    p = argparse.ArgumentParser(description="FolderDesk foundational Skills seeder")
     p.add_argument("--config", required=True)
     p.add_argument("--apply", action="store_true", help="Create missing foundational Skill files")
     return p
@@ -128,7 +129,7 @@ def main() -> int:
         data = load_config(args.config)
         return command_apply(data) if args.apply else command_plan(data)
     except (FoundationError, json.JSONDecodeError) as exc:
-        print(f"ARC FOUNDATION ERROR: {exc}", file=sys.stderr)
+        print(f"FOLDERDESK FOUNDATION ERROR: {exc}", file=sys.stderr)
         return 2
 
 

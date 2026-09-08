@@ -96,7 +96,7 @@ Known bounded work should go directly to the smallest relevant Skill/owner. Fast
 python3 scripts/seed_foundation.py --config arc.json --apply
 ```
 
-Starter Skills exist only to make a blank environment usable. They remain thin bootstrap pointers; the deployed organisation should establish and evolve its own canonical Skills repository.
+Starter Skills exist only to make a blank environment usable. FolderDesk also seeds a generic `document-intake` Skill so a client-supplied file is filed, ingested, routed with provenance and retrieval-tested by default from day one. The deployed organisation should evolve its own canonical Skills repository without duplicating business truth.
 
 Existing target Skill files are never overwritten automatically.
 

@@ -1,6 +1,6 @@
 # FolderDesk by iMPLEMENTAi — Your Business AI Operating System
 
-FolderDesk gives your business a **GitHub-first operating desk for humans and AI agents**. It provides the reusable structure, routing, Skills model, deployment and recovery patterns needed to turn capable AI tools into an organised operating environment rather than a collection of disconnected chats.
+FolderDesk gives your business a **GitHub-first task-management, filing and organisational-memory system for humans and AI agents**. It turns capable AI tools into an organised operating environment that can track work, file what you give it, preserve useful knowledge and find it again later — reducing the admin chaos of disconnected chats, loose documents and forgotten follow-ups.
 
 You keep your own business data, accounts and credentials with their proper owners. FolderDesk supplies the portable operating structure that connects the work.
 
@@ -8,13 +8,29 @@ You keep your own business data, accounts and credentials with their proper owne
 
 ## What you get
 
-- a persistent GitHub operating desk for human + AI work;
+- a persistent GitHub operating desk and task-management layer for human + AI work;
+- a default document-intake route that files source documents, ingests useful content and makes both the source and derived knowledge retrievable later;
 - reusable Skills instead of repeatedly explaining the same process;
 - clear owners for business truth, work and decisions;
 - agent routing across repositories, tools and specialist systems;
 - a clean way to add connectors, MCP, runtimes, memory and automations;
 - deployment, verification and recovery without copying your private business data into FolderDesk;
 - an architecture that can grow toward the full **[Ultimate Features](FEATURES.md)** catalogue as you connect the capabilities you need.
+
+## Give FolderDesk a file
+
+When you give your agent a document, the default is **not** "read it once and forget it." FolderDesk treats that as an intake event:
+
+```text
+receive file
+→ file/preserve original in your declared private-file owner
+→ identify + ingest useful content
+→ route facts, decisions and tasks to the correct durable owner
+→ preserve provenance back to the source
+→ verify the document and useful knowledge can be found again
+```
+
+This is how FolderDesk becomes a filing machine and organisational memory rather than another chat window. It remembers **where the source lives and what durable work/knowledge came from it**. Inventory/checkpoint metadata alone does not count as ingestion.
 
 ## Step 1 — Connect GitHub
 
@@ -40,6 +56,7 @@ Read the root AGENTS.md first, then use the smallest relevant FolderDesk guidanc
 First confirm that you can access and operate on my target GitHub organisation/account.
 Then onboard and bootstrap FolderDesk, keeping me informed as each repository is checked, reused or created and showing the remaining-time estimate during bootstrap.
 Do not copy TBHRC private business data or secrets. Use FolderDesk as the portable structure and create/adapt my organisation's own owners and Skills.
+If I give you a file or document, treat it as a FolderDesk intake event: preserve/file the source, ingest useful content, route durable knowledge/tasks with provenance, and verify I can retrieve it later.
 After deployment, show me verification status, connection readiness and the next useful capability to activate.
 ```
 

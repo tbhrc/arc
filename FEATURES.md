@@ -22,6 +22,14 @@ FolderDesk is not one monolithic agent runtime. It is the portable architecture 
 | Category | Capability | Scope | Primary owner / mechanism |
 |---|---|---|---|
 | Core harness | General-purpose human + AI operating harness | Core | FolderDesk Router + owners |
+| Work management | Durable task/work identity across agents and sessions | Core/Reference | GitHub Issues + owner state |
+| Work management | Extract actions, decisions and follow-ups from received documents | Reference | Document Intake + domain/task owner |
+| Documents | Default client file/document intake | Core | `document-intake` starter Skill + Router |
+| Documents | File/preserve original source in declared private-file owner | Core/Connected | Private-file owner (for example OneDrive/SharePoint) |
+| Documents | Selective content ingestion instead of read-once chat use | Reference | Document Intake / LOOP3 pattern |
+| Documents | Provenance from durable knowledge/tasks back to source | Core/Reference | Source locator + canonical owner |
+| Documents | Retrieve source documents and derived organisational knowledge later | Core/Reference | File owner + GitHub/owner search |
+| Documents | Admin-chaos reduction through filing + task + knowledge continuity | Core/Reference | FolderDesk operating model |
 | Core harness | Persistent operating environment | Core | GitHub + durable owners |
 | Core harness | Autonomous authorised execution | Reference | Agent runtimes + Workflow |
 | Core harness | Tool-using agents | Reference | Native tools / plugins / MCP / gateways |
