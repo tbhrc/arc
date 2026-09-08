@@ -383,7 +383,43 @@ def command_onboard(args: argparse.Namespace) -> int:
     return 0
 
 
-def command_doctor(data: dict[str, Any]) -> int:
+def command_connection_readiness(data: dict[str, Any]) -> int:
+    owner = data["target"]["owner"]
+    navigation = navigation_from_config(data)
+    skills = navigation.get("skills", "skills")
+    integrations = data.get("integrations", {})
+    print("Connection readiness (read-only; not a deployment gate)")
+    print("Selected modules:")
+    for repo in repos_from_config(data):
+        print(f"- {repo['name']} ({repo['role']}): GitHub repository + {owner}/{skills} Skills routing")
+    print("Observed portable surfaces:")
+    if gh_available() and gh_authenticated():
+        print("- GitHub: WIRED (gh authenticated)")
+    elif gh_available():
+        print("- GitHub: NOT WIRED (gh present but unauthenticated)")
+    else:
+        print("- GitHub: NOT WIRED (gh unavailable)")
+    private_files = integrations.get("private_files", "not-declared")
+    print(f"- Private files connector: DECLARED {private_files}; external wiring UNVERIFIED")
+    systems = integrations.get("specialist_systems", [])
+    if systems:
+        for system in systems:
+            print(f"- Specialist connector/MCP: DECLARED {system}; external wiring UNVERIFIED")
+    else:
+        print("- Specialist connector/MCP: none declared")
+    memory = integrations.get("memory", "optional")
+    print(f"- Memory: DECLARED {memory}; external wiring UNVERIFIED")
+    runtimes = data.get("runtimes", [])
+    if runtimes:
+        for runtime in runtimes:
+            print(f"- Runtime: DECLARED {runtime}; external wiring UNVERIFIED")
+    else:
+        print("- Runtime: none declared")
+    print("External connector/MCP/runtime credentials are intentionally not inspected. Confirm provider-side wiring before calling the deployment operationally ready.")
+    return 0
+
+
+def command_doctor(data: dict[str, Any], *, connectors: bool = False) -> int:
     print(f"ARC doctor for {data['target']['owner']}")
     ok = True
     print(f"PASS Python {sys.version_info.major}.{sys.version_info.minor}")
@@ -396,6 +432,8 @@ def command_doctor(data: dict[str, Any]) -> int:
         print("FAIL GitHub CLI is not authenticated for the intended target")
         ok = False
     print("PASS configuration schema")
+    if connectors:
+        command_connection_readiness(data)
     return 0 if ok else 1
 
 
@@ -445,21 +483,25 @@ def role_label(role: str) -> str:
 def generated_readme(owner: str, repo: dict[str, Any], navigation: dict[str, str]) -> str:
     skills = navigation.get("skills", "skills")
     research = navigation.get("research", "research")
-    return f"""# {repo['name']}\n\n**ARC role:** {role_label(repo['role'])}\n\n{repo['description']}\n\nThis repository was bootstrapped from [ARC](https://github.com/tbhrc/arc). Its live facts and decisions belong here only where this repository is the declared owner. Reusable operating method belongs in `{owner}/{skills}`; external discovery/proving belongs in `{owner}/{research}`.\n\n## Start\n\n1. Read `AGENTS.md`.\n2. Use the local Atlas project Skill for onboarding/navigation.\n3. Create durable work as an Issue when the outcome needs tracking.\n4. Verify real state before claiming completion.\n\n## Navigation\n\n- Skills: `https://github.com/{owner}/{skills}`\n- Research: `https://github.com/{owner}/{research}`\n- ARC upstream: https://github.com/tbhrc/arc\n- ARC learning course: https://github.com/tbhrc/gh-course\n"""
+    return f"""# {repo['name']}\n\n**FolderDesk role:** {role_label(repo['role'])}\n\n{repo['description']}\n\nThis repository was bootstrapped from [FolderDesk](https://github.com/tbhrc/folderdesk). Its live facts and decisions belong here only where this repository is the declared owner. Reusable operating method belongs in `{owner}/{skills}`; external discovery/proving belongs in `{owner}/{research}`.\n\n## Start\n\n1. Read `AGENTS.md`.\n2. Use the local Atlas project Skill for onboarding/navigation.\n3. Create durable work as an Issue when the outcome needs tracking.\n4. Verify real state before claiming completion.\n\n## Navigation\n\n- Skills: `https://github.com/{owner}/{skills}`\n- Research: `https://github.com/{owner}/{research}`\n- FolderDesk upstream: https://github.com/tbhrc/folderdesk\n- Learning course: https://github.com/tbhrc/gh-course\n"""
 
 
 def generated_agents(owner: str, repo: dict[str, Any], navigation: dict[str, str]) -> str:
     skills = navigation.get("skills", "skills")
     research = navigation.get("research", "research")
-    return f"""# AGENTS.md — Repository Router\n\nThis file is the repository **Router** and cold-start contract. Read it first. Follow only the Fast Link needed for the task; do not preload linked material.\n\n**Repository role:** {role_label(repo['role'])}\n\n**Core Fast Links:** [Skills](https://github.com/{owner}/{skills}) · [Research](https://github.com/{owner}/{research}) · [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) · [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md) · [Multi-Agent Orchestrator](https://github.com/tbhrc/skills/tree/main/github-multi-agent-orchestrator)\n\n**Repository Fast Links:** [README](README.md) · [Atlas](.github/skills/atlas/SKILL.md) · [Issues](https://github.com/{owner}/{repo['name']}/issues) · [ARC](https://github.com/tbhrc/arc)\n\n## Route\n\n- **Known owner + bounded task** → use the most-specific repository Fast Link / Skill and execute.\n- **Owner or source unclear** → use [Sniper](https://github.com/tbhrc/skills/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md).\n- **Normal authorised durable GitHub work** → Level 0 Direct. Ordinary already-authorised bounded work executes directly; do not ask twice. Load [Workflow](https://github.com/tbhrc/skills/tree/main/github-agent-workflow) only when Hybrid or Controlled may be needed.\n- **Multiple agents, specialist delegation or genuine parallel work** → use [Multi-Agent Orchestrator](https://github.com/tbhrc/skills/tree/main/github-multi-agent-orchestrator).\n- **Onboarding, adoption or recovery** → use [Atlas](.github/skills/atlas/SKILL.md); it is not the daily routing layer.\n\n## Rules\n\n- Fast Links are pointers, not preload instructions.\n- This repository owns only the facts/state declared by its role.\n- Reusable HOW belongs in `{owner}/{skills}`; external research/proving belongs in `{owner}/{research}`.\n- Preserve existing systems and owners unless a deliberate change is required.\n- Never place secrets, credentials or unnecessary private data in repository surfaces.\n- Verify the requested outcome in the correct owner before claiming completion.\n"""
+    skills_base = f"https://github.com/{owner}/{skills}"
+    workflow = f"{skills_base}/tree/main/github-agent-workflow"
+    sniper = f"{skills_base}/blob/main/human-ai-operations-map/references/ai-sniper-entry-map.md"
+    orchestrator = f"{skills_base}/tree/main/github-multi-agent-orchestrator"
+    return f"""# AGENTS.md — Repository Router\n\nThis file is the repository **Router** and cold-start contract. Read it first. Follow only the Fast Link needed for the task; do not preload linked material.\n\n**Repository role:** {role_label(repo['role'])}\n\n**Core Fast Links:** [Skills]({skills_base}) · [Research](https://github.com/{owner}/{research}) · [Workflow]({workflow}) · [Sniper]({sniper}) · [Multi-Agent Orchestrator]({orchestrator})\n\n**Repository Fast Links:** [README](README.md) · [Atlas](.github/skills/atlas/SKILL.md) · [Issues](https://github.com/{owner}/{repo['name']}/issues) · [FolderDesk](https://github.com/tbhrc/folderdesk)\n\n## Route\n\n- **Known owner + bounded task** → use the most-specific repository Fast Link / Skill and execute.\n- **Owner or source unclear** → use [Sniper]({sniper}).\n- **Normal authorised durable GitHub work** → Level 0 Direct. Ordinary already-authorised bounded work executes directly; do not ask twice. Load [Workflow]({workflow}) only when Hybrid or Controlled may be needed.\n- **Multiple agents, specialist delegation or genuine parallel work** → use [Multi-Agent Orchestrator]({orchestrator}).\n- **Onboarding, adoption or recovery** → use [Atlas](.github/skills/atlas/SKILL.md); it is not the daily routing layer.\n\n## Rules\n\n- Fast Links are pointers, not preload instructions.\n- This repository owns only the facts/state declared by its role.\n- Reusable HOW belongs in `{owner}/{skills}`; external research/proving belongs in `{owner}/{research}`.\n- If a referenced Skill has not yet been adopted into `{owner}/{skills}`, use the local Atlas starter guidance and adopt/author the missing equivalent. Authorised TBHRC operators may temporarily consult `tbhrc/skills`; external deployments must not depend on that private fallback.\n- Preserve existing systems and owners unless a deliberate change is required.\n- Never place secrets, credentials or unnecessary private data in repository surfaces.\n- Verify the requested outcome in the correct owner before claiming completion.\n"""
 
 
 def generated_atlas_pointer() -> str:
-    return """---\nname: atlas\ndescription: \"ARC front-door pointer. Use for ARC onboarding, adoption, audit, health, upgrade, recovery, next-action guidance, deployment, diagnosis or `/atlas`. Load and follow the current upstream Atlas Skill from tbhrc/arc; inspect/plan when useful and never mutate solely because credentials exist.\"\n---\n\n# Atlas Pointer\n\nCurrent canonical Atlas: https://github.com/tbhrc/arc/blob/main/.github/skills/atlas/SKILL.md\n\nLoad the current upstream Skill and ARC repository contract before acting. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries.\n"""
+    return """---\nname: atlas\ndescription: \"FolderDesk front-door pointer. Use for FolderDesk onboarding, adoption, audit, health, upgrade, recovery, next-action guidance, deployment, diagnosis or `/atlas`. Load and follow the current upstream Atlas Skill from tbhrc/folderdesk; inspect/plan when useful and never mutate solely because credentials exist.\"\n---\n\n# Atlas Pointer\n\nCurrent canonical Atlas: https://github.com/tbhrc/folderdesk/blob/main/.github/skills/atlas/SKILL.md\n\nLoad the current upstream Skill and FolderDesk repository contract before acting. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries.\n"""
 
 
 def generated_atlas_prompt() -> str:
-    return """Use the local `atlas` project Skill and load the current ARC upstream contract from https://github.com/tbhrc/arc. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries. Atlas supports onboard, adopt, audit, health, upgrade, recover and next modes.\n"""
+    return """Use the local `atlas` project Skill and load the current FolderDesk upstream contract from https://github.com/tbhrc/folderdesk. Inspect/plan when useful. The current instruction is sufficient authority for ordinary bounded work, and `--apply` is a deliberate mutation-mode selector. Fresh authority is required only at real destructive/root/private-data/spend/legal/client-commitment boundaries. Atlas supports onboard, adopt, audit, health, upgrade, recover and next modes.\n"""
 
 
 def put_content(full: str, path: str, content: str, *, sha: str | None = None) -> None:
@@ -800,6 +842,7 @@ def parser() -> argparse.ArgumentParser:
 
     doctor = sub.add_parser("doctor")
     doctor.add_argument("--config", required=True)
+    doctor.add_argument("--connectors", action="store_true", help="Show read-only connector/MCP/runtime readiness without inspecting secrets")
 
     plan = sub.add_parser("plan")
     plan.add_argument("--config", required=True)
@@ -846,7 +889,7 @@ def main() -> int:
 
         data = load_config(args.config)
         if args.command == "doctor":
-            return command_doctor(data)
+            return command_doctor(data, connectors=args.connectors)
         if args.command == "plan":
             return command_plan(data, args.inspect_target)
         if args.command == "bootstrap":
