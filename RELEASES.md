@@ -1,6 +1,8 @@
-# ARC Release Contract
+# FolderDesk Release Contract
 
-Formal ARC releases are known-good upstream anchors for deployment, upgrade and safe-harbour recovery. Release publication is distribution integrity, not runtime permission.
+Formal **FolderDesk** releases are known-good upstream anchors for deployment, upgrade and Safe Harbour recovery. Release publication is distribution integrity, not runtime permission.
+
+Internal compatibility names such as `scripts/arc.py`, `arc.json`, `arc_version` and historical ARC evidence may remain where changing them would create unnecessary migration risk. The current **product and release identity is FolderDesk**.
 
 ## Tag convention
 
@@ -8,13 +10,13 @@ Formal ARC releases are known-good upstream anchors for deployment, upgrade and 
 vMAJOR.MINOR.PATCH
 ```
 
-A formal release points to an exact `main` commit that passed normal executable ARC verification.
+A formal FolderDesk release points to an exact `main` commit that passed normal executable repository verification.
 
 ## What a release guarantees
 
-At publication time, the tagged ARC repository state:
+At publication time, the tagged FolderDesk repository state:
 
-- passed normal ARC repository verification/CI;
+- passed normal repository verification/CI;
 - has a declared semantic version in `VERSION`;
 - states the estate-manifest schema(s) it supports;
 - contains aligned Router, Atlas, manifest, bootstrap and verification contracts;
@@ -22,34 +24,21 @@ At publication time, the tagged ARC repository state:
 
 ## Published releases
 
-- `v0.3.0` — Safe Harbour.
-- `v1.0.0` — Blank-Slate Reproduction Proven.
+- `v0.3.0` — FolderDesk Safe Harbour foundation (published before the public product rename; release metadata is now branded FolderDesk).
+- `v1.0.0` — FolderDesk Blank-Slate Reproduction Proven (published before the public product rename; release metadata is now branded FolderDesk).
 
-`v1.1.0` was an internal unreleased alignment candidate and is superseded by `v1.2.0`; do not create or backfill a release for it.
+Historical implementation provenance is preserved; current public release titles and descriptions use FolderDesk.
 
-## Current release candidate — v1.2.0
+## Current package
 
-ARC `v1.2.0` aligns the portable architecture with the current zero-friction operating model while reducing duplicated canon.
+The repository `VERSION` is the current package version. New formal releases must use **FolderDesk** in release names and user-facing release notes.
 
-Material changes:
+## Safe Harbour relationship
 
-- Anti-Drift/durable-evidence is optional continuity, not architecture or runtime admission;
-- no named Anti-Drift Issue structure is required by ARC;
-- README/Architecture/Bootstrap now describe the minimum route only;
-- starter Workflow and owner-router Skills are thin bootstrap pointers, not competing operating doctrine;
-- TBHRC reference doctrine points to current `tbhrc/skills` canon;
-- each deployed organisation still owns its own evolving Skills canon;
-- ordinary authorised work executes directly and verifies once;
-- estate-manifest schema remains `1.0`;
-- current restore reuses existing configured repositories unchanged and creates only missing configured repositories;
-- private/live external state and credential recovery remain external-owner responsibilities.
-
-## Safe-harbour relationship
-
-ARC **1.x** supports estate-manifest schema `1.0` unless a later release explicitly states otherwise.
+FolderDesk **1.x** supports estate-manifest schema `1.0` unless a later release explicitly states otherwise.
 
 ```text
-formal ARC release/tag
+formal FolderDesk release/tag
 +
 validated non-secret estate manifest
 +
@@ -64,7 +53,7 @@ external owner backups/reprovisioning
 Record only useful facts:
 
 ```text
-ARC version/tag
+FolderDesk version/tag
 exact source commit
 estate-manifest schema support
 material architecture changes
@@ -73,4 +62,4 @@ verification evidence
 genuine known limitations / external-owner responsibilities
 ```
 
-The formal `v1.2.0` release must point to the final reconciled `main` commit after normal ARC verification passes.
+Do not publish a current release under the old ARC product name.

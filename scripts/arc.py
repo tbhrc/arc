@@ -13,6 +13,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
@@ -378,7 +379,7 @@ def command_onboard(args: argparse.Namespace) -> int:
         entity_ref=args.entity_ref,
     )
     path = write_config(data, args.output, overwrite=args.overwrite)
-    print(f"ARC onboarding profile written: {path}")
+    print(f"FolderDesk onboarding profile written: {path}")
     print("No remote mutation performed. Doctor and plan remain available when useful.")
     return 0
 
@@ -420,7 +421,7 @@ def command_connection_readiness(data: dict[str, Any]) -> int:
 
 
 def command_doctor(data: dict[str, Any], *, connectors: bool = False) -> int:
-    print(f"ARC doctor for {data['target']['owner']}")
+    print(f"FolderDesk doctor for {data['target']['owner']}")
     ok = True
     print(f"PASS Python {sys.version_info.major}.{sys.version_info.minor}")
     if not gh_available():
@@ -439,7 +440,7 @@ def command_doctor(data: dict[str, Any], *, connectors: bool = False) -> int:
 
 def command_plan(data: dict[str, Any], inspect_target: bool = False) -> int:
     target = data["target"]
-    print("ARC deployment plan")
+    print("FolderDesk deployment plan")
     if target.get("business_name"):
         print(f"Business: {target['business_name']}")
     print(f"Target: {target['owner']} ({target.get('owner_type', 'org')})")
@@ -506,7 +507,7 @@ def generated_atlas_prompt() -> str:
 
 def put_content(full: str, path: str, content: str, *, sha: str | None = None) -> None:
     payload: dict[str, str] = {
-        "message": f"Seed ARC {path}",
+        "message": f"Seed FolderDesk {path}",
         "content": base64.b64encode(content.encode("utf-8")).decode("ascii"),
     }
     if sha:
@@ -544,15 +545,29 @@ def create_repo(owner: str, owner_type: str, repo: dict[str, Any], navigation: d
 
 def command_bootstrap(data: dict[str, Any], apply: bool) -> int:
     if not apply:
-        print("ARC bootstrap preview: no mutation selected. Use --apply to create missing repositories.")
+        print("FolderDesk bootstrap preview: no mutation selected. Use --apply to create missing repositories.")
         return command_plan(data)
     if not gh_authenticated():
-        raise ArcError("GitHub CLI (gh) must be available and authenticated for --apply")
+        raise ArcError("GitHub is FolderDesk's first requirement. Connect/authenticate GitHub before bootstrap --apply.")
     target = data["target"]
     navigation = navigation_from_config(data)
-    for repo in repos_from_config(data):
+    repos = repos_from_config(data)
+    total = len(repos)
+    started = time.monotonic()
+    print("FolderDesk bootstrap starting.")
+    print(f"GitHub connection: confirmed. Target: {target['owner']}.")
+    print(f"Work ahead: {total} configured repositories will be checked one by one.")
+    print("Time estimate: remaining time will be calculated after the first repository check; progress will stream continuously.")
+    for index, repo in enumerate(repos, start=1):
+        full = f"{target['owner']}/{repo['name']}"
+        print(f"[{index}/{total}] Checking {full}...")
         create_repo(target["owner"], target.get("owner_type", "org"), repo, navigation)
-    print("Repository bootstrap complete. External owner data and credential values were intentionally not modified.")
+        elapsed = max(time.monotonic() - started, 0.0)
+        average = elapsed / index
+        remaining = max(average * (total - index), 0.0)
+        print(f"[{index}/{total}] Complete | elapsed {elapsed:.1f}s | estimated remaining {remaining:.1f}s")
+    elapsed = max(time.monotonic() - started, 0.0)
+    print(f"FolderDesk bootstrap complete in {elapsed:.1f}s. External owner data and credential values were intentionally not modified.")
     return 0
 
 
@@ -822,7 +837,7 @@ def command_verify_self() -> int:
 
 
 def parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="ARC deployment and recovery utility")
+    p = argparse.ArgumentParser(description="FolderDesk deployment and recovery utility")
     sub = p.add_subparsers(dest="command", required=True)
 
     onboard = sub.add_parser("onboard", help="Create a valid ARC profile without remote mutation")

@@ -145,7 +145,7 @@ class ArcConfigTests(unittest.TestCase):
         messages = [call.args[0] for call in print_mock.call_args_list]
         self.assertEqual(
             messages[0],
-            "ARC bootstrap preview: no mutation selected. Use --apply to create missing repositories.",
+            "FolderDesk bootstrap preview: no mutation selected. Use --apply to create missing repositories.",
         )
         self.assertNotIn("approval", " ".join(messages).lower())
         self.assertNotIn("plan-only", " ".join(messages).lower())
@@ -188,7 +188,7 @@ class ArcConfigTests(unittest.TestCase):
 
     def test_cli_description_is_not_plan_first(self):
         description = arc.parser().description
-        self.assertEqual(description, "ARC deployment and recovery utility")
+        self.assertEqual(description, "FolderDesk deployment and recovery utility")
         self.assertNotIn("plan-first", description.lower())
 
 

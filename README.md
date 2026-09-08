@@ -1,12 +1,100 @@
-# FolderDesk by iMPLEMENTAi — Reproduce a Proven Business AI Operating System
+# FolderDesk by iMPLEMENTAi — Your Business AI Operating System
 
-FolderDesk is the public, non-secret architecture package for reproducing a working human + AI operating ecosystem without copying private business state or turning governance into the work.
+FolderDesk gives your business a **GitHub-first operating desk for humans and AI agents**. It provides the reusable structure, routing, Skills model, deployment and recovery patterns needed to turn capable AI tools into an organised operating environment rather than a collection of disconnected chats.
 
-FolderDesk is the **reproducible DNA of the organisation**: routing, ownership, execution, verification, deployment and recovery patterns that can be recreated while live business truth stays with its real owners.
+You keep your own business data, accounts and credentials with their proper owners. FolderDesk supplies the portable operating structure that connects the work.
 
-**Fast links:** [Features](FEATURES.md) · [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Router](AGENTS.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Manifest](MANIFEST.md) · [Evidence](ECOSYSTEM-EVIDENCE.md) · [Releases](RELEASES.md)
+**Fast links:** **[Ultimate Features](FEATURES.md)** · [Get Started](BOOTSTRAP.md) · [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Verify](VERIFY.md) · [Safe Harbour](MANIFEST.md) · [Releases](RELEASES.md) · [Agent Router](AGENTS.md)
 
-## Core route
+## What you get
+
+- a persistent GitHub operating desk for human + AI work;
+- reusable Skills instead of repeatedly explaining the same process;
+- clear owners for business truth, work and decisions;
+- agent routing across repositories, tools and specialist systems;
+- a clean way to add connectors, MCP, runtimes, memory and automations;
+- deployment, verification and recovery without copying your private business data into FolderDesk;
+- an architecture that can grow toward the full **[Ultimate Features](FEATURES.md)** catalogue as you connect the capabilities you need.
+
+## Step 1 — Connect GitHub
+
+**GitHub is the first requirement.** FolderDesk uses GitHub as the durable operating desk where repositories, Skills, Issues, decisions and agent handoffs live.
+
+Before bootstrap, make sure the human or AI agent doing the deployment can access the target GitHub organisation/account and is authenticated for the repository actions you want FolderDesk to perform.
+
+With the CLI, the quick check is:
+
+```bash
+gh auth status
+```
+
+Then continue with [Get Started / Bootstrap](BOOTSTRAP.md).
+
+## Give this to your agent
+
+Copy and paste this into the AI agent you want to use for deployment:
+
+```text
+Open https://github.com/tbhrc/folderdesk and help me deploy FolderDesk into my GitHub organisation.
+Read the root AGENTS.md first, then use the smallest relevant FolderDesk guidance.
+First confirm that you can access and operate on my target GitHub organisation/account.
+Then onboard and bootstrap FolderDesk, keeping me informed as each repository is checked, reused or created and showing the remaining-time estimate during bootstrap.
+Do not copy TBHRC private business data or secrets. Use FolderDesk as the portable structure and create/adapt my organisation's own owners and Skills.
+After deployment, show me verification status, connection readiness and the next useful capability to activate.
+```
+
+That is the intended front door. You do not need to understand the implementation files before asking a capable agent to operate FolderDesk for you.
+
+## How deployment works
+
+At a high level:
+
+```text
+connect GitHub
+→ describe your organisation
+→ FolderDesk plans the repository/owner structure
+→ bootstrap streams progress as repositories are reused or created
+→ seed the starter Skills
+→ verify
+→ connect the external tools/runtimes you want
+→ start real work
+```
+
+FolderDesk reuses existing configured repositories unchanged and creates only missing configured repositories. It does not copy credentials, private files or specialist-system records into the public package.
+
+### CLI path
+
+Create your local deployment profile:
+
+```bash
+python3 scripts/arc.py onboard --output arc.json
+```
+
+Check GitHub and optional connector readiness:
+
+```bash
+python3 scripts/arc.py doctor --config arc.json --connectors
+```
+
+Inspect the target when useful:
+
+```bash
+python3 scripts/arc.py plan --config arc.json --inspect-target
+```
+
+Bootstrap:
+
+```bash
+python3 scripts/arc.py bootstrap --config arc.json --apply
+python3 scripts/seed_foundation.py --config arc.json --apply
+python3 scripts/arc.py verify --config arc.json
+```
+
+During `bootstrap --apply`, FolderDesk reports the current repository, completed/total count, elapsed time and an estimated remaining time after the first repository check. It should not appear to go silent while GitHub work is happening.
+
+## For agents and operators
+
+FolderDesk also contains a compact machine-facing operating contract:
 
 ```text
 request
@@ -18,113 +106,35 @@ request
 → stop
 ```
 
-Conditional only when genuinely needed:
-
-- owner/source unclear → owner lookup;
-- execution method genuinely needs escalation → Workflow;
-- specialist delegation or genuine parallelism → Multi-Agent Orchestrator;
-- consequential boundary → smallest proven control protecting that boundary.
-
-## What FolderDesk reproduces
-
-- organisation direction ownership mechanism;
-- repository/domain ownership topology;
-- root `AGENTS.md` Repository Router and progressive Fast Links;
-- one canonical Skills home for reusable HOW;
-- source-of-truth boundaries;
-- provider/runtime-neutral execution;
-- private-file and specialist-system owner references;
-- inspectable bootstrap and bounded recovery;
-- real-state verification;
-- non-secret estate manifest/reconnection model.
-
-FolderDesk does **not** copy the target organisation's editable live truth, private files, specialist-system records, credentials, runtime machine state or memory contents.
-
-## Skills-first, without duplicate canon
-
-FolderDesk seeds only the minimum starter surface needed to make a blank estate usable.
-
-Starter `owner-router` and `github-workflow` assets are thin bootstrap pointers. They must not become competing copies of the organisation's live operating doctrine.
-
-For the TBHRC reference implementation, current reusable operating rules live in [`tbhrc/skills`](https://github.com/tbhrc/skills). Other organisations should establish the equivalent current canon in their own Skills repository.
-
-## Authority without friction
-
-Ordinary authorised bounded work executes directly.
-
-`--apply` selects mutating mode. It does not create a second approval requirement.
-
-Additional human authority is reserved for genuine consequential boundaries such as root/super-admin changes, destructive or irreversible mutation, material spend, legal/compliance commitment, private-data disclosure or material external/client commitment.
-
-Security, governance and continuity mechanisms must protect a concrete current boundary and earn their friction.
-
-## Durable context without Issue ceremony
-
-Issues, PRs, plans and durable evidence are not runtime permission for ordinary authorised work, and FolderDesk does not require a named Anti-Drift field, controlling Issue, checklist or evidence object merely to execute.
-
-When substantive work changes a material objective, scope, acceptance condition, architecture/decision, blocker or continuation state, preserve that change once in the appropriate durable owner record before handoff, closure or the end of the meaningful work unit. Do not interrupt authorised execution for pre-mutation documentation ceremony.
-
-## Deploy
-
-Inspect when useful:
-
-```bash
-python3 scripts/arc.py onboard --output arc.json
-python3 scripts/arc.py doctor --config arc.json
-python3 scripts/arc.py plan --config arc.json --inspect-target
-```
-
-Execute ordinary authorised deployment directly:
-
-```bash
-python3 scripts/arc.py bootstrap --config arc.json --apply
-python3 scripts/seed_foundation.py --config arc.json --apply
-python3 scripts/arc.py verify --config arc.json
-```
-
-Bootstrap reuses existing configured repositories unchanged and creates only missing configured repositories.
+Fast Links are pointers, not preload instructions. Reusable HOW belongs in the organisation's canonical Skills repository; live mutable business truth remains with its real owner.
 
 ## Safe Harbour
 
-Export a non-secret architecture map:
+FolderDesk can export a non-secret architecture map for recovery:
 
 ```bash
 python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
-```
-
-Inspect recovery when useful:
-
-```bash
 python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
 ```
 
-Reconstruct missing configured repositories:
+When authorised, missing configured repositories can be reconstructed with:
 
 ```bash
 python3 scripts/arc.py restore --manifest arc-estate.json --apply
 ```
 
-Current restore reuses existing configured repositories unchanged and creates only missing configured repositories. External owners recover their own data and credentials through their own systems.
+External owners recover their own files, records, credentials and runtime state through their own systems.
 
-## Acceptance
+## What FolderDesk does not do
 
-FolderDesk is healthy when a fresh capable human or agent can:
+FolderDesk does **not** copy your editable live business truth, private files, specialist-system records, credentials, runtime machine state or memory contents into this public repository.
 
-1. enter through root `AGENTS.md`;
-2. reach the correct Skill/owner without broad preload;
-3. execute ordinary authorised work directly;
-4. use extra routing/coordination only when genuinely needed;
-5. verify the requested real-world result once;
-6. preserve material durable context when needed without turning it into execution permission.
-
-## Evidence
-
-FolderDesk was extracted from the measured TBHRC/iMPLEMENTAi operating transformation. Historical scale and performance evidence is preserved in [ECOSYSTEM-EVIDENCE.md](ECOSYSTEM-EVIDENCE.md); it is reference evidence, not a deployment requirement.
+It also does not require a daemon, queue, control plane or approval ritual just to perform ordinary authorised work.
 
 ## KISSS
 
 > **The operating system must not become the work.**
 
-Prefer a direct edit, pointer, existing Skill, existing system or ordinary agent judgement before adding a validator, daemon, scheduler, queue, policy engine, provider hierarchy, approval loop or new control plane.
+Prefer the direct route, existing Skill, existing owner or existing tool before adding more machinery.
 
 **`main` keeps progress. KISSS keeps speed. Security protects real boundaries, not paperwork.**

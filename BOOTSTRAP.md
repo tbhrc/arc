@@ -1,10 +1,22 @@
-# Bootstrap ARC
+# Bootstrap FolderDesk
 
-ARC bootstrap is inspectable before mutation, but inspection is not a mandatory approval ceremony.
+FolderDesk bootstrap is designed for a first-time human user **and** a capable AI agent. The first requirement is GitHub access; after that, the deployment can be driven by the agent or by the CLI.
 
-**Fast links:** [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Manifest](MANIFEST.md) · [Verify](VERIFY.md) · [Router](AGENTS.md)
+**Fast links:** **[Ultimate Features](FEATURES.md)** · [README](README.md) · [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Verify](VERIFY.md) · [Safe Harbour](MANIFEST.md) · [Agent Router](AGENTS.md)
 
-## 1. Create the profile
+## 1. Connect GitHub first
+
+FolderDesk uses GitHub as the durable operating desk. Before bootstrap, confirm that the human or agent performing deployment can access the target GitHub organisation/account.
+
+CLI check:
+
+```bash
+gh auth status
+```
+
+If GitHub is not connected/authenticated, fix that before `bootstrap --apply`.
+
+## 2. Create the deployment profile
 
 Use Atlas or:
 
@@ -16,7 +28,7 @@ A capable agent that already knows the required facts can use `onboard --non-int
 
 `onboard` writes local configuration only.
 
-## 2. Resolve only required ownership facts
+## 3. Resolve only required ownership facts
 
 Establish only what deployment actually needs:
 
@@ -30,14 +42,14 @@ Establish only what deployment actually needs:
 
 Do not put secret values in `arc.json`.
 
-## 3. Inspect when useful
+## 4. Inspect readiness when useful
 
 ```bash
-python3 scripts/arc.py doctor --config arc.json
+python3 scripts/arc.py doctor --config arc.json --connectors
 python3 scripts/arc.py plan --config arc.json --inspect-target
 ```
 
-`plan` is a visibility tool, not runtime permission.
+`doctor --connectors` gives a read-only view of GitHub and declared connector/MCP/runtime readiness. `plan` is visibility, not runtime permission.
 
 Where target state is observable:
 
@@ -46,13 +58,21 @@ REUSE  — repository exists; leave unchanged
 CREATE — repository is missing; create in mutating mode
 ```
 
-## 4. Execute ordinary authorised deployment
+## 5. Bootstrap with streamed progress
 
 ```bash
 python3 scripts/arc.py bootstrap --config arc.json --apply
 ```
 
-`--apply` selects mutating mode. It does not create a second approval requirement.
+Before repository work begins, FolderDesk states the target and total configured repositories. During the run it reports:
+
+- current repository number / total;
+- which repository is being checked;
+- whether it was reused or created;
+- elapsed time;
+- estimated remaining time after the first repository check.
+
+The remaining-time figure is a live estimate based on completed repository checks, not a fixed promise. Its purpose is to keep the user informed instead of leaving a silent bootstrap.
 
 Bootstrap:
 
@@ -62,21 +82,13 @@ Bootstrap:
 - does not migrate private business data;
 - does not rewrite specialist systems.
 
-Additional human authority is reserved for genuine consequential boundaries such as root/super-admin changes, destructive or irreversible mutation, material spend, legal/compliance commitment, private-data disclosure or material external/client commitment.
+`--apply` selects mutating mode. It does not create a second approval requirement.
 
-## 5. Repository Router
+## 6. Repository Router
 
 Each new repository receives a compact root `AGENTS.md` Repository Router plus thin Atlas entrypoints.
 
-Known bounded work should go directly to the smallest relevant Skill/owner. Load owner lookup, Workflow or Multi-Agent Orchestrator only when the task actually needs them.
-
-Fast Links are pointers, not preload instructions.
-
-## 6. Continuity only when useful
-
-Issues, PRs, plans and evidence may help continuity, coordination, review or recovery. They are optional and never runtime permission for ordinary authorised work.
-
-ARC does not require a named Anti-Drift field, controlling Issue, checklist or evidence object. Preserve the requested outcome in the smallest useful form only when continuity is genuinely needed.
+Known bounded work should go directly to the smallest relevant Skill/owner. Fast Links are pointers, not preload instructions.
 
 ## 7. Seed starter Skills
 
@@ -84,9 +96,7 @@ ARC does not require a named Anti-Drift field, controlling Issue, checklist or e
 python3 scripts/seed_foundation.py --config arc.json --apply
 ```
 
-Starter Skills exist only to make a blank environment usable. They must remain thin bootstrap pointers and must not become a competing editable operating canon.
-
-For the TBHRC reference implementation, current operating doctrine remains in [`tbhrc/skills`](https://github.com/tbhrc/skills). Another organisation should establish and evolve its own canonical Skills repository after deployment.
+Starter Skills exist only to make a blank environment usable. They remain thin bootstrap pointers; the deployed organisation should establish and evolve its own canonical Skills repository.
 
 Existing target Skill files are never overwritten automatically.
 
@@ -96,9 +106,17 @@ Existing target Skill files are never overwritten automatically.
 python3 scripts/arc.py verify --config arc.json
 ```
 
-Use [VERIFY.md](VERIFY.md) for observable acceptance only.
+Use [VERIFY.md](VERIFY.md) for observable acceptance.
 
-## 9. Prove one real workflow
+## 9. Give the deployed system to your agent
+
+After bootstrap, tell your agent:
+
+```text
+Work from my FolderDesk GitHub estate. Read the root AGENTS.md of the repository you enter before doing work. Use the smallest relevant Skill/owner, verify the real outcome once, and keep durable work in GitHub rather than only in chat.
+```
+
+## 10. Prove one real workflow
 
 A useful deployment proves:
 
@@ -108,10 +126,10 @@ request
 → relevant Skill / owner truth
 → authorised execution
 → verify real state
-→ continuity only when useful
+→ preserve material durable context when needed
 ```
 
-## 10. Export Safe Harbour
+## 11. Export Safe Harbour
 
 ```bash
 python3 scripts/arc.py export \
@@ -122,7 +140,7 @@ python3 scripts/arc.py export \
 
 The estate manifest is architecture metadata and owner references, not a backup of private files, specialist-system data, credentials, runtime machine state or memory contents.
 
-## 11. Recover
+## 12. Recover
 
 Inspect when useful:
 
@@ -140,4 +158,4 @@ Current restore reuses existing configured repositories unchanged and creates on
 
 ## KISSS
 
-Do not add another workflow, gate, Issue requirement, approval step, provider layer or duplicated operating rule merely to make bootstrap look more governed.
+Do not add another workflow, gate, approval step, provider layer or duplicated operating rule merely to make bootstrap look more governed.
