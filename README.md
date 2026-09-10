@@ -4,7 +4,9 @@ FolderDesk is a **task-management, filing and organisational-memory system for h
 
 **You do not need GitHub experience to use FolderDesk.** GitHub is the durable backend your agent uses; the detailed deployment behaviour belongs in [Get Started / Bootstrap](BOOTSTRAP.md), not in this public front door.
 
-**Fast links:** **[Ultimate Features](FEATURES.md)** · [Get Started](BOOTSTRAP.md) · [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Verify](VERIFY.md) · [Safe Harbour](MANIFEST.md) · [Releases](RELEASES.md) · [Agent Router](AGENTS.md)
+**FolderDesk V5** is the clean GitHub-native product era. The platform capability layer inherited from GitHub — enterprise governance, indexed search, identity/access, secrets, Apps/OAuth, APIs, automation, auditability and more — is documented separately in [V5 GitHub Platform Capabilities](GITHUB-PLATFORM-CAPABILITIES.md).
+
+**Fast links:** **[Ultimate Features](FEATURES.md)** · **[V5 GitHub Platform](GITHUB-PLATFORM-CAPABILITIES.md)** · [Get Started](BOOTSTRAP.md) · [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Verify](VERIFY.md) · [Safe Harbour](MANIFEST.md) · [Releases](RELEASES.md) · [Agent Router](AGENTS.md)
 
 ## Start here — Give this to your agent
 
