@@ -8,6 +8,11 @@
   },
   "repositories": [
     {
+      "name": "org",
+      "role": "organization-map",
+      "visibility": "private"
+    },
+    {
       "name": "skills",
       "role": "skills",
       "visibility": "private"
