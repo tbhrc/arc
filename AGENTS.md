@@ -3,11 +3,7 @@
 **Structural class:** F — product / application / code repository. See [TBHRC GitHub Repository Pre-Structure](https://github.com/tbhrc/org/blob/main/700-architecture/organisation-pre-structure.md).
 
 <!-- ROUTER_SHARED_LIFECYCLE_START -->
-**Issue Gate:** Every substantive or durable work unit requires a master controlling Issue; create new substantive Issues from the canonical [Durable Work template](https://github.com/tbhrc/.github/blob/main/.github/ISSUE_TEMPLATE/durable-work.md).
-
-**FolderDesk Lifecycle / Lever:** For substantive ideas/work originating in conversation, use the canonical [Lifecycle Lever](https://github.com/tbhrc/skills/blob/main/github-agent-workflow/scripts/lifecycle_set.py) owned by the [Lifecycle of FolderDesk](https://github.com/tbhrc/skills/blob/main/docs/lifecycle/folderdesk-lifecycle.md): search/reuse first; create exactly once at the truthful initial `idea` or `discussion` stage with priority in the same mutation; later choose the semantic stage through the Lever/native adapter rather than reconstructing label mechanics; lifecycle metadata is evidence/navigation, never runtime permission.
-
-**Close Gate:** Before closing any Issue, read and reconcile its current body; every required `## Checklist` and `## Acceptance Criteria` item must be `[x]`, otherwise keep the Issue open.
+**Direct execution / optional continuity:** Execute authorised work directly. Use an existing GitHub Issue only when it materially helps continuity, handoff or coordination; create one only when that durable record is genuinely useful. Lifecycle/priority labels and the Lifecycle Lever are optional metadata/mechanics and must never trigger extra AI reads, writes, audits, reconciliation, approvals or execution gates. This rule supersedes older mandatory lifecycle/Issue-gate wording.
 <!-- ROUTER_SHARED_LIFECYCLE_END -->
 Read this first. Follow only the link needed for the task; do not preload documentation.
 
@@ -34,9 +30,9 @@ Read this first. Follow only the link needed for the task; do not preload docume
 
 ## Rules
 
-- **Issue-backed by default.** A master controlling Issue backs every substantive or durable unit of work. Reuse the existing master controlling Issue when it materially helps continuity; create additional Issues only when continuation, handoff, audit/founder visibility, cross-agent work or material chat-only decisions make it useful, and link every such Issue back to the master controlling Issue. If no controlling Issue exists anywhere org-wide for the work, create a new master controlling Issue before proceeding. Do not open or update an Issue for `go`/`continue`/`retry`/`next`, or before every mutation when nothing material changed — continuation against an existing Issue needs no new Issue and no ceremony update. Metadata is never runtime permission, and issue-less substantive work is not permitted.
+- **Issues are optional continuity.** Reuse or create an Issue only when it materially improves continuation, handoff, coordination, durable decision history or founder visibility; do not stop authorised work for Issue or label ceremony.
 - Do not require a controlling Issue for ordinary bounded work. Create/use one when durable continuity, coordination or recovery actually benefits from it.
-- Material founder/user changes to objective, scope, acceptance, architecture/decision, blocker or continuation state must not remain trapped only in chat; capture them once in the Issue or better owner truth at the natural checkpoint.
+- When an Issue is in use, capture only material state another human/agent needs to continue; do not sync routine steps or unchanged context.
 - Do not pause authorised execution merely to synchronise Issue metadata. If a controlling Issue exists or was warranted, reconcile it before completion or handoff.
 - **Founder scan speed.** Follow the [Workflow founder-facing output convention](https://github.com/tbhrc/skills/blob/main/github-agent-workflow/SKILL.md#founder-facing-output): keep status concise, and render material existing GitHub repositories, Issues, PRs, Skills, canonical files/documents and navigable folders as descriptive clickable links when stable URLs exist; use raw/code paths only for proposed/nonexistent paths, literal commands/identifiers, or when the raw path itself is under discussion.
 - **Friction masquerading as security is prohibited.**
