@@ -26,7 +26,10 @@ At publication time, the tagged FolderDesk repository state:
 
 - `v0.3.0` — early Safe Harbour foundation.
 - `v1.0.0` — early blank-slate reproduction proof.
-- `v2.0.0` — FolderDesk-native naming and **single-repository-first** deployment contract; additional repositories become explicit optional expansion.
+
+## Current release candidate — v2.0.0
+
+`VERSION` already declares `2.0.0` (FolderDesk-native naming and **single-repository-first** deployment contract; additional repositories become explicit optional expansion), but no `v2.0.0` tag/GitHub release has been published yet — `v1.0.0` remains the latest actually-tagged release. Verification (`python3 -m unittest discover -s tests -p 'test_*.py'`) currently reports 3 failures (`test_issue_51_client_ux`, `test_issue_51_document_intake`, `test_issue_52_client_experience`) expecting front-door README copy not yet written. `v2.0.0` should not be tagged until those pass or the expectation is deliberately revised.
 
 Historical commits/audits may retain the terminology that existed at the time. Current product code, configuration and release surfaces do not.
 
