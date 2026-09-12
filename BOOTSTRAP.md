@@ -6,7 +6,11 @@ FolderDesk bootstrap is **agent-led for a non-technical business client**. The c
 
 ## 0. Client handoff
 
-The normal client gives the FolderDesk link to a capable agent. Use the copy/paste instruction in [README](README.md#start-here--give-this-to-your-agent). Do not begin by teaching the client GitHub, repository architecture or CLI commands.
+The normal handoff is exactly the two-line prompt in [README](README.md#start-here--give-this-to-your-ai-agent): repository URL, then `fork this repository and run BOOTSTRAP.md`.
+
+Use the existing authorised GitHub identity to fork FolderDesk into the client's/target operator's authorised organisation or account, then continue this bootstrap from that fork. The FolderDesk fork is the deployment/reference copy; normal client business data still belongs in the private workspace repository created or reused by the steps below. Do not put client business data into a public FolderDesk fork.
+
+If the current GitHub account is not connected, ask only for the normal sign-in/authorisation action. If GitHub or organisation policy prevents the fork, report that exact blocker instead of silently inventing a different deployment path. Do not begin by teaching the client GitHub architecture or pasting this whole bootstrap into chat.
 
 ## 1. Establish the exact GitHub backend
 
