@@ -1,6 +1,6 @@
 import importlib.util
-import unittest
 from pathlib import Path
+import unittest
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "seed_foundation.py"
 spec = importlib.util.spec_from_file_location("seed_foundation", MODULE_PATH)
@@ -14,13 +14,20 @@ class FoundationTests(unittest.TestCase):
         return {
             "target": {"owner": "example-org"},
             "repositories": [
-                {"name": "playbooks", "role": "skills"},
-                {"name": "research", "role": "research"},
+                {"name": "example-business", "role": "workspace"},
             ],
         }
 
-    def test_resolves_configured_skills_owner(self):
-        self.assertEqual(foundation.resolve_target(self.config()), ("example-org", "playbooks"))
+    def test_defaults_to_workspace_local_skills(self):
+        self.assertEqual(
+            foundation.resolve_target(self.config()),
+            ("example-org", "example-business", ".folderdesk/skills/"),
+        )
+
+    def test_explicit_skills_repo_remains_supported(self):
+        data = self.config()
+        data["repositories"].append({"name": "playbooks", "role": "skills"})
+        self.assertEqual(foundation.resolve_target(data), ("example-org", "playbooks", ""))
 
     def test_rejects_placeholder_owner(self):
         data = self.config()
@@ -28,7 +35,7 @@ class FoundationTests(unittest.TestCase):
         with self.assertRaises(foundation.FoundationError):
             foundation.resolve_target(data)
 
-    def test_rejects_missing_skills_role(self):
+    def test_rejects_missing_workspace_or_skills_owner(self):
         data = self.config()
         data["repositories"] = [{"name": "research", "role": "research"}]
         with self.assertRaises(foundation.FoundationError):

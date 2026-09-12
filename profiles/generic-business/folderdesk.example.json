@@ -1,0 +1,37 @@
+{
+  "folderdesk_version": "2.0.0",
+  "target": {
+    "business_name": "YOUR-BUSINESS",
+    "owner": "YOUR-GITHUB-ORG",
+    "owner_type": "org",
+    "default_visibility": "private"
+  },
+  "deployment_context": {
+    "scope": "shared"
+  },
+  "repositories": [
+    {
+      "name": "your-business",
+      "description": "YOUR-BUSINESS FolderDesk workspace.",
+      "role": "workspace",
+      "required": true
+    }
+  ],
+  "domains": [
+    {
+      "name": "sales",
+      "label": "Sales",
+      "description": "Sales domain/context inside the workspace."
+    },
+    {
+      "name": "delivery",
+      "label": "Delivery",
+      "description": "Delivery domain/context inside the workspace."
+    }
+  ],
+  "integrations": {
+    "private_files": "not-declared",
+    "specialist_systems": [],
+    "memory": "optional"
+  }
+}

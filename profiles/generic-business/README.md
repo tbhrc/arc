@@ -1,20 +1,18 @@
 # Generic Business Profile
 
-Use this profile to deploy ARC into a new business or client without importing TBHRC-specific names or provider assumptions.
+Use this profile to deploy FolderDesk into a new business or client without importing TBHRC-specific names or provider assumptions.
 
 ## Recommended path
 
-1. Use Atlas or `scripts/arc.py onboard` to generate `arc.json`.
-2. Set/confirm the target GitHub owner and visibility.
+1. Use Atlas or `scripts/folderdesk.py onboard` to generate `folderdesk.json`.
+2. Confirm the target GitHub owner, primary workspace name and visibility.
 3. For a managed-client deployment, set `deployment_context.scope` to `tenant` and supply the canonical `tenant_id`; for shared architecture use `scope: shared`.
-4. Rename/add domain repositories to match how the business actually owns work.
-5. Select only the optional business modules that have a real owner/use case.
-6. Declare at least one normal capable-agent route and one normal runtime route.
-7. Add a trusted runtime only when the required work genuinely needs that capability.
-8. Use `doctor` and `plan --inspect-target` when useful for validation; if the current instruction already authorises ordinary bounded deployment, run `bootstrap --apply` directly without asking again.
-9. Seed the first-day Skills foundation with `scripts/seed_foundation.py --apply` when ordinary bounded seeding is already authorised; the non-mutating form remains available for inspection.
-10. Use Atlas to complete only the owner mapping, specialist-system integration and agent onboarding actually required.
-11. Run one real workflow and verify durable evidence before calling the deployment useful.
+4. Declare business domains as logical in-repository context. Do not create a repository per department/domain by default.
+5. Reuse existing external systems/connectors as live owners of their records.
+6. Use `doctor` and `plan --inspect-target` when useful; if ordinary bounded deployment is already authorised, run `bootstrap --apply` directly.
+7. Seed starter Skills under `.folderdesk/skills/` with `scripts/seed_foundation.py --apply` when useful.
+8. Run one real workflow and verify a useful result before calling the deployment useful.
+9. Add another repository later only when a concrete ownership, access/security, independent lifecycle/release, concurrency/isolation or mature-capability boundary earns separation.
 
 `--apply` selects mutating mode. It is not a ceremonial second approval step. Fresh authority is required only at a real destructive/root/private-data/spend/legal/client-commitment boundary.
 
@@ -23,7 +21,13 @@ Use this profile to deploy ARC into a new business or client without importing T
 Managed-client profiles must carry explicit deployment context. Generate it directly when onboarding:
 
 ```bash
-python3 scripts/arc.py onboard --non-interactive --business-name "Client Name" --owner client-github-org --tenant-id canonical-tenant-id --entity-ref canonical-owner-entity-ref
+python3 scripts/folderdesk.py onboard \
+  --non-interactive \
+  --business-name "Client Name" \
+  --owner client-github-org \
+  --tenant-id canonical-tenant-id \
+  --entity-ref canonical-owner-entity-ref \
+  --output folderdesk.json
 ```
 
 Equivalent profile contract:
@@ -36,47 +40,47 @@ Equivalent profile contract:
 }
 ```
 
-`tenant_id` and `entity_ref` are references supplied by the canonical organisation/DB owners; FolderDesk does not allocate a parallel client/identity code system. A non-client shared architecture profile uses `"scope": "shared"` and no `tenant_id`. Safe-harbour export/recovery preserves this context.
+`tenant_id` and `entity_ref` are references supplied by canonical organisation/DB owners; FolderDesk does not allocate a parallel client/identity code system. A non-client shared profile uses `"scope": "shared"` and no `tenant_id`. Safe-harbour export/recovery preserves this context.
 
-For an iMPLEMENTAi managed-service estate, multiple tenant profiles may deliberately target the **same GitHub owner and same shared repository/Skills topology** while carrying distinct tenant context. A dedicated client-owned deployment may instead target that client's own GitHub owner. Tenant identity must never be encoded by cloning or renaming the shared architecture.
-
-## Module selection
+## Domains are not repositories
 
 Example:
 
 ```json
-"modules": ["sales", "research", "website"]
+"domains": [
+  {"name": "sales", "label": "Sales", "description": "Sales context inside the workspace."},
+  {"name": "delivery", "label": "Delivery", "description": "Delivery context inside the workspace."}
+]
 ```
 
-Use the catalogue in [`modules/README.md`](../../modules/README.md). A module does not automatically require a repository or a new SaaS product. Reuse the existing specialist system when it is already the correct owner.
+Domains help route context and work. They do not automatically create repositories, agents, databases or SaaS products.
 
-## Provider and runtime portability
+## Optional repository expansion
 
-Example:
+The default profile contains exactly one repository with `role: "workspace"`.
 
-```json
-"providers": ["capable-agent"],
-"runtimes": ["github-hosted-actions"]
-```
+If a separate repository later becomes genuinely useful, add it explicitly to `repositories[]`. Typical earned boundaries are:
 
-Provider names are deployment choices, not architecture canon. Runtime choice follows the **simplest authorised route that can actually complete the work**, with purpose-fit authority sufficient for its intended function. See [`providers/`](../../providers/README.md) and [`runtimes/`](../../runtimes/README.md).
-
-Do not choose a weaker route merely because it appears more restrictive, and do not create an extra credential/bridge when an existing authorised route can do the job.
+- separate access/privacy/security;
+- independent product/release lifecycle;
+- genuine concurrent/isolated execution;
+- public distribution separate from private work;
+- mature reusable capability with a distinct owner.
 
 ## Skills-first foundation
 
 Inspect when useful:
 
 ```bash
-python3 scripts/seed_foundation.py --config arc.json
+python3 scripts/seed_foundation.py --config folderdesk.json
 ```
 
 Execute ordinary authorised seeding directly:
 
 ```bash
-python3 scripts/seed_foundation.py --config arc.json --apply
+python3 scripts/seed_foundation.py --config folderdesk.json --apply
 ```
 
-ARC creates only missing generic starter Skills and never overwrites existing target Skill files.
+By default FolderDesk creates only missing starter Skills under `.folderdesk/skills/` in the primary workspace and never overwrites existing files. If an explicit repository with `role: "skills"` is later configured, that repository becomes the Skills target.
 
-The profile intentionally does not contain secret fields or live business data.
+The profile intentionally contains no secret fields or live business data.

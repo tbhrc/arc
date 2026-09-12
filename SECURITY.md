@@ -1,6 +1,6 @@
 # Security Policy
 
-ARC is public. Never report credential values, private client/personnel data or exploit details in a public Issue or Pull Request.
+FolderDesk is public. Never report credential values, private client/personnel data or exploit details in a public Issue or Pull Request.
 
 ## Principles
 

@@ -1,12 +1,12 @@
-name: ARC improvement
+name: FolderDesk improvement
 description: Propose a reproducibility, architecture, onboarding or deployment improvement.
-title: "[ARC] "
+title: "[FolderDesk] "
 body:
   - type: textarea
     id: problem
     attributes:
       label: Problem
-      description: What deployment or operating problem is ARC not solving well?
+      description: What deployment or operating problem is FolderDesk not solving well?
     validations:
       required: true
   - type: textarea

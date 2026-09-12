@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Verify the public ARC TBHRC reference against current canonical Skills truth.
+"""Verify the public FolderDesk TBHRC reference against current canonical Skills truth.
 
 Checks are deliberately bounded:
 1. Router repository membership parity.
-2. Material ARC Fast Links into tbhrc/skills resolve to real paths.
-3. One consolidated report with ARC + Skills source SHAs.
+2. Material FolderDesk Fast Links into tbhrc/skills resolve to real paths.
+3. One consolidated report with FolderDesk + Skills source SHAs.
 
-The script reports drift; it does not invent role/visibility metadata or mutate source truth.
+The TBHRC profile is an expanded mature reference, not the default deployment topology.
+The script reports drift; it does not mutate source truth.
 """
 from __future__ import annotations
 
@@ -19,7 +20,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_REFERENCE = ROOT / "profiles" / "tbhrc-reference" / "arc.reference.json"
+DEFAULT_REFERENCE = ROOT / "profiles" / "tbhrc-reference" / "folderdesk.reference.json"
 MATERIAL_DOCS = (
     ROOT / "AGENTS.md",
     ROOT / "README.md",
@@ -131,7 +132,7 @@ def build_report(skills_source: Path, reference_path: Path = DEFAULT_REFERENCE) 
     status = "GREEN" if not missing and not extra and not broken else "DRIFT"
     return {
         "status": status,
-        "arc_sha": git_sha(ROOT),
+        "folderdesk_sha": git_sha(ROOT),
         "skills_sha": git_sha(skills_source),
         "router_repository_count": len(router),
         "reference_repository_count": len(reference),
@@ -143,7 +144,7 @@ def build_report(skills_source: Path, reference_path: Path = DEFAULT_REFERENCE) 
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Reconcile ARC TBHRC reference parity")
+    parser = argparse.ArgumentParser(description="Reconcile FolderDesk TBHRC expanded-reference parity")
     parser.add_argument("--skills-source", required=True, type=Path)
     parser.add_argument("--reference", type=Path, default=DEFAULT_REFERENCE)
     parser.add_argument("--report", type=Path)
@@ -157,7 +158,7 @@ def main() -> int:
             args.report.write_text(rendered + "\n", encoding="utf-8")
         return 0 if report["status"] == "GREEN" else 1
     except (ReconcileError, OSError, json.JSONDecodeError) as exc:
-        print(f"ARC RECONCILE ERROR: {exc}", file=sys.stderr)
+        print(f"FOLDERDESK RECONCILE ERROR: {exc}", file=sys.stderr)
         return 2
 
 

@@ -3,10 +3,6 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("folderdesk_issue52", ROOT / "scripts" / "arc.py")
-arc = importlib.util.module_from_spec(spec)
-assert spec.loader is not None
-spec.loader.exec_module(arc)
 
 
 class Issue52ClientExperienceTests(unittest.TestCase):
@@ -37,8 +33,10 @@ class Issue52ClientExperienceTests(unittest.TestCase):
         self.assertIn("before asking the client to manually reproduce that context", text)
         self.assertIn("polished DOCX and/or PDF", text)
         self.assertIn("The client should not need to know or operate GitHub", text)
+        self.assertIn("the default is **one repository**", text.lower())
+        self.assertIn("not separate repositories", text.lower())
 
-    def test_client_experience_starter_skill_is_seeded(self):
+    def test_client_experience_starter_skill_is_seeded_locally_by_default(self):
         skill = (ROOT / "starter/skills/client-experience/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("Assume zero GitHub knowledge", skill)
         self.assertIn("representative documents", skill)
@@ -51,14 +49,11 @@ class Issue52ClientExperienceTests(unittest.TestCase):
         assert seed_spec.loader is not None
         seed_spec.loader.exec_module(seed)
         self.assertIn("client-experience", seed.STARTER_SKILLS)
-
-    def test_generated_router_inherits_client_experience(self):
-        repo = {"name": "sales", "role": "business-domain", "description": "Sales", "required": True, "visibility": "private"}
-        agents = arc.generated_agents("acme", repo, {"skills": "skills", "research": "research"})
-        self.assertIn("[Client Experience](https://github.com/acme/skills/tree/main/client-experience)", agents)
-        self.assertIn("Client-facing onboarding, status or business artifact", agents)
-        self.assertIn("polished DOCX/PDF", agents)
-        self.assertIn("keep technical evidence behind the scenes", agents)
+        config = {
+            "target": {"owner": "acme"},
+            "repositories": [{"name": "acme", "role": "workspace"}],
+        }
+        self.assertEqual(seed.resolve_target(config), ("acme", "acme", ".folderdesk/skills/"))
 
     def test_features_capture_product_behaviour(self):
         text = (ROOT / "FEATURES.md").read_text(encoding="utf-8")

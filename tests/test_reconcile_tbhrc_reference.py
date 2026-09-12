@@ -17,16 +17,16 @@ class ReconcileTBHRCReferenceTests(unittest.TestCase):
             root = Path(tmp)
             router = root / "router.json"
             reference = root / "reference.json"
-            router.write_text(json.dumps({"tbhrc/skills": "x", "tbhrc/arc": "y"}), encoding="utf-8")
+            router.write_text(json.dumps({"tbhrc/skills": "x", "tbhrc/folderdesk": "y"}), encoding="utf-8")
             reference.write_text(json.dumps({
                 "target": {"owner": "tbhrc"},
                 "repositories": [
                     {"name": "skills", "role": "skills", "visibility": "private"},
-                    {"name": "arc", "role": "portable-architecture", "visibility": "public"},
+                    {"name": "folderdesk", "role": "portable-architecture", "visibility": "public"},
                 ],
             }), encoding="utf-8")
-            self.assertEqual(reconcile.router_repositories(router), {"tbhrc/skills", "tbhrc/arc"})
-            self.assertEqual(reconcile.reference_repositories(reference)[1], {"tbhrc/skills", "tbhrc/arc"})
+            self.assertEqual(reconcile.router_repositories(router), {"tbhrc/skills", "tbhrc/folderdesk"})
+            self.assertEqual(reconcile.reference_repositories(reference)[1], {"tbhrc/skills", "tbhrc/folderdesk"})
 
     def test_verify_skill_links_detects_only_missing_targets(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,0 +1,35 @@
+{
+  "folderdesk_version": "2.0.0",
+  "reference_only": true,
+  "topology": "expanded-reference",
+  "target": {
+    "owner": "tbhrc",
+    "owner_type": "org",
+    "default_visibility": "mixed"
+  },
+  "repositories": [
+    {"name": "fd-tiny", "role": "folderdesk-bootstrap", "visibility": "private"},
+    {"name": "skills", "role": "skills", "visibility": "private"},
+    {"name": "research", "role": "research", "visibility": "private"},
+    {"name": "ai-ops", "role": "operations", "visibility": "private"},
+    {"name": "ai-engine", "role": "trusted-runtime", "visibility": "private"},
+    {"name": "ats", "role": "specialist-system", "visibility": "private"},
+    {"name": "db", "role": "specialist-system", "visibility": "private"},
+    {"name": "tb", "role": "business-domain", "visibility": "private"},
+    {"name": "now-hiring", "role": "business-domain", "visibility": "private"},
+    {"name": "recruitment", "role": "business-domain", "visibility": "private"},
+    {"name": "assessments", "role": "business-domain", "visibility": "private"},
+    {"name": "drf-main", "role": "business-domain", "visibility": "private"},
+    {"name": "meetings", "role": "business-domain", "visibility": "private"},
+    {"name": "marketing", "role": "business-domain", "visibility": "private"},
+    {"name": "hr", "role": "business-domain", "visibility": "private"},
+    {"name": "sales", "role": "business-domain", "visibility": "private"},
+    {"name": "legal", "role": "business-domain", "visibility": "private"},
+    {"name": "finance", "role": "business-domain", "visibility": "private"},
+    {"name": "design", "role": "business-domain", "visibility": "private"},
+    {"name": "implementai.ae", "role": "product-website", "visibility": "private"},
+    {"name": "gh-course", "role": "learning", "visibility": "public"},
+    {"name": "folderdesk", "role": "portable-architecture", "visibility": "public"}
+  ],
+  "notes": "This is a mature expanded TBHRC reference, not the default FolderDesk deployment topology. New deployments start with one workspace repository and expand only when a real boundary earns separation."
+}

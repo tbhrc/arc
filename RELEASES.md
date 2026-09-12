@@ -2,7 +2,7 @@
 
 Formal **FolderDesk** releases are known-good upstream anchors for deployment, upgrade and Safe Harbour recovery. Release publication is distribution integrity, not runtime permission.
 
-Internal compatibility names such as `scripts/arc.py`, `arc.json`, `arc_version` and historical ARC evidence may remain where changing them would create unnecessary migration risk. The current **product and release identity is FolderDesk**.
+FolderDesk v2 is a deliberate clean break from the old ARC-named prototype contract. Current executable/configuration surfaces use FolderDesk naming only.
 
 ## Tag convention
 
@@ -22,20 +22,21 @@ At publication time, the tagged FolderDesk repository state:
 - contains aligned Router, Atlas, manifest, bootstrap and verification contracts;
 - records material changes and genuine known limitations.
 
-## Published releases
+## Published history
 
-- `v0.3.0` — FolderDesk Safe Harbour foundation (published before the public product rename; release metadata is now branded FolderDesk).
-- `v1.0.0` — FolderDesk Blank-Slate Reproduction Proven (published before the public product rename; release metadata is now branded FolderDesk).
+- `v0.3.0` — early Safe Harbour foundation.
+- `v1.0.0` — early blank-slate reproduction proof.
+- `v2.0.0` — FolderDesk-native naming and **single-repository-first** deployment contract; additional repositories become explicit optional expansion.
 
-Historical implementation provenance is preserved; current public release titles and descriptions use FolderDesk.
+Historical commits/audits may retain the terminology that existed at the time. Current product code, configuration and release surfaces do not.
 
 ## Current package
 
-The repository `VERSION` is the current package version. New formal releases must use **FolderDesk** in release names and user-facing release notes.
+The repository `VERSION` is the current package version. New formal releases use **FolderDesk** in release names, code-facing configuration names and user-facing release notes.
 
 ## Safe Harbour relationship
 
-FolderDesk **1.x** supports estate-manifest schema `1.0` unless a later release explicitly states otherwise.
+FolderDesk **2.x** uses estate-manifest schema `2.0` unless a later release explicitly states otherwise.
 
 ```text
 formal FolderDesk release/tag
@@ -43,7 +44,7 @@ formal FolderDesk release/tag
 validated non-secret estate manifest
 +
 external owner backups/reprovisioning
-→ bounded repository reconstruction
+→ bounded workspace reconstruction
 → external owner restoration/reconnection
 → verification
 ```
@@ -61,5 +62,3 @@ compatibility / migration notes
 verification evidence
 genuine known limitations / external-owner responsibilities
 ```
-
-Do not publish a current release under the old ARC product name.

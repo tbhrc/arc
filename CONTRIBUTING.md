@@ -1,24 +1,26 @@
-# Contributing to ARC
+# Contributing to FolderDesk
 
-ARC should become simpler and more reproducible as it grows.
+FolderDesk should become simpler, more useful and more reproducible as it grows.
 
 ## Good contributions
 
 - remove hidden setup knowledge;
 - improve portability;
-- add a proven provider adapter;
+- simplify the default workspace;
 - improve Atlas onboarding;
 - improve deterministic verification;
 - document a real deployment lesson;
-- make truth ownership or security boundaries clearer.
+- make truth ownership or security boundaries clearer;
+- preserve single-repository-first as the default unless evidence proves a broader boundary is required.
 
 ## Avoid
 
-- copying live client/business data into ARC;
+- copying live client/business data into FolderDesk;
 - adding framework code where concise instructions are sufficient;
-- coupling ARC to one model/provider without necessity;
+- forcing additional repositories without a concrete ownership, security, lifecycle, concurrency or scale reason;
+- coupling FolderDesk to one model/provider without necessity;
 - adding a second owner for an existing truth;
 - shipping secret values or credential-bearing examples;
 - claiming a provider feature works without verification.
 
-Use an Issue for material changes, work on a focused branch, verify the affected path, and open a Pull Request with evidence.
+For substantial changes, use the smallest review/continuity mechanism that materially helps. Issues and branches are useful when needed; they are not runtime permission for ordinary authorised work. Verify the affected path before merging.
