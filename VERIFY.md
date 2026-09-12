@@ -1,6 +1,6 @@
-# ARC Verification Contract
+# FolderDesk Verification Contract
 
-ARC is healthy when the intended operating capability works. Verification proves outcomes; it does not create permission gates.
+FolderDesk is healthy when the intended operating capability works. Verification proves outcomes; it does not create permission gates.
 
 ## Repository baseline
 
@@ -31,8 +31,8 @@ For a new or adopted estate, prove only what is relevant:
 A valid estate manifest must:
 
 - use supported `manifest_schema: 1.0`;
-- identify the ARC version that exported it;
-- round-trip into valid ARC topology/configuration;
+- identify the FolderDesk release version that exported it (currently stored in the compatibility `arc_version` field);
+- round-trip into valid FolderDesk topology/configuration;
 - contain architecture/owner references only;
 - exclude credential values, private-file contents, specialist-system records, database contents, trusted-runtime machine state and derived memory contents;
 - reject unsupported schemas and obvious credential material.
@@ -53,8 +53,8 @@ If a future operation actually deletes, overwrites, force-updates, uses root/sup
 
 These controls remain because they protect concrete public-repository risks:
 
-- no credential values in public ARC configuration or manifests;
-- no private client/personnel/business records copied into public ARC;
+- no credential values in public FolderDesk configuration or manifests;
+- no private client/personnel/business records copied into public FolderDesk;
 - exposed credentials are revoked/rotated rather than treated as remediated by deleting text;
 - external systems remain owners of their live records and backups;
 - existing target repositories and Skills are not silently overwritten.
@@ -66,7 +66,7 @@ One authorised capable route is enough when it can complete and verify the inten
 - use the simplest existing authorised route that can do the job;
 - do not require redundant providers, extra runtime hops or weaker execution merely for appearance of safety;
 - use a trusted/local/self-hosted/VPS runtime only when its capability is actually needed;
-- changing provider should not require redesigning ARC ownership.
+- changing provider should not require redesigning FolderDesk ownership.
 
 ## Continuity
 
@@ -81,7 +81,7 @@ Useful continuity is limited to:
 
 ## Definition of green
 
-ARC is green when a fresh human or capable agent can:
+FolderDesk is green when a fresh human or capable agent can:
 
 ```text
 request
