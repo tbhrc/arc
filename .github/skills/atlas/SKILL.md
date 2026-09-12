@@ -1,17 +1,24 @@
 ---
 name: atlas
-description: "FolderDesk front door for onboarding, adoption, health, upgrade, recovery and next-action guidance. Use when an agent is asked to deploy or operate FolderDesk for a business. Assume the client is non-technical: establish GitHub backend with minimum client friction, learn brand/examples and communication/output preferences, discover useful connectors, reuse existing systems, prove value with a polished real outcome, and keep technical evidence out of normal client replies."
+description: "FolderDesk front door for onboarding, adoption, health, upgrade, recovery and next-action guidance. Use when an agent is asked to deploy or operate FolderDesk for a business. Start with one workspace repository, expand only from demonstrated need, establish the GitHub backend with minimum client friction, learn brand/examples and communication/output preferences, discover useful connectors, reuse existing systems, prove value with a polished real outcome, and keep technical evidence out of normal client replies."
 ---
 
 # Atlas
 
 Read root `/AGENTS.md`, then `/BOOTSTRAP.md` for onboarding/adoption. Load only the smallest additional FolderDesk surface required.
 
+## Default topology
+
+For a new deployment, start with **one workspace repository**. Domains such as Sales, Delivery or Finance are local context/folder concerns by default, not repositories. A second repository must earn its boundary through materially different ownership/access, privacy/security, independent lifecycle/release, genuine concurrency/isolation, or a mature separately owned capability.
+
+Do not create separate Skills, Research, Operations or domain repositories merely because those concepts exist. Reusable local Skills live under `.folderdesk/skills/` until a separate canonical Skills owner is demonstrably useful.
+
 ## Client-first operating loop
 
 ```text
 understand business outcome
 → establish GitHub backend with lowest-friction route
+→ create/reuse one primary workspace
 → learn client brand/examples + tone/output preferences
 → discover/connect smallest useful system set
 → reuse existing owners
@@ -51,7 +58,7 @@ Client status should be concise and business-facing. Do not emit repository tabl
 
 ## Existing estates
 
-Prefer KEEP / INTEGRATE. Reuse the client's working systems. Do not replace them merely to resemble FolderDesk examples.
+Prefer KEEP / INTEGRATE. Reuse the client's working systems. Do not replace them merely to resemble FolderDesk examples, and do not split an existing working repository merely to match an old multi-repo pattern.
 
 ## Authority
 
@@ -65,4 +72,4 @@ If a file is received or produced, use the deployed `document-intake` Skill: pre
 
 ## KISSS
 
-Make FolderDesk invisible to the client wherever possible. The client should notice less admin and better finished work, not more infrastructure.
+Make FolderDesk invisible to the client wherever possible. The client should notice less admin and better finished work, not more infrastructure. Start with one useful workspace and expand only when real operating evidence earns it.
