@@ -7,6 +7,8 @@
 
 FolderDesk v2 is a **single-repository-first, file-native human + AI operating workspace**. A new deployment starts with one useful workspace repository, normal human folders (`work/`, `knowledge/`, `outputs/`, `archive/`) and agent support under `.folderdesk/`. Domains are local context/folder concerns by default. Additional repositories are optional expansion and must earn their boundary.
 
+A fresh FolderDesk-managed workspace is self-contained. It includes six progressive-loaded local Skills: `structure`, `skill-builder`, `lessons`, `auditor`, `document-intake` and `client-experience`.
+
 Live mutable truth stays with the correct owner. FolderDesk connects CRM, accounting, file stores, databases, calendars, memory and specialist runtimes rather than copying them into a competing source of truth.
 
 ### Scope labels
@@ -24,9 +26,15 @@ Live mutable truth stays with the correct owner. FolderDesk connects CRM, accoun
 | Workspace | `.folderdesk/` agent-support surface | Core | Local Skills/config/machinery |
 | Workspace | Domains as in-repository context rather than forced repositories | Core | `domains[]` profile metadata |
 | Workspace | Optional repository expansion after demonstrated need | Core | Explicit `repositories[]` entries |
+| Workspace | Exact target owner/path verification before mutation | Core | GitHub identity resolution + `OWNER_MISMATCH` refusal |
+| Workspace | Managed-vs-adopted repository distinction | Core | `.folderdesk/managed.json` + explicit adoption |
 | Routing | Compact root request router | Core | `AGENTS.md` |
 | Routing | Route before loading / progressive context | Core | Router + Skills |
 | Routing | One owner / one truth | Core | Owner/source discipline |
+| Skills | Structure / canonical placement | Core | local `structure` Skill |
+| Skills | Earned reusable HOW | Core | local `skill-builder` Skill |
+| Skills | Material learning changes future behaviour | Core | local `lessons` Skill |
+| Skills | Lightweight drift/necessity audit | Core | local `auditor` Skill; event-driven, no mandatory Issue/gate |
 | Skills | Reusable local Skills without a mandatory separate Skills repo | Core | `.folderdesk/skills/` |
 | Skills | Optional promotion to a separate Skills owner later | Core/Reference | Explicit `role: skills` repository |
 | Client experience | Non-technical client onboarding with GitHub hidden as agent backend | Core | Atlas + Client Experience Skill |
@@ -37,7 +45,7 @@ Live mutable truth stays with the correct owner. FolderDesk connects CRM, accoun
 | Client experience | Existing-system/connector discovery and smallest-useful-set activation | Core/Connected | Native/dedicated connectors + owner systems |
 | Client experience | Polished DOCX/PDF default for natural business-document outputs | Reference/Connected | Document tools + client brand/style |
 | Client experience | Backend technical evidence separated from normal client communication | Core | Router + Client Experience Skill |
-| Documents | Default client file/document intake | Core | `document-intake` starter Skill |
+| Documents | Default client file/document intake | Core | local `document-intake` Skill |
 | Documents | Selective content ingestion instead of read-once chat use | Reference | Document Intake / LOOP3 pattern |
 | Documents | Provenance from durable knowledge/tasks back to source | Core/Reference | Source locator + canonical owner |
 | Documents | Retrieve source documents and derived organisational knowledge later | Core/Reference | File owner + owner search |
@@ -47,7 +55,8 @@ Live mutable truth stays with the correct owner. FolderDesk connects CRM, accoun
 | Recovery | Conservative reconstruction of missing configured repositories | Core | FolderDesk restore |
 | Recovery | External-owner reconnection model | Core | Manifest + reconnection contract |
 | Verification | Health / doctor inspection | Core | `scripts/folderdesk.py doctor` |
-| Verification | Deployment verification | Core | `scripts/folderdesk.py verify` |
+| Verification | Managed deployment structural verification | Core | `scripts/folderdesk.py verify` |
+| Verification | External operational readiness kept separate | Core | proof through each connector/system owner |
 | Verification | Self-verification | Core | `scripts/folderdesk.py verify-self` + tests |
 | Portability | Provider/runtime-neutral execution | Core | Native tools/connectors + optional specialist runtimes |
 | Portability | Existing-estate adoption without forced restructuring | Core | Atlas KEEP / INTEGRATE default |
@@ -69,6 +78,9 @@ These are available when real operating evidence warrants them; they are **not d
 | File/folder ingestion loops | Reference | Large estates need deterministic inventory, delta detection and provenance |
 | Hindsight/shared memory | Reference | Cross-session derived recall adds value without replacing canonical owner truth |
 | VPS/local/self-hosted runtime | Connected | A capability genuinely requires privileged/local execution |
+| Research escalation / technology radar | Reference | Repeated local friction indicates a broader platform/tool decision worth proving |
+| MCP ingress / external deployment service | Future/Connected | Native agent + GitHub deployment proves insufficient for a real client entry path |
+| Large GitHub platform capability inventory | Reference | Architecture/product research needs it; never a first-day runtime requirement |
 
 ## Expansion test
 
@@ -94,14 +106,19 @@ python3 scripts/folderdesk.py verify --config folderdesk.json
 python3 scripts/folderdesk.py export --config folderdesk.json --output folderdesk-estate.json --inspect-target
 ```
 
+A fresh successful `bootstrap --apply` creates the workspace **and** seeds the six core local Skills. `scripts/seed_foundation.py --apply` remains an adoption/repair tool for existing workspaces and creates only missing Skill files.
+
 ## Deliberate non-features
 
 - Forced repository-per-domain topology.
 - Mandatory separate Skills, Research or Operations repositories for a new client.
+- Mandatory Issue-per-task or audit-before-execution lifecycle.
+- Recurring audit service, audit ledger, approval state or scorecard as product baseline.
 - Monolithic all-in-one agent runtime.
 - Duplicate canonical memory layer.
 - Replacing specialist systems merely to make the estate look uniform.
 - Databases, queues, vector stores or services before a demonstrated requirement earns them.
+- Artificial capability-count targets as a deployment acceptance criterion.
 
 ## Product principle
 

@@ -8,13 +8,15 @@ FolderDesk bootstrap is **agent-led for a non-technical business client**. The c
 
 The normal client gives the FolderDesk link to a capable agent. Use the copy/paste instruction in [README](README.md#start-here--give-this-to-your-agent). Do not begin by teaching the client GitHub, repository architecture or CLI commands.
 
-## 1. Establish the GitHub backend
+## 1. Establish the exact GitHub backend
 
 Reuse an existing authorised GitHub connection where possible. Otherwise ask only for the unavoidable sign-in/authorisation action, then resume setup immediately.
 
 ```bash
 gh auth status
 ```
+
+Before mutation, resolve the active GitHub identity and exact configured owner/path. A GitHub rename/transfer redirect is **not** permission to silently deploy somewhere else. FolderDesk refuses an owner/path mismatch. If a repository must be created, confirm the active identity can create repositories in the configured target owner.
 
 ## 2. Learn the client experience
 
@@ -84,36 +86,56 @@ python3 scripts/folderdesk.py doctor --config folderdesk.json --connectors
 python3 scripts/folderdesk.py plan --config folderdesk.json --inspect-target
 ```
 
-These are operator tools, not approval rituals.
+These are operator tools, not approval rituals. `plan --inspect-target` distinguishes exact-path `REUSE`, missing `CREATE`, and an unsafe `OWNER_MISMATCH`.
 
-## 6. Bootstrap the workspace
+## 6. Bootstrap the self-contained workspace
 
 ```bash
 python3 scripts/folderdesk.py bootstrap --config folderdesk.json --apply
 ```
 
-A new workspace receives:
+A **new** workspace receives in the same bootstrap:
 
 - `README.md` and a compact root `AGENTS.md` Router;
 - `work/`, `knowledge/`, `outputs/`, `archive/`;
-- `.folderdesk/` for agent support and reusable machinery;
-- a local Atlas pointer.
+- `.folderdesk/README.md` plus a FolderDesk-managed marker;
+- a local Atlas pointer;
+- six local foundational Skills under `.folderdesk/skills/`:
+  - `structure` — canonical workspace vocabulary and placement;
+  - `skill-builder` — create/update the smallest earned reusable capability;
+  - `lessons` — convert material real-work learning into behaviour change;
+  - `auditor` — one-shot drift/necessity check without audit ceremony;
+  - `document-intake` — preserve, ingest, route and retrieve documents;
+  - `client-experience` — business-first onboarding and client-facing output.
 
-The CLI leaves any existing configured repository unchanged.
+The CLI leaves an existing configured repository unchanged. It does not claim an existing repository as FolderDesk-managed merely because the name exists.
 
-## 7. Seed reusable starter Skills
+## 7. Adopt or repair an existing workspace when needed
 
-By default starter Skills live inside the workspace at `.folderdesk/skills/`:
+For a reused existing repository, inspect it first. Seed the six foundational Skills only when the client wants that repository adopted into FolderDesk and the mutation is authorised:
 
 ```bash
 python3 scripts/seed_foundation.py --config folderdesk.json --apply
 ```
 
-A separate Skills repository remains supported only when explicitly configured as an expansion.
+The seeder creates only missing Skill files and never overwrites existing target Skill files. Adoption of other FolderDesk router/support files should likewise be explicit and bounded rather than silently rewriting an existing repository.
 
 ## 8. Prove value with a real outcome
 
 Do not use “a Markdown file exists in GitHub” as the client proof when the natural output is a business artifact. Deliver the useful result. For proposal/report/quote-style work, default to a **polished DOCX and/or PDF** using the client's brand/style when available.
+
+Use the local Skills progressively:
+
+```text
+placement/naming → Structure
+repeatable HOW → Skill Builder
+material lesson → Lessons
+suspected drift or unnecessary machinery → Auditor once
+file/document → Document Intake
+client-facing work → Client Experience
+```
+
+The Auditor is not a deployment gate, recurring job, Issue requirement or approval state. Use it after a material structural change or when actual drift/over-engineering is suspected.
 
 ## 9. File and remember the result
 
@@ -147,6 +169,8 @@ Keep backend GitHub evidence behind the scenes unless requested.
 python3 scripts/folderdesk.py verify --config folderdesk.json
 python3 scripts/folderdesk.py export --config folderdesk.json --output folderdesk-estate.json --inspect-target
 ```
+
+FolderDesk verification proves the **FolderDesk structural contract**. External connectors, runtimes and specialist business systems are operational only when separately verified through their actual owners.
 
 Use [VERIFY.md](VERIFY.md) for acceptance and [MANIFEST.md](MANIFEST.md) for recovery.
 

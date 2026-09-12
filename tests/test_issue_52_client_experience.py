@@ -10,17 +10,17 @@ class Issue52ClientExperienceTests(unittest.TestCase):
         text = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn("Start here — Give this to your agent", text)
         self.assertIn("You do not need GitHub experience", text)
-        self.assertIn("Open https://github.com/tbhrc/folderdesk and help me deploy FolderDesk into my GitHub organisation.", text)
+        self.assertIn("Open https://github.com/tbhrc/folderdesk", text)
         self.assertIn("Read the root AGENTS.md first", text)
-        self.assertIn("First confirm that you can access and operate on my target GitHub organisation/account.", text)
-        self.assertIn("showing the remaining-time estimate during bootstrap", text)
+        self.assertIn("Confirm the exact GitHub identity and target owner/path", text)
+        self.assertIn("Start with one private workspace repository", text)
+        self.assertIn("six core local Skills", text)
         self.assertIn("Do not copy TBHRC private business data or secrets", text)
-        self.assertIn("treat it as a FolderDesk intake event", text)
-        self.assertIn("verification status, connection readiness and the next useful capability to activate", text)
-        self.assertIn("detailed deployment behaviour belongs in [Get Started / Bootstrap](BOOTSTRAP.md)", text)
-        self.assertNotIn("Assume I have never used GitHub", text)
-        self.assertNotIn("documents are in Google", text)
-        self.assertNotIn("Avoid status theatre", text)
+        self.assertIn("Prove the deployment with one useful real workflow", text)
+        self.assertIn("GitHub Platform Capabilities", text)
+        self.assertIn("not a first-day FolderDesk requirement", text)
+        self.assertNotIn("FolderDesk V5", text)
+        self.assertNotIn("showing the remaining-time estimate during bootstrap", text)
 
     def test_bootstrap_discovers_brand_connectors_tone_and_output(self):
         text = (ROOT / "BOOTSTRAP.md").read_text(encoding="utf-8")
@@ -28,13 +28,14 @@ class Issue52ClientExperienceTests(unittest.TestCase):
         self.assertIn("Communication and output preferences", text)
         self.assertIn("Infer, then connect", text)
         self.assertIn("smallest useful connector set", text)
-        self.assertIn("documents are in Google", text)
+        self.assertIn("our documents are in Google", text)
         self.assertIn("Google Workspace / Google Drive", text)
-        self.assertIn("before asking the client to manually reproduce that context", text)
         self.assertIn("polished DOCX and/or PDF", text)
-        self.assertIn("The client should not need to know or operate GitHub", text)
-        self.assertIn("the default is **one repository**", text.lower())
-        self.assertIn("not separate repositories", text.lower())
+        self.assertIn("one repository", text.lower())
+        self.assertIn("self-contained workspace", text.lower())
+        self.assertIn("six local foundational Skills", text)
+        self.assertIn("Auditor is not a deployment gate", text)
+        self.assertIn("REUSED/UNMANAGED", (ROOT / "VERIFY.md").read_text(encoding="utf-8"))
 
     def test_client_experience_starter_skill_is_seeded_locally_by_default(self):
         skill = (ROOT / "starter/skills/client-experience/SKILL.md").read_text(encoding="utf-8")
@@ -49,6 +50,8 @@ class Issue52ClientExperienceTests(unittest.TestCase):
         assert seed_spec.loader is not None
         seed_spec.loader.exec_module(seed)
         self.assertIn("client-experience", seed.STARTER_SKILLS)
+        self.assertIn("auditor", seed.STARTER_SKILLS)
+        self.assertIn("structure", seed.STARTER_SKILLS)
         config = {
             "target": {"owner": "acme"},
             "repositories": [{"name": "acme", "role": "workspace"}],

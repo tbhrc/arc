@@ -1,44 +1,48 @@
-# ARC Foundational Skills
+# FolderDesk Foundational Skills
 
-A newly deployed ARC estate should start with a small useful Skills foundation, not process machinery.
-
-ARC seeds generic capabilities, not a copy of TBHRC's live Skill Bank. The target organisation owns its own North Star and editable Skills canon.
+A fresh FolderDesk workspace starts with a **small, self-contained capability foundation**. It does not copy TBHRC's internal Skill Bank and it does not require the client to understand TBHRC repositories.
 
 **Fast links:** [Atlas](../../ATLAS.md) · [Architecture](../../ARCHITECTURE.md) · [Bootstrap](../../BOOTSTRAP.md) · [Verify](../../VERIFY.md)
 
-## Foundation
+## First-day foundation
 
 | Skill | Purpose |
 |---|---|
-| `owner-router` | conditional owner/source lookup only when the repository Router cannot resolve ownership |
-| `github-workflow` | execute authorised GitHub work directly and escalate only for genuine parallelism/material risk |
-| `skill-authoring` | turn repeatable operating method into a reusable Skill |
-| `research-escalation` | turn recurring friction into problem-to-platform research |
+| `structure` | canonical workspace vocabulary and placement; prevent duplicate folder systems |
+| `skill-builder` | turn proven repeatable behaviour into the smallest reusable local Skill |
+| `lessons` | convert material real-work learning into a durable behaviour change |
+| `auditor` | one-shot semantic/structural/behaviour/purpose drift check without governance ceremony |
+| `document-intake` | preserve, ingest, route and retrieve files/documents with provenance |
+| `client-experience` | keep onboarding and output business-first while hiding backend complexity |
 
-## First-day operating model
+## Operating model
 
 ```text
-repository root AGENTS.md Router
-→ one relevant Fast Link
-→ smallest relevant Skill / owner
-→ execute through an existing authorised route
+root AGENTS.md Router
+→ one relevant local Skill/context
+→ direct reasoning or existing authorised tool
+→ useful result
+→ write durable meaning/output where it belongs
 → verify once
-→ record durable continuity only when useful
+→ learn only when a material lesson exists
+→ stop
 ```
 
-If the Router cannot resolve the correct owner/source, use `owner-router` once, then return to the resolved owner and execute.
+Issues are optional continuity/evidence records, not runtime permission. Auditing is event-driven, not recurring. New repositories, services, agents, databases, status layers and controls must earn their place from demonstrated need.
 
-Issues are optional continuity/evidence records, not runtime permission. Do not seed mandatory Issue schemas, approval gates or checklists into every task.
+## What is deliberately not seeded
 
-When a durable record is useful, preserve only enough context to recover the requested outcome and current state.
+A fresh client does **not** need a separate owner-router, workflow framework, research programme, orchestration layer, audit service or TBHRC-specific pointer just to start useful work. Those are maturity/expansion capabilities and can be added later when a real requirement earns them.
 
 ## Doctrine
 
-- target Skills repository = editable reusable HOW;
-- authorised work proceeds directly by default;
-- purpose-fit authority is correct authority;
-- do not narrow access merely because restrictive wording sounds safer;
-- do not hard-code TBHRC-specific doctrine into generic deployments;
-- do not continuously sync templates over target edits.
+- one workspace first; expansion is optional;
+- one meaning, one canonical home;
+- reusable HOW belongs in Skills;
+- route before loading;
+- files/native reasoning before machinery;
+- purpose-fit authority and real boundaries, not generic restriction theatre;
+- deterministic code only when an exact/repeated mechanical requirement earns it;
+- prove the real outcome once, then stop.
 
-**ARC should seed capability, not bureaucracy.**
+**FolderDesk seeds capability, not bureaucracy.**

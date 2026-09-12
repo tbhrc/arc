@@ -16,11 +16,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Compile and test
+      - name: Compile, self-verify and test
         run: |
           python3 -m py_compile scripts/folderdesk.py scripts/package_atlas.py scripts/seed_foundation.py scripts/sync_public_skills.py scripts/reconcile_tbhrc_reference.py
+          python3 scripts/folderdesk.py verify-self
           python3 -m unittest discover -s tests -p 'test_*.py'
-      - name: Single-repo blank-slate smoke proof
+      - name: Single-repo self-contained contract proof
         run: |
           python3 scripts/folderdesk.py onboard --non-interactive --business-name 'FolderDesk CI Business' --owner folderdesk-ci-business --domains 'sales,delivery' --output /tmp/folderdesk-ci.json
           python3 scripts/folderdesk.py plan --config /tmp/folderdesk-ci.json

@@ -41,14 +41,21 @@ class FoundationTests(unittest.TestCase):
         with self.assertRaises(foundation.FoundationError):
             foundation.resolve_target(data)
 
-    def test_starter_skill_files_exist(self):
+    def test_starter_skill_files_are_self_contained_baseline(self):
         rows = foundation.starter_files()
         self.assertEqual(len(rows), 6)
         paths = {path for path, _ in rows}
-        self.assertIn("owner-router/SKILL.md", paths)
-        self.assertIn("research-escalation/SKILL.md", paths)
-        self.assertIn("document-intake/SKILL.md", paths)
-        self.assertIn("client-experience/SKILL.md", paths)
+        self.assertEqual(paths, {
+            "structure/SKILL.md",
+            "skill-builder/SKILL.md",
+            "lessons/SKILL.md",
+            "auditor/SKILL.md",
+            "document-intake/SKILL.md",
+            "client-experience/SKILL.md",
+        })
+        self.assertNotIn("owner-router/SKILL.md", paths)
+        self.assertNotIn("github-workflow/SKILL.md", paths)
+        self.assertNotIn("research-escalation/SKILL.md", paths)
 
     def test_plan_is_non_mutating(self):
         self.assertEqual(foundation.command_plan(self.config()), 0)

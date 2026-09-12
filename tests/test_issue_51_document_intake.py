@@ -28,14 +28,15 @@ class DocumentIntakeDefaultTests(unittest.TestCase):
         }
         self.assertEqual(seed.resolve_target(config), ("acme", "acme", ".folderdesk/skills/"))
 
-    def test_public_product_surfaces_file_task_memory_positioning(self):
+    def test_public_product_surfaces_file_task_memory_behaviour(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         features = (ROOT / "FEATURES.md").read_text(encoding="utf-8")
         bootstrap = (ROOT / "BOOTSTRAP.md").read_text(encoding="utf-8")
-        self.assertIn("task-management, filing and organisational-memory system", readme)
-        self.assertIn("treat it as a FolderDesk intake event", readme)
-        self.assertIn("find it again later", readme)
-        self.assertIn("File and remember the result", bootstrap)
+        self.assertIn("filing/retrieval", readme)
+        self.assertIn("If I give you a file/document", readme)
+        self.assertIn("verify I can retrieve it later", readme)
+        self.assertIn("file source/output", bootstrap)
+        self.assertIn("verify retrieval", bootstrap)
         self.assertIn("Default client file/document intake", features)
         self.assertIn("Retrieve source documents and derived organisational knowledge later", features)
         self.assertIn("Admin-chaos reduction", features)
