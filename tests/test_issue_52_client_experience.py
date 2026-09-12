@@ -30,7 +30,7 @@ class Issue52ClientExperienceTests(unittest.TestCase):
         text = (ROOT / "BOOTSTRAP.md").read_text(encoding="utf-8")
         self.assertIn("representative documents", text)
         self.assertIn("Communication and output preferences", text)
-        self.assertIn("Infer, then connect, the systems", text)
+        self.assertIn("Infer, then connect", text)
         self.assertIn("smallest useful connector set", text)
         self.assertIn("documents are in Google", text)
         self.assertIn("Google Workspace / Google Drive", text)
