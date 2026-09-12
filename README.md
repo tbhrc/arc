@@ -6,25 +6,14 @@ FolderDesk gives a capable AI agent a **durable business workspace**: active wor
 
 **Fast links:** **[Ultimate Features](FEATURES.md)** · [Get Started](BOOTSTRAP.md) · [Architecture](ARCHITECTURE.md) · [Verify](VERIFY.md) · [Safe Harbour](MANIFEST.md) · [Releases](RELEASES.md) · [Agent Router](AGENTS.md)
 
-## Start here — Give this to your agent
+## Start here — Give this to your AI agent
 
 ```text
-Open https://github.com/tbhrc/folderdesk and help me deploy FolderDesk into my GitHub organisation or account.
-
-Read the root AGENTS.md first, then use the smallest relevant FolderDesk guidance.
-
-Confirm the exact GitHub identity and target owner/path before creating anything. Start with one private workspace repository unless a real boundary earns an additional repository.
-
-Onboard and bootstrap FolderDesk. A new workspace should be self-contained: work/, knowledge/, outputs/, archive/, the local FolderDesk router/support files, and the six core local Skills (Structure, Skill Builder, Lessons, Auditor, Document Intake and Client Experience).
-
-Do not copy TBHRC private business data or secrets. This repository is the portable product/reference implementation; my organisation owns its own business truth.
-
-Infer useful existing systems from what I tell you and connect only the smallest useful set. If I give you a file/document, preserve or locate the source, ingest useful content, route durable knowledge/tasks with provenance, and verify I can retrieve it later.
-
-Prove the deployment with one useful real workflow and a normal business-facing result. Keep GitHub/engineering detail behind the scenes unless I ask for it or it blocks progress.
+https://github.com/tbhrc/folderdesk
+Fork this repository into my authorised GitHub organisation or account and run BOOTSTRAP.md from the fork.
 ```
 
-The agent should then follow [BOOTSTRAP.md](BOOTSTRAP.md).
+That is the entire handoff prompt. The repository owns the deployment instructions; the agent should then follow [BOOTSTRAP.md](BOOTSTRAP.md).
 
 ## What you get
 
