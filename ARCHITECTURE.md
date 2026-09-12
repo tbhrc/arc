@@ -1,6 +1,6 @@
-# ARC Architecture
+# FolderDesk Architecture
 
-ARC reproduces the minimum portable architecture needed for a human + AI operating ecosystem without turning process into the work.
+FolderDesk reproduces the minimum portable architecture needed for a human + AI operating ecosystem without turning process into the work.
 
 **Fast links:** [README](README.md) · [Atlas](ATLAS.md) · [Router](AGENTS.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Manifest](MANIFEST.md)
 
@@ -23,7 +23,7 @@ Conditional only when genuinely needed:
 - specialist delegation or genuine parallelism → Multi-Agent Orchestrator;
 - consequential boundary → smallest proven control protecting that boundary.
 
-## What ARC reproduces
+## What FolderDesk reproduces
 
 - organisation direction ownership mechanism;
 - repository/domain ownership topology;
@@ -36,9 +36,9 @@ Conditional only when genuinely needed:
 - real-state verification;
 - non-secret estate manifest/reconnection model.
 
-## What ARC does not reproduce
+## What FolderDesk does not reproduce
 
-ARC does not copy or become the owner of:
+FolderDesk does not copy or become the owner of:
 
 - editable mission/vision wording;
 - business/product/client facts;
@@ -53,7 +53,7 @@ ARC does not copy or become the owner of:
 
 Reusable HOW belongs in one canonical Skills repository.
 
-ARC may seed thin starter pointers so a blank environment is usable on day one. Those starters are bootstrap assets only. They must not become a competing editable copy of the live operating system.
+FolderDesk may seed thin starter pointers so a blank environment is usable on day one. Those starters are bootstrap assets only. They must not become a competing editable copy of the live operating system.
 
 For the TBHRC reference implementation, current operating doctrine lives in `tbhrc/skills`, including:
 
@@ -62,11 +62,11 @@ For the TBHRC reference implementation, current operating doctrine lives in `tbh
 - Multi-Agent Orchestrator;
 - anti-friction / real-boundary security policy.
 
-ARC should point to those current owners where appropriate rather than restating their full rules.
+FolderDesk should point to those current owners where appropriate rather than restating their full rules.
 
 ## Durable context without Issue ceremony
 
-Issues, PRs, plans and evidence are not part of the minimum execution path and are never runtime permission for ordinary authorised work. ARC does not require a named `Anti-Drift` section, controlling Issue, checklist or evidence object merely to execute.
+Issues, PRs, plans and evidence are not part of the minimum execution path and are never runtime permission for ordinary authorised work. FolderDesk does not require a named `Anti-Drift` section, controlling Issue, checklist or evidence object merely to execute.
 
 When substantive work changes a material objective, scope, acceptance condition, architecture/decision, blocker or continuation state, preserve that change once in the appropriate durable owner record before handoff, closure or the end of the meaningful work unit. Do not interrupt authorised execution for pre-mutation documentation ceremony.
 
@@ -81,13 +81,13 @@ When substantive work changes a material objective, scope, acceptance condition,
 | CRM/ATS/ERP/accounting state | specialist system |
 | privileged runtime state | trusted-runtime owner |
 | derived context | memory layer |
-| ARC portable architecture | ARC |
+| FolderDesk portable architecture | FolderDesk |
 
 Do not copy mutable state into GitHub merely because GitHub is convenient for an agent.
 
 ## Execution and authority
 
-ARC starts with the simplest existing authorised route that can complete the work.
+FolderDesk starts with the simplest existing authorised route that can complete the work.
 
 `--apply` or an equivalent mutating mode is an execution selector, not a second approval request.
 
@@ -97,13 +97,13 @@ Security controls must protect a concrete current boundary and earn their fricti
 
 ## Recovery
 
-ARC Safe Harbour is architecture recovery, not data backup.
+FolderDesk Safe Harbour is architecture recovery, not data backup.
 
 ```text
-known-good ARC release
+known-good FolderDesk release
 + non-secret estate manifest
 + external owners' own recovery methods
-→ recreate missing ARC-owned repository surfaces
+→ recreate missing FolderDesk-owned repository surfaces
 → reconnect external owners
 → verify
 ```
@@ -112,7 +112,7 @@ Current `restore --apply` reuses existing configured repositories unchanged and 
 
 ## Acceptance
 
-ARC is healthy when a fresh capable human or agent can:
+FolderDesk is healthy when a fresh capable human or agent can:
 
 1. enter through root `AGENTS.md`;
 2. reach the correct Skill/owner without broad preload;
