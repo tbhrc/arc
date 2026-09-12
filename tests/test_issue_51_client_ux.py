@@ -19,17 +19,21 @@ class Issue51ClientUxTests(unittest.TestCase):
     def test_bootstrap_streams_progress_and_remaining_time(self):
         out = io.StringIO()
         ticks = iter([100.0, 102.0])
+        state = [{"name": "acme", "full_name": "acme/acme", "resolved_name": "", "action": "CREATE"}]
         with mock.patch.object(folderdesk, "gh_authenticated", return_value=True), \
+             mock.patch.object(folderdesk, "inspect_repository_state", return_value=state), \
+             mock.patch.object(folderdesk, "gh_target_operability", return_value=(True, "confirmed")), \
              mock.patch.object(folderdesk, "create_repo", return_value=True), \
              mock.patch.object(folderdesk.time, "monotonic", side_effect=lambda: next(ticks)), \
              contextlib.redirect_stdout(out):
             rc = folderdesk.command_bootstrap(self.data(), True)
         rendered = out.getvalue()
         self.assertEqual(rc, 0)
+        self.assertIn("GitHub target access: confirmed", rendered)
         self.assertIn("FolderDesk bootstrap starting with 1 configured repository", rendered)
         self.assertIn("[1/1] Checking acme/acme", rendered)
         self.assertIn("estimated remaining", rendered)
-        self.assertIn("Extra repositories were created only if explicitly present", rendered)
+        self.assertIn("self-contained baseline Skills", rendered)
 
     def test_bootstrap_requires_github_in_human_language(self):
         with mock.patch.object(folderdesk, "gh_authenticated", return_value=False):
