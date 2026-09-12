@@ -33,7 +33,8 @@ class Issue52ClientExperienceTests(unittest.TestCase):
         self.assertIn("before asking the client to manually reproduce that context", text)
         self.assertIn("polished DOCX and/or PDF", text)
         self.assertIn("The client should not need to know or operate GitHub", text)
-        self.assertIn("single repository", text.lower())
+        self.assertIn("the default is **one repository**", text.lower())
+        self.assertIn("not separate repositories", text.lower())
 
     def test_client_experience_starter_skill_is_seeded_locally_by_default(self):
         skill = (ROOT / "starter/skills/client-experience/SKILL.md").read_text(encoding="utf-8")
