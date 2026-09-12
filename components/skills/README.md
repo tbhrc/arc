@@ -7,7 +7,7 @@ A deployed FolderDesk workspace has one editable local Skills home: `.folderdesk
 `scripts/sync_agent_skills.py` is the concrete adapter. With no arguments it prefers `.folderdesk/skills/` when that directory contains Skills, otherwise it falls back to `.github/skills/`. It mirrors the selected source into each local AI CLI's native discovery path — `.claude/skills/`, `.codex/skills/` (both symlinks) and `.agents/skills.json` (Antigravity's documented per-repo manifest, written best-effort — verify live with `agy --print` before relying on it). Re-run it after adding, renaming or removing a Skill:
 
 ```bash
-python3 scripts/sync_agent_skills.py
+python3 .folderdesk/scripts/sync_agent_skills.py
 ```
 
 Use `--source <path>` only when a deployment intentionally keeps canonical local Skills somewhere else.

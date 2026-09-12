@@ -74,6 +74,12 @@ class FolderDeskV2Tests(unittest.TestCase):
             "client-experience",
         ))
 
+    def test_sync_adapter_is_seedable_into_workspace(self):
+        adapter = (ROOT / "scripts" / "sync_agent_skills.py").read_text(encoding="utf-8")
+        self.assertIn('.folderdesk/skills', adapter)
+        self.assertIn('.claude/skills', adapter)
+        self.assertIn('.codex/skills', adapter)
+
     def test_managed_marker_uses_folderdesk_identity(self):
         repo = folderdesk.primary_workspace(self.data())
         marker = json.loads(folderdesk.generated_managed_marker(repo))

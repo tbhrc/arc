@@ -492,6 +492,8 @@ def seed_new_repo(data: dict[str, Any], repo: dict[str, Any]) -> None:
     put_content(full, ".github/prompts/atlas.prompt.md", generated_atlas_prompt())
     put_content(full, ".folderdesk/README.md", generated_folderdesk_support())
     put_content(full, ".folderdesk/managed.json", generated_managed_marker(repo))
+    sync_adapter = (ROOT / "scripts" / "sync_agent_skills.py").read_text(encoding="utf-8")
+    put_content(full, ".folderdesk/scripts/sync_agent_skills.py", sync_adapter)
     put_content(full, ".folderdesk/skills/README.md", "# Workspace Skills\n\nFolderDesk's core local Skills are seeded here. Add another Skill only after repeatable real work earns it.\n")
     for skill_path, content in starter_skill_files():
         put_content(full, f".folderdesk/skills/{skill_path}", content)
@@ -676,6 +678,7 @@ def command_verify(data: dict[str, Any]) -> int:
             "AGENTS.md",
             ".folderdesk/README.md",
             ".folderdesk/managed.json",
+            ".folderdesk/scripts/sync_agent_skills.py",
             ".github/skills/atlas/SKILL.md",
         ]
         required_paths.extend(f".folderdesk/skills/{skill}/SKILL.md" for skill in BASELINE_SKILLS)

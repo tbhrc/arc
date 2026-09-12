@@ -121,7 +121,7 @@ For a deployed FolderDesk workspace, `.folderdesk/skills/` is the editable local
 ```bash
 # example
 cp -R /path/to/uae-corporate-tax .folderdesk/skills/uae-corporate-tax
-python3 scripts/sync_agent_skills.py
+python3 .folderdesk/scripts/sync_agent_skills.py
 ```
 
 The adapter symlinks Skills into `.claude/skills/` and `.codex/skills/`, and writes `.agents/skills.json` for Antigravity. These are derived adapters, not editable Skill canon. Re-run the adapter after adding, renaming or removing a Skill.
