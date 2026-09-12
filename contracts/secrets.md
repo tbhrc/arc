@@ -1,6 +1,6 @@
 # Secrets and Credential Contract
 
-ARC never stores credential or secret values.
+FolderDesk never stores credential or secret values.
 
 For each credential that is actually required, record only what helps operate or recover it:
 
@@ -22,8 +22,8 @@ Root/break-glass credentials remain exceptional because they cross a genuine hig
 
 ## Configuration and safe-harbour rule
 
-Neither `arc.json` nor an ARC estate manifest may contain credential values. ARC rejects common secret-like field names and known credential-value patterns because public credential disclosure is a concrete risk.
+Neither `folderdesk.json` nor a FolderDesk estate manifest may contain credential values. FolderDesk rejects common secret-like field names and known credential-value patterns because public credential disclosure is a concrete risk.
 
-A safe-harbour manifest may state that credential reprovisioning is required and identify the responsible owner/store **by name or purpose only**. Recovery obtains current credentials through the owning external identity/secret-management process; ARC does not restore them.
+A safe-harbour manifest may state that credential reprovisioning is required and identify the responsible owner/store **by name or purpose only**. Recovery obtains current credentials through the owning external identity/secret-management process; FolderDesk does not restore them.
 
 If a credential value is exposed publicly, revoke/rotate it. History cleanup alone does not restore confidentiality.
