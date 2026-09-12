@@ -12,10 +12,10 @@ spec.loader.exec_module(sync)
 
 
 class AgentSkillSyncTests(unittest.TestCase):
-    def make_skill(self, source: Path, name: str) -> None:
+    def make_skill(self, source: Path, name: str, body: str | None = None) -> None:
         path = source / name
         path.mkdir(parents=True)
-        (path / "SKILL.md").write_text(f"# {name}\n", encoding="utf-8")
+        (path / "SKILL.md").write_text(body or f"# {name}\n", encoding="utf-8")
 
     def test_finds_only_dirs_with_skill_md(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -24,25 +24,48 @@ class AgentSkillSyncTests(unittest.TestCase):
             (source / "not-a-skill").mkdir(parents=True)
             self.assertEqual(sync.find_skills(source), ["atlas"])
 
-    def test_symlinks_point_into_workspace_source(self):
+    def test_framework_and_workspace_skills_are_merged(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            source = root / ".folderdesk" / "skills"
-            self.make_skill(source, "atlas")
-            sync.sync_symlink_target(root, source, ".claude/skills", ["atlas"])
-            link = root / ".claude" / "skills" / "atlas"
-            self.assertTrue(link.is_symlink())
-            self.assertEqual(link.readlink(), Path("../../.folderdesk/skills/atlas"))
-            self.assertEqual((link / "SKILL.md").read_text(), "# atlas\n")
+            framework = root / ".github" / "skills"
+            workspace = root / ".folderdesk" / "skills"
+            self.make_skill(framework, "atlas")
+            self.make_skill(workspace, "tax")
+            found = sync.collect_skills([framework, workspace])
+            self.assertEqual(set(found), {"atlas", "tax"})
+            self.assertEqual(found["atlas"], framework)
+            self.assertEqual(found["tax"], workspace)
+
+    def test_workspace_skill_wins_name_collision(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            framework = root / ".github" / "skills"
+            workspace = root / ".folderdesk" / "skills"
+            self.make_skill(framework, "atlas", "framework\n")
+            self.make_skill(workspace, "atlas", "workspace\n")
+            found = sync.collect_skills([framework, workspace])
+            self.assertEqual(found["atlas"], workspace)
+
+    def test_symlinks_point_to_each_owning_source(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            framework = root / ".github" / "skills"
+            workspace = root / ".folderdesk" / "skills"
+            self.make_skill(framework, "atlas")
+            self.make_skill(workspace, "tax")
+            found = sync.collect_skills([framework, workspace])
+            sync.sync_symlink_target(root, found, ".claude/skills")
+            self.assertEqual((root / ".claude/skills/atlas").readlink(), Path("../../.github/skills/atlas"))
+            self.assertEqual((root / ".claude/skills/tax").readlink(), Path("../../.folderdesk/skills/tax"))
 
     def test_stale_symlink_removed_when_skill_deleted(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             source = root / ".folderdesk" / "skills"
             self.make_skill(source, "atlas")
-            sync.sync_symlink_target(root, source, ".claude/skills", ["atlas"])
-            sync.sync_symlink_target(root, source, ".claude/skills", [])
-            self.assertFalse((root / ".claude" / "skills" / "atlas").exists())
+            sync.sync_symlink_target(root, {"atlas": source}, ".claude/skills")
+            sync.sync_symlink_target(root, {}, ".claude/skills")
+            self.assertFalse((root / ".claude/skills/atlas").exists())
 
     def test_real_file_never_touched(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -53,27 +76,30 @@ class AgentSkillSyncTests(unittest.TestCase):
             dest.mkdir(parents=True)
             (dest / "atlas").mkdir()
             (dest / "atlas" / "local.md").write_text("local\n", encoding="utf-8")
-            sync.sync_symlink_target(root, source, ".claude/skills", ["atlas"])
+            sync.sync_symlink_target(root, {"atlas": source}, ".claude/skills")
             self.assertFalse((dest / "atlas").is_symlink())
-            self.assertEqual((dest / "atlas" / "local.md").read_text(), "local\n")
+            self.assertEqual((dest / "atlas/local.md").read_text(), "local\n")
 
-    def test_agy_manifest_points_at_workspace_source(self):
+    def test_agy_manifest_lists_both_sources(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            source = root / ".folderdesk" / "skills"
-            self.make_skill(source, "atlas")
-            sync.write_agy_manifest(root, source)
-            manifest = json.loads((root / ".agents" / "skills.json").read_text())
-            self.assertEqual(manifest, {"entries": [{"path": ".folderdesk/skills"}]})
+            framework = root / ".github" / "skills"
+            workspace = root / ".folderdesk" / "skills"
+            self.make_skill(framework, "atlas")
+            self.make_skill(workspace, "tax")
+            sync.write_agy_manifest(root, [framework, workspace])
+            manifest = json.loads((root / ".agents/skills.json").read_text())
+            self.assertEqual(manifest, {"entries": [{"path": ".github/skills"}, {"path": ".folderdesk/skills"}]})
 
     def test_idempotent_rerun_produces_no_duplicates(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             source = root / ".folderdesk" / "skills"
             self.make_skill(source, "atlas")
-            sync.sync_symlink_target(root, source, ".claude/skills", ["atlas"])
-            sync.sync_symlink_target(root, source, ".claude/skills", ["atlas"])
-            entries = list((root / ".claude" / "skills").iterdir())
+            found = {"atlas": source}
+            sync.sync_symlink_target(root, found, ".claude/skills")
+            sync.sync_symlink_target(root, found, ".claude/skills")
+            entries = list((root / ".claude/skills").iterdir())
             self.assertEqual(len(entries), 1)
 
 
