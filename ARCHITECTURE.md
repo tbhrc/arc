@@ -1,6 +1,6 @@
 # FolderDesk Architecture
 
-FolderDesk is a small file-native operating surface for capable human + AI work. **Start with one self-contained workspace repository. Expand only when demonstrated need earns another boundary.**
+FolderDesk is a small file-native operating surface for capable human + AI work. **Start with one self-contained workspace repository. Expand only when demonstrated need earns another boundary.** The preserved ChatGPT FolderDesk connector is one ingress into multiple authorised execution nodes; node-specific transports stay behind that connector rather than multiplying ChatGPT apps per machine.
 
 The design intentionally combines the strongest proven ideas from FolderDesk Tiny—small canonical structure, smart-agent-first execution, earned Skills, learning and lightweight drift checking—with the fuller FolderDesk business capabilities needed for real client deployment: document intake, client experience, integration/recovery boundaries and optional expansion.
 
@@ -13,12 +13,15 @@ request
 → one workspace
 → root AGENTS.md Router
 → smallest relevant local context / Skill / connected owner
+→ optional execution through the preserved connector to the required authorised node
 → act with native reasoning or an existing tool
 → write useful result
 → verify once
 → learn only when a material lesson exists
 → stop
 ```
+
+The current live mesh proof routes FD0 to the VPS and Mac through existing transports. A home-server node is reserved in the same contract but remains unavailable until its real authorised transport is identified. This is a routing concern behind the connector, not a reason to create another ChatGPT connector, queue or control plane.
 
 ## Default workspace
 
