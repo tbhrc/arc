@@ -1,11 +1,11 @@
 # Portability Contract
 
-ARC is portable when a new business can reproduce the operating behaviour without receiving another organisation's credentials, private data or stale copies of live state.
+FolderDesk is portable when a new business can reproduce the operating behaviour without receiving another organisation's credentials, private data or stale copies of live state.
 
-## Portable ARC material
+## Portable FolderDesk material
 
 - architecture;
-- repository roles/topology;
+- single-workspace default plus explicit expansion rules;
 - Skills patterns and pointers;
 - agent entrypoints;
 - bootstrap/verification/recovery contracts;
@@ -14,7 +14,7 @@ ARC is portable when a new business can reproduce the operating behaviour withou
 - integration contracts;
 - ownership model;
 - public reference implementations;
-- formal ARC release/tag references.
+- formal FolderDesk release/tag references.
 
 ## Not portable by copying
 
@@ -30,10 +30,10 @@ ARC is portable when a new business can reproduce the operating behaviour withou
 
 ## Safe-harbour portability
 
-A portable ARC recovery package is:
+A portable FolderDesk recovery package is:
 
 ```text
-formal known-good ARC release/tag
+formal known-good FolderDesk release/tag
 +
 validated non-secret estate manifest
 +
@@ -42,6 +42,6 @@ external owner backups/reprovisioning handled by those owners
 
 The estate manifest may identify external providers/systems by name so the recovery plan knows where state belongs. It must not absorb their record contents or credential values.
 
-Use `scripts/arc.py export` to create the architecture manifest and `restore-plan` to understand the recovery requirements. `restore --apply` is limited to conservative GitHub repository reconstruction. See [safe-harbour.md](safe-harbour.md).
+Use `scripts/folderdesk.py export` to create the architecture manifest and `restore-plan` to understand recovery requirements. `restore --apply` is limited to conservative reconstruction of explicitly configured GitHub repositories. See [safe-harbour.md](safe-harbour.md).
 
-Use profiles/adapters to map provider and business differences without forking the core architecture unnecessarily.
+Use profiles/adapters to map provider and business differences without forcing additional repositories or forking the core architecture unnecessarily.
