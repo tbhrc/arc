@@ -1,128 +1,120 @@
 # FolderDesk Architecture
 
-FolderDesk reproduces the minimum portable architecture needed for a human + AI operating ecosystem without turning process into the work.
+FolderDesk is a small file-native operating surface for capable human + AI work. **Start with one workspace repository. Expand only when demonstrated need earns another boundary.**
 
 **Fast links:** [README](README.md) · [Atlas](ATLAS.md) · [Router](AGENTS.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Manifest](MANIFEST.md)
 
 ## Core operating graph
 
 ```text
-organisation direction
-→ root AGENTS.md Repository Router
-→ smallest relevant Skill / owner
-→ simplest authorised execution route
-→ verify real state once
-→ preserve material durable context when needed
+request
+→ one workspace
+→ root AGENTS.md Router
+→ smallest relevant local context / Skill / connected owner
+→ act with native reasoning or an existing tool
+→ write useful result
+→ verify once
 → stop
 ```
 
-Conditional only when genuinely needed:
+## Default workspace
 
-- owner/source unclear → owner lookup;
-- execution method genuinely needs escalation → Workflow;
-- specialist delegation or genuine parallelism → Multi-Agent Orchestrator;
-- consequential boundary → smallest proven control protecting that boundary.
+```text
+workspace repository/
+├── AGENTS.md
+├── README.md
+├── work/
+├── knowledge/
+├── outputs/
+├── archive/
+└── .folderdesk/
+    ├── README.md
+    └── skills/
+```
 
-## What FolderDesk reproduces
+- `work/` — active work.
+- `knowledge/` — durable business/domain knowledge.
+- `outputs/` — finished deliverables.
+- `archive/` — inactive history.
+- `.folderdesk/` — reusable agent support, Skills, non-secret config and earned machinery.
 
-- organisation direction ownership mechanism;
-- repository/domain ownership topology;
-- root `AGENTS.md` Repository Router with progressive Fast Links;
-- one canonical Skills home for reusable HOW;
-- source-of-truth boundaries;
-- provider/runtime-neutral execution;
-- private-file and specialist-system ownership references;
-- inspectable bootstrap and bounded recovery;
-- real-state verification;
-- non-secret estate manifest/reconnection model.
+Domains such as Sales, Delivery, Finance or Marketing are **local context/folder concerns by default**. They do not automatically become repositories.
 
-## What FolderDesk does not reproduce
+## Expansion is optional
 
-FolderDesk does not copy or become the owner of:
+A second repository must earn its boundary. Good reasons include:
 
-- editable mission/vision wording;
-- business/product/client facts;
-- private client/candidate files;
-- CRM/ATS/ERP/accounting records;
-- credentials;
-- runtime machine state;
-- derived memory contents;
-- the target organisation's evolving Skills canon after deployment.
+- materially different access/security/privacy requirements;
+- independently owned or released product/capability;
+- genuine concurrent or isolated execution needs;
+- an external/public distribution boundary;
+- a mature capability whose separate lifecycle is demonstrably simpler.
 
-## Skills-first ownership
+Bad reason: “there are several departments.”
 
-Reusable HOW belongs in one canonical Skills repository.
+When expansion is earned, add it explicitly to `repositories[]`; FolderDesk already supports multiple configured repositories without requiring them at bootstrap.
 
-FolderDesk may seed thin starter pointers so a blank environment is usable on day one. Those starters are bootstrap assets only. They must not become a competing editable copy of the live operating system.
+## Files first, machinery second
 
-For the TBHRC reference implementation, current operating doctrine lives in `tbhrc/skills`, including:
+Use:
 
-- Repository Router / Agent OS conventions;
-- GitHub Agent Workflow;
-- Multi-Agent Orchestrator;
-- anti-friction / real-boundary security policy.
+```text
+clear instruction
++ source evidence
++ native reasoning/tools
+→ useful result
+→ observe real failure
+→ smallest proven fix
+```
 
-FolderDesk should point to those current owners where appropriate rather than restating their full rules.
-
-## Durable context without Issue ceremony
-
-Issues, PRs, plans and evidence are not part of the minimum execution path and are never runtime permission for ordinary authorised work. FolderDesk does not require a named `Anti-Drift` section, controlling Issue, checklist or evidence object merely to execute.
-
-When substantive work changes a material objective, scope, acceptance condition, architecture/decision, blocker or continuation state, preserve that change once in the appropriate durable owner record before handoff, closure or the end of the meaningful work unit. Do not interrupt authorised execution for pre-mutation documentation ceremony.
+Do not pre-build queues, databases, agents, services, status layers or approval machinery for hypothetical future needs. Add deterministic code when an exact machine contract, repeated mechanical failure, scale advantage or hard boundary proves it valuable.
 
 ## One owner / one truth
 
-| State | Owner |
+Keep live truth in its real owner:
+
+| State | Default owner |
 |---|---|
-| reusable HOW | Skills canon |
-| business/product facts | business/domain owner |
-| external research/proving | Research |
-| private documents | private file owner |
-| CRM/ATS/ERP/accounting state | specialist system |
-| privileged runtime state | trusted-runtime owner |
-| derived context | memory layer |
-| FolderDesk portable architecture | FolderDesk |
+| active business work | workspace `work/` |
+| durable business/domain knowledge | workspace `knowledge/` or connected owner system |
+| finished deliverables | workspace `outputs/` / declared file owner |
+| reusable local HOW | `.folderdesk/skills/` |
+| CRM/ERP/accounting records | specialist system |
+| transactional/identity data | database/system designed for it |
+| private documents | approved private-file owner |
+| credentials | approved secret/identity store |
 
-Do not copy mutable state into GitHub merely because GitHub is convenient for an agent.
+A mature organisation may later promote reusable Skills, Research or product/runtime code into separate repositories. Promotion changes the owner; it is not a default deployment requirement.
 
-## Execution and authority
+## Context discipline
 
-FolderDesk starts with the simplest existing authorised route that can complete the work.
-
-`--apply` or an equivalent mutating mode is an execution selector, not a second approval request.
-
-Additional human authority is reserved for genuine consequential boundaries such as root/super-admin changes, destructive or irreversible mutation, material spend, legal/compliance commitment, private-data disclosure or material external/client commitment.
-
-Security controls must protect a concrete current boundary and earn their friction. Generic hardening, read-only defaults, approval rituals, fail-closed machinery, provider hierarchies and duplicate validation are not architecture by default.
+- Keep root routing small.
+- Route before loading.
+- Put conditional depth one semantic hop away.
+- Human-readable files do not replace deterministic validation where correctness needs it.
+- File organisation can decay; prune, promote or reset when structure starts becoming the work.
 
 ## Recovery
 
-FolderDesk Safe Harbour is architecture recovery, not data backup.
+FolderDesk Safe Harbour is architecture/context recovery, not a substitute for every external owner's backup.
 
 ```text
 known-good FolderDesk release
-+ non-secret estate manifest
-+ external owners' own recovery methods
-→ recreate missing FolderDesk-owned repository surfaces
++ folderdesk-estate.json
++ external owners' recovery methods
+→ recreate missing configured repositories
 → reconnect external owners
 → verify
 ```
 
-Current `restore --apply` reuses existing configured repositories unchanged and creates only missing configured repositories. If a future recovery action actually deletes, overwrites or force-updates material state, protect that specific destructive action then.
+Existing repositories are left unchanged by current restore/bootstrap behavior.
 
 ## Acceptance
 
-FolderDesk is healthy when a fresh capable human or agent can:
-
-1. enter through root `AGENTS.md`;
-2. reach the correct Skill/owner without broad preload;
-3. execute ordinary authorised work directly;
-4. use extra routing/coordination only when genuinely needed;
-5. verify the requested real-world result once;
-6. preserve material durable context when needed without turning it into execution permission.
+FolderDesk is healthy when a fresh capable person or agent can enter one repository, find the relevant context, produce useful work, preserve reusable learning without ceremony, and expand the topology only after a real boundary appears.
 
 ## KISSS
 
 > **The operating system must not become the work.**
 
-Before adding architecture, ask whether a direct edit, pointer, existing Skill, existing system or ordinary agent judgement already solves the need.
+Before adding structure or machinery: `DELETE → COLLAPSE → REUSE → DIRECT → only then ADD`.
