@@ -1,3 +1,4 @@
+# bounded one-shot migration; removes itself after a successful run
 name: Solidify FolderDesk v2 once
 
 on:
