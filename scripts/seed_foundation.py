@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seed FolderDesk's minimal generic Skills foundation.
+"""Seed FolderDesk's lean self-contained Skills foundation.
 
 Single-repository deployments place starter Skills under `.folderdesk/skills/` in the
 primary workspace. A separately configured repository with role `skills` remains a
@@ -19,10 +19,10 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 STARTER_ROOT = ROOT / "starter" / "skills"
 STARTER_SKILLS = (
-    "owner-router",
-    "github-workflow",
-    "skill-authoring",
-    "research-escalation",
+    "structure",
+    "skill-builder",
+    "lessons",
+    "auditor",
     "document-intake",
     "client-experience",
 )
