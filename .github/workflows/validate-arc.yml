@@ -1,4 +1,4 @@
-name: Validate ARC
+name: Validate FolderDesk
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Blank-slate smoke proof
         run: |
-          python3 scripts/arc.py onboard --non-interactive --business-name 'ARC CI Business' --owner arc-ci-business --domains 'sales,delivery' --private-files SharePoint --specialist-systems 'HubSpot,Xero' --output /tmp/arc-ci.json
+          python3 scripts/arc.py onboard --non-interactive --business-name 'FolderDesk CI Business' --owner folderdesk-ci-business --domains 'sales,delivery' --private-files SharePoint --specialist-systems 'HubSpot,Xero' --output /tmp/arc-ci.json
           python3 scripts/seed_foundation.py --config /tmp/arc-ci.json
           python3 scripts/arc.py export --config /tmp/arc-ci.json --output /tmp/arc-estate.json
           python3 scripts/arc.py restore-plan --manifest /tmp/arc-estate.json
