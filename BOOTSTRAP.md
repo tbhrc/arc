@@ -1,60 +1,38 @@
 # Bootstrap FolderDesk
 
-FolderDesk bootstrap is **agent-led for a non-technical business client**. The client should not need to know or operate GitHub. GitHub is required backend infrastructure; the agent establishes it with the lowest-friction supported route and exposes only unavoidable sign-in/authorisation steps to the client.
+FolderDesk bootstrap is **agent-led for a non-technical business client**. The client should not need to know or operate GitHub. The default deployment is one private workspace repository with normal human work in `work/`, `knowledge/`, `outputs/` and `archive/`, and agent support under `.folderdesk/`.
 
 **Fast links:** **[Ultimate Features](FEATURES.md)** · [README](README.md) · [Atlas](ATLAS.md) · [Architecture](ARCHITECTURE.md) · [Verify](VERIFY.md) · [Safe Harbour](MANIFEST.md) · [Agent Router](AGENTS.md)
 
 ## 0. Client handoff
 
-The normal client starts by giving the FolderDesk link to a capable agent. Use the copy/paste instruction in [README](README.md#start-here--give-this-to-your-agent).
+The normal client gives the FolderDesk link to a capable agent. Use the copy/paste instruction in [README](README.md#start-here--give-this-to-your-agent). Do not begin by teaching the client GitHub, repository architecture or CLI commands.
 
-Do not begin by teaching the client GitHub, repository architecture or CLI commands.
+## 1. Establish the GitHub backend
 
-## 1. Agent establishes GitHub backend
-
-FolderDesk needs a GitHub owner/home, but **this is the agent's setup responsibility**.
-
-Lowest-friction order:
-
-1. reuse an existing authorised GitHub connection/session if available;
-2. if GitHub is not connected, use the current platform's native/dedicated GitHub connection path where available;
-3. otherwise guide the client through only the unavoidable account/sign-in/authorisation step;
-4. immediately resume setup after connection.
-
-Do not ask the client to learn repositories, branches, `gh`, `AGENTS.md` or GitHub administration unless they explicitly want to.
-
-Operator/CLI check when relevant:
+Reuse an existing authorised GitHub connection where possible. Otherwise ask only for the unavoidable sign-in/authorisation action, then resume setup immediately.
 
 ```bash
 gh auth status
 ```
 
-## 2. Learn the client experience before producing work
+## 2. Learn the client experience
 
 Ask only what is not already evident.
 
 ### Brand and visual style
 
-- Ask for formal brand guidelines **if they exist**.
-- If they do not, ask for one or more representative documents (proposal, quote, report, letterhead, brochure, invoice, presentation, etc.) and infer a practical house style from them.
-- Ask for logo/assets only when needed for the expected output.
-- Preserve the source/reference so future agents can apply the same style.
+- Ask for formal brand guidelines if they exist.
+- Otherwise use representative documents such as proposals, reports, invoices, presentations or letterhead to infer a practical house style.
+- Ask for logos/assets only when the expected output needs them.
 
 ### Communication and output preferences
 
-Infer from the conversation and examples first, then ask only what remains unclear:
-
-- tone and vocabulary;
-- concise vs detailed;
-- technical vs business language;
-- normal approval/review style;
-- preferred artifact formats (DOCX, PDF, spreadsheet, slides, etc.).
-
-Record the useful preferences durably in the client-owned operating estate so they are reused instead of repeatedly re-asked.
+Infer first, then ask only what remains unclear: tone, vocabulary, concise vs detailed, technical vs business language, approval style and preferred artifact formats.
 
 ## 3. Infer, then connect, wherever the client's data already lives
 
-**Do not start with a generic app questionnaire when the client has already supplied a clue.** Treat any named data/work location as a routing signal. The goal is to connect the existing owner system and learn from authorised source data before asking the client to manually reproduce context.
+Do not start with a generic app questionnaire when the client already supplied a clue. Treat the named location as a routing signal and connect the existing owner system before asking the client to manually reproduce that context.
 
 Examples:
 
@@ -65,125 +43,81 @@ Examples:
 "everything is in Microsoft / SharePoint / OneDrive"
 → Microsoft 365 / SharePoint / OneDrive
 
-"our sales data is in HubSpot / Salesforce"
+"sales is in HubSpot / Salesforce"
 → the matching CRM connector
 
 "finance is in Zoho Books / Xero / QuickBooks"
 → the matching accounting connector
-
-"our knowledge is in Notion / Confluence"
-→ the matching knowledge connector
-
-"files are on Dropbox / Box"
-→ the matching file-store connector
-
-"the data is on our server / NAS / shared drive / database"
-→ use the authorised mounted-filesystem, database, API, SFTP or other purpose-fit route
 ```
 
-Google Workspace / Drive is a canonical example, **not a special-case dependency**. Apply the same inference rule to any named system, including systems not listed above.
+Prefer the smallest useful connector set for real work now. Keep each external system authoritative for its own live records.
 
-### Connector resolution order
+## 4. Create the FolderDesk profile
 
-For every named source:
-
-1. **Reuse an existing authorised native/dedicated connector** if one is already available.
-2. Otherwise use the platform's normal connector/plugin/app connection path and ask the client only for the unavoidable sign-in/authorisation action.
-3. If no native connector exists, use an already-authorised API, MCP, mounted filesystem, database route or governed specialist tool/gateway that can access the source safely.
-4. If the source is genuinely not connectable, ask for the **smallest useful export** or representative document set rather than making the client manually reconstruct the business in chat. Record the missing connector as a capability gap for later improvement.
-
-Once connected:
-
-```text
-identify owner/source
-→ inspect/inventory authorised scope
-→ ingest only relevant useful content
-→ preserve provenance
-→ route durable knowledge/tasks to the correct owners
-→ verify retrieval
-```
-
-Do **not** migrate or ingest an entire source blindly. Keep the existing system as owner truth where appropriate and pull only the context required for useful work.
-
-Only after using existing clues, ask what still owns:
-
-- files/documents;
-- email and calendar;
-- CRM/sales;
-- ERP/accounting;
-- messaging/collaboration;
-- knowledge/wiki;
-- databases/shared drives;
-- other business-critical systems.
-
-Recommend the **smallest useful connector set for real work now**, prioritising connectors that unlock the most existing context with the least client effort. Prefer native/dedicated authorised connectors. Reuse existing systems rather than replacing them. If a named source can supply documents/context directly once authorised, connect it before asking the client to manually reproduce that context.
-
-Do not ask for credential values in chat or store them in FolderDesk. Ask only for necessary sign-in/authorisation actions.
-
-## 4. Create the deployment profile
-
-Use Atlas or:
+The default is **one repository**. Domains such as Sales, Delivery or Finance are in-repository context/folder concerns, not separate repositories.
 
 ```bash
-python3 scripts/arc.py onboard --output arc.json
+python3 scripts/folderdesk.py onboard --output folderdesk.json
 ```
 
-A capable agent that already knows the required facts can use `onboard --non-interactive`.
+Non-interactive example:
 
-Only resolve deployment facts actually needed: GitHub owner, repository visibility, domain owners, Skills home, private-file owner, specialist-system owners and runtime route where relevant.
+```bash
+python3 scripts/folderdesk.py onboard \
+  --non-interactive \
+  --business-name "Example Business" \
+  --owner example-org \
+  --domains "sales,delivery" \
+  --output folderdesk.json
+```
+
+The primary repository name defaults to a slug of the business name. Use `--repository` only when a different name is useful.
+
+### Expansion rule
+
+Do **not** create separate Skills, Research, Operations or domain repositories during normal bootstrap. Add another `repositories[]` entry only when a concrete ownership, security, scale, concurrency, lifecycle or independent-review boundary earns separation.
 
 ## 5. Inspect readiness when useful
 
 ```bash
-python3 scripts/arc.py doctor --config arc.json --connectors
-python3 scripts/arc.py plan --config arc.json --inspect-target
+python3 scripts/folderdesk.py doctor --config folderdesk.json --connectors
+python3 scripts/folderdesk.py plan --config folderdesk.json --inspect-target
 ```
 
-These are operator tools. Do not dump their raw output into normal client replies. Translate material results into plain language.
+These are operator tools, not approval rituals.
 
-## 6. Bootstrap with streamed operator progress
+## 6. Bootstrap the workspace
 
 ```bash
-python3 scripts/arc.py bootstrap --config arc.json --apply
+python3 scripts/folderdesk.py bootstrap --config folderdesk.json --apply
 ```
 
-The CLI reports configured repository progress, elapsed time and estimated remaining time. The agent should convert this into compact client updates such as:
+A new workspace receives:
 
-```text
-I’m setting up the workspace now. No action needed from you.
-Core workspace is ready. I’m connecting your file/email systems next.
-```
+- `README.md` and a compact root `AGENTS.md` Router;
+- `work/`, `knowledge/`, `outputs/`, `archive/`;
+- `.folderdesk/` for agent support and reusable machinery;
+- a local Atlas pointer.
 
-Do not send repository matrices, SHAs, CLI traces or router diagnostics unless requested or materially blocking.
+The CLI leaves any existing configured repository unchanged.
 
-## 7. Seed starter Skills
+## 7. Seed reusable starter Skills
+
+By default starter Skills live inside the workspace at `.folderdesk/skills/`:
 
 ```bash
-python3 scripts/seed_foundation.py --config arc.json --apply
+python3 scripts/seed_foundation.py --config folderdesk.json --apply
 ```
 
-A blank deployment receives public-safe starter Skills including:
+A separate Skills repository remains supported only when explicitly configured as an expansion.
 
-- owner routing;
-- GitHub workflow;
-- Skill authoring;
-- research escalation;
-- document intake;
-- **client experience** — tone, brand/examples, connectors, polished artifacts and client-safe communication.
+## 8. Prove value with a real outcome
 
-Existing target Skill files are never overwritten automatically.
-
-## 8. Prove value with a real client-ready outcome
-
-Do not use “a Markdown file exists in GitHub” as the normal client proof when the natural output is a business document.
-
-Choose one useful real workflow and return its finished client-facing artifact. For document/report/proposal/quote style work, default to a **polished DOCX and/or PDF**, using the client's brand/style when available.
-
-Backend GitHub/Markdown evidence may be preserved for agents/operators, but it is not the default client deliverable.
+Do not use “a Markdown file exists in GitHub” as the client proof when the natural output is a business artifact. Deliver the useful result. For proposal/report/quote-style work, default to a **polished DOCX and/or PDF** using the client's brand/style when available.
 
 ## 9. File and remember the result
 
-If the workflow consumes or produces documents:
+For document workflows:
 
 ```text
 file source/output
@@ -197,25 +131,25 @@ The client should be able to ask for the document or its meaning later in normal
 
 ## 10. Client-facing completion
 
-Normal completion should answer only:
+Normal completion answers only:
 
 1. What is ready?
 2. What useful systems are connected?
-3. What finished artifact/result did I produce?
+3. What finished result was produced?
 4. Is there anything the client must do now?
 5. What can FolderDesk do next?
 
-Keep technical evidence behind the scenes unless requested.
+Keep backend GitHub evidence behind the scenes unless requested.
 
 ## 11. Verify / Safe Harbour
 
 ```bash
-python3 scripts/arc.py verify --config arc.json
-python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
+python3 scripts/folderdesk.py verify --config folderdesk.json
+python3 scripts/folderdesk.py export --config folderdesk.json --output folderdesk-estate.json --inspect-target
 ```
 
-Use [VERIFY.md](VERIFY.md) for operator acceptance and recovery evidence.
+Use [VERIFY.md](VERIFY.md) for acceptance and [MANIFEST.md](MANIFEST.md) for recovery.
 
 ## KISSS
 
-Do not add infrastructure merely to make onboarding look sophisticated. The product should remove admin and technical friction from the client, not expose it.
+Start with one useful workspace. Expand only from demonstrated need. The operating system must not become the work.
