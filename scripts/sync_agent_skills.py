@@ -3,10 +3,9 @@
 discovery path, so Claude Code, Codex, and Antigravity (agy) all see the
 same one-editable-canon Skills without duplicating them.
 
-Canonical source defaults to `.github/skills/` — this repo's own documented
-Skills home (see `components/skills/README.md`, `starter/README.md`). A
-deploying organisation with a different canonical Skills location overrides
-`--source`.
+Canonical source is auto-detected: deployed FolderDesk workspaces prefer
+`.folderdesk/skills/`; the FolderDesk framework repository falls back to
+`.github/skills/`. Use `--source` only for an explicit non-standard source.
 
 Targets (see `components/agents/README.md` — runtime copies/adapters may
 exist, but must never become independently edited canon):
@@ -71,12 +70,17 @@ def write_agy_manifest(repo_root: Path, source: Path) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--source", default=".github/skills", help="Canonical Skills home (default: .github/skills)")
+    ap.add_argument("--source", default=None, help="Canonical Skills home (default: auto-detect .folderdesk/skills, then .github/skills)")
     ap.add_argument("--root", default=".", help="Repository root (default: current directory)")
     args = ap.parse_args()
 
     repo_root = Path(args.root).resolve()
-    source = (repo_root / args.source).resolve()
+    if args.source:
+        source = (repo_root / args.source).resolve()
+    else:
+        workspace_source = (repo_root / ".folderdesk/skills").resolve()
+        framework_source = (repo_root / ".github/skills").resolve()
+        source = workspace_source if find_skills(workspace_source) else framework_source
 
     skills = find_skills(source)
     if not skills:

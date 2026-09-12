@@ -114,6 +114,18 @@ A **new** workspace receives in the same bootstrap:
 
 The CLI leaves an existing configured repository unchanged. It does not claim an existing repository as FolderDesk-managed merely because the name exists.
 
+### Add or import another Skill
+
+For a deployed FolderDesk workspace, `.folderdesk/skills/` is the editable local Skill source. To add a Skill, place the complete Skill directory there, then refresh every supported local agent discovery surface from that one source:
+
+```bash
+# example
+cp -R /path/to/uae-corporate-tax .folderdesk/skills/uae-corporate-tax
+python3 scripts/sync_agent_skills.py
+```
+
+The adapter symlinks Skills into `.claude/skills/` and `.codex/skills/`, and writes `.agents/skills.json` for Antigravity. These are derived adapters, not editable Skill canon. Re-run the adapter after adding, renaming or removing a Skill.
+
 ## 7. Adopt or repair an existing workspace when needed
 
 For a reused existing repository, inspect it first. Seed the six foundational Skills only when the client wants that repository adopted into FolderDesk and the mutation is authorised:

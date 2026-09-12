@@ -2,9 +2,15 @@
 
 Skills are ARC's reusable HOW layer.
 
-A deployed organisation should nominate one editable canonical Skills home (this repo's own: `.github/skills/`). Runtime copies/adapters may exist, but should not become independently edited canon.
+A deployed FolderDesk workspace has one editable local Skills home: `.folderdesk/skills/`. Put a Skill directory there (for example `.folderdesk/skills/uae-corporate-tax/SKILL.md`) and keep runtime discovery paths derived; do not edit runtime copies independently. The FolderDesk framework repository itself may keep framework-owned Skills in `.github/skills/`.
 
-`scripts/sync_agent_skills.py` is the concrete adapter: it mirrors the canonical Skills home into each local AI CLI's own native discovery path — `.claude/skills/`, `.codex/skills/` (both symlinks) and `.agents/skills.json` (Antigravity's documented per-repo manifest, written best-effort — verify live with `agy --print` before relying on it). Re-run it after adding, renaming or removing a Skill.
+`scripts/sync_agent_skills.py` is the concrete adapter. With no arguments it prefers `.folderdesk/skills/` when that directory contains Skills, otherwise it falls back to `.github/skills/`. It mirrors the selected source into each local AI CLI's native discovery path — `.claude/skills/`, `.codex/skills/` (both symlinks) and `.agents/skills.json` (Antigravity's documented per-repo manifest, written best-effort — verify live with `agy --print` before relying on it). Re-run it after adding, renaming or removing a Skill:
+
+```bash
+python3 scripts/sync_agent_skills.py
+```
+
+Use `--source <path>` only when a deployment intentionally keeps canonical local Skills somewhere else.
 
 Prefer concise instructions for capable agents. Add deterministic scripts only for proven fragile or machine-interface requirements.
 
