@@ -1,6 +1,8 @@
 # FolderDesk Architecture
 
-FolderDesk is a small file-native operating surface for capable human + AI work. **Start with one workspace repository. Expand only when demonstrated need earns another boundary.**
+FolderDesk is a small file-native operating surface for capable human + AI work. **Start with one self-contained workspace repository. Expand only when demonstrated need earns another boundary.**
+
+The design intentionally combines the strongest proven ideas from FolderDesk Tiny—small canonical structure, smart-agent-first execution, earned Skills, learning and lightweight drift checking—with the fuller FolderDesk business capabilities needed for real client deployment: document intake, client experience, integration/recovery boundaries and optional expansion.
 
 **Fast links:** [README](README.md) · [Atlas](ATLAS.md) · [Router](AGENTS.md) · [Bootstrap](BOOTSTRAP.md) · [Verify](VERIFY.md) · [Manifest](MANIFEST.md)
 
@@ -14,6 +16,7 @@ request
 → act with native reasoning or an existing tool
 → write useful result
 → verify once
+→ learn only when a material lesson exists
 → stop
 ```
 
@@ -29,7 +32,14 @@ workspace repository/
 ├── archive/
 └── .folderdesk/
     ├── README.md
+    ├── managed.json
     └── skills/
+        ├── structure/
+        ├── skill-builder/
+        ├── lessons/
+        ├── auditor/
+        ├── document-intake/
+        └── client-experience/
 ```
 
 - `work/` — active work.
@@ -38,7 +48,24 @@ workspace repository/
 - `archive/` — inactive history.
 - `.folderdesk/` — reusable agent support, Skills, non-secret config and earned machinery.
 
-Domains such as Sales, Delivery, Finance or Marketing are **local context/folder concerns by default**. They do not automatically become repositories.
+Domains such as Sales, Delivery, Finance or Marketing are **local context/folder concerns by default**. They do not automatically become repositories or a pre-created departmental tree.
+
+## Six foundational local Skills
+
+A fresh FolderDesk-managed workspace is usable without depending on TBHRC's internal Skill Bank:
+
+| Skill | Owns |
+|---|---|
+| `structure` | canonical workspace vocabulary and placement |
+| `skill-builder` | creation/update of earned reusable local HOW |
+| `lessons` | material real-work learning that changes future behaviour |
+| `auditor` | one-shot semantic/structural/behaviour/purpose drift and necessity checking |
+| `document-intake` | durable file/document preservation, ingestion, provenance and retrieval |
+| `client-experience` | business-first onboarding, communication, connectors and polished outputs |
+
+These are progressive-loaded. Their presence does not mean every task loads every Skill.
+
+The Auditor is deliberately not the organisation's old mandatory lifecycle. It does not require an Issue, approval state, recurring run, ledger or audit-before-execution ritual. It is used when actual drift/over-engineering is suspected or after a material structural change.
 
 ## Expansion is optional
 
@@ -52,7 +79,7 @@ A second repository must earn its boundary. Good reasons include:
 
 Bad reason: “there are several departments.”
 
-When expansion is earned, add it explicitly to `repositories[]`; FolderDesk already supports multiple configured repositories without requiring them at bootstrap.
+When expansion is earned, add it explicitly to `repositories[]`; FolderDesk supports multiple configured repositories without requiring them at bootstrap.
 
 ## Files first, machinery second
 
@@ -67,7 +94,7 @@ clear instruction
 → smallest proven fix
 ```
 
-Do not pre-build queues, databases, agents, services, status layers or approval machinery for hypothetical future needs. Add deterministic code when an exact machine contract, repeated mechanical failure, scale advantage or hard boundary proves it valuable.
+Do not pre-build queues, databases, agents, services, status layers, control planes or approval machinery for hypothetical future needs. Add deterministic code when an exact machine contract, repeated mechanical failure, scale advantage or hard boundary proves it valuable.
 
 ## One owner / one truth
 
@@ -86,6 +113,14 @@ Keep live truth in its real owner:
 
 A mature organisation may later promote reusable Skills, Research or product/runtime code into separate repositories. Promotion changes the owner; it is not a default deployment requirement.
 
+## Managed vs adopted repositories
+
+FolderDesk-created repositories carry `.folderdesk/managed.json`. That marker means the repository claims the FolderDesk-managed structural contract.
+
+An existing exact-path repository without that marker is **reused/unmanaged** until explicitly adopted. FolderDesk must not call it broken merely because it lacks FolderDesk scaffolding, and bootstrap must not silently overwrite it.
+
+GitHub redirects/transfers are resolved before mutation. An exact configured owner/path is required; `OWNER_MISMATCH` is a stop condition rather than an implicit redirect-following deployment.
+
 ## Context discipline
 
 - Keep root routing small.
@@ -93,6 +128,7 @@ A mature organisation may later promote reusable Skills, Research or product/run
 - Put conditional depth one semantic hop away.
 - Human-readable files do not replace deterministic validation where correctness needs it.
 - File organisation can decay; prune, promote or reset when structure starts becoming the work.
+- Research/programme machinery belongs outside the first-day client baseline unless a real deployment need earns it.
 
 ## Recovery
 
@@ -111,10 +147,10 @@ Existing repositories are left unchanged by current restore/bootstrap behavior.
 
 ## Acceptance
 
-FolderDesk is healthy when a fresh capable person or agent can enter one repository, find the relevant context, produce useful work, preserve reusable learning without ceremony, and expand the topology only after a real boundary appears.
+FolderDesk is healthy when a fresh capable person or agent can enter one repository, discover the six core routes without preloading them, produce useful work, preserve files/learning with provenance, detect real drift without governance ceremony, and expand topology only after a real boundary appears.
 
 ## KISSS
 
 > **The operating system must not become the work.**
 
-Before adding structure or machinery: `DELETE → COLLAPSE → REUSE → DIRECT → only then ADD`.
+Before adding structure or machinery: `DELETE → COLLAPSE → REUSE → DIRECT → SKILL → only then ADD`.
