@@ -1,95 +1,68 @@
 # FolderDesk Verification Contract
 
-FolderDesk is healthy when the intended operating capability works. Verification proves outcomes; it does not create permission gates.
+FolderDesk is healthy when useful work can begin from one workspace and expansion remains possible without being mandatory. Verification proves outcomes; it does not create permission gates.
 
 ## Repository baseline
 
-Run the normal executable checks:
-
 ```bash
-python3 scripts/arc.py verify-self
+python3 scripts/folderdesk.py verify-self
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```
 
-Use `doctor`, `plan --inspect-target` and target `verify` when they materially help diagnose or prove the requested deployment. They are tools, not mandatory preconditions for ordinary authorised mutation.
+## Default deployment proof
 
-## Deployment proof
+For a fresh deployment, prove that:
 
-For a new or adopted estate, prove only what is relevant:
+- onboarding creates a profile with exactly one `workspace` repository;
+- declared domains remain in-repository context and do not create repositories;
+- bootstrap creates/reuses only the explicitly configured repository list;
+- the workspace has `README.md`, `AGENTS.md`, `.folderdesk/` and the Atlas pointer;
+- human work has clear `work/`, `knowledge/`, `outputs/`, `archive/` homes;
+- starter Skills can be seeded under `.folderdesk/skills/`;
+- a real requested workflow reaches a useful real-world result.
 
-- root `AGENTS.md` routes a known bounded task directly to the smallest relevant Skill/owner;
-- owner lookup, Workflow and Multi-Agent Orchestrator remain unloaded unless genuinely needed;
-- Fast Links are pointers rather than preload requirements;
-- an already-authorised bounded mutation executes without a second approval ritual;
-- `--apply` selects mutation mode;
-- existing configured repositories are reused unchanged;
-- missing configured repositories can be created through the authorised bootstrap path;
-- one real workflow reaches real-state verification.
+## Expansion proof
+
+When another repository is added, prove the boundary that earned it. The reason should be observable—for example access isolation, independent release/lifecycle, concurrency, security/privacy, or a mature separately owned capability.
+
+The deployment must continue to work when no optional expansion repositories exist.
 
 ## Safe-harbour proof
 
-A valid estate manifest must:
-
-- use supported `manifest_schema: 1.0`;
-- identify the FolderDesk release version that exported it (currently stored in the compatibility `arc_version` field);
-- round-trip into valid FolderDesk topology/configuration;
-- contain architecture/owner references only;
-- exclude credential values, private-file contents, specialist-system records, database contents, trusted-runtime machine state and derived memory contents;
-- reject unsupported schemas and obvious credential material.
-
-Useful commands:
-
 ```bash
-python3 scripts/arc.py export --config arc.json --output arc-estate.json --inspect-target
-python3 scripts/arc.py restore-plan --manifest arc-estate.json --inspect-target
-python3 scripts/arc.py restore --manifest arc-estate.json --apply
+python3 scripts/folderdesk.py export --config folderdesk.json --output folderdesk-estate.json --inspect-target
+python3 scripts/folderdesk.py restore-plan --manifest folderdesk-estate.json --inspect-target
+python3 scripts/folderdesk.py restore --manifest folderdesk-estate.json --apply
 ```
 
-Current `restore --apply` is bounded reconstruction: existing repositories remain unchanged and only missing configured repositories are created. It is not a separate approval class.
+A valid manifest:
 
-If a future operation actually deletes, overwrites, force-updates, uses root/super-admin authority, moves private/confidential data, spends materially, creates a legal/compliance commitment or makes a material external/client commitment, protect that specific boundary only.
+- uses `manifest_schema: 2.0`;
+- identifies `folderdesk_version`;
+- preserves the workspace plus explicit expansion repositories;
+- preserves logical domains separately from repositories;
+- contains no credential values, private-file contents, specialist-system records, database contents or derived memory contents;
+- round-trips into a valid FolderDesk config.
+
+Restore leaves existing repositories unchanged and creates only missing configured repositories.
 
 ## Data and credential boundary
 
-These controls remain because they protect concrete public-repository risks:
-
-- no credential values in public FolderDesk configuration or manifests;
-- no private client/personnel/business records copied into public FolderDesk;
-- exposed credentials are revoked/rotated rather than treated as remediated by deleting text;
-- external systems remain owners of their live records and backups;
-- existing target repositories and Skills are not silently overwritten.
-
-## Provider and runtime proof
-
-One authorised capable route is enough when it can complete and verify the intended work.
-
-- use the simplest existing authorised route that can do the job;
-- do not require redundant providers, extra runtime hops or weaker execution merely for appearance of safety;
-- use a trusted/local/self-hosted/VPS runtime only when its capability is actually needed;
-- changing provider should not require redesigning FolderDesk ownership.
-
-## Continuity
-
-Preserve continuity only when it materially helps future execution. An Issue, PR, repository file or owner-system record may be used; no specific object is mandatory merely because work is material.
-
-Useful continuity is limited to:
-
-- objective;
-- current state;
-- evidence;
-- exact next action.
+- No credential values in public FolderDesk configuration or manifests.
+- No private client/personnel/business records copied into public FolderDesk.
+- External systems remain owners of their live records and backups.
+- A file-first operating surface is not a transactional database.
 
 ## Definition of green
 
-FolderDesk is green when a fresh human or capable agent can:
-
 ```text
 request
-→ Repository Router
-→ smallest relevant Skill / owner truth
+→ one workspace
+→ smallest relevant local context / Skill / connected owner
 → authorised execution
-→ real-state verification
+→ useful result
+→ verify once
 → stop
 ```
 
-with no unnecessary approval loop, mandatory planning ceremony, issue-first requirement, redundant provider/runtime requirement, duplicate control plane or hypothetical security restriction.
+with no forced multi-repository topology, unnecessary approval loop, duplicate control plane or speculative machinery.
