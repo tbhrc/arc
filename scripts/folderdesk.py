@@ -25,6 +25,14 @@ VALID_VISIBILITY = {"public", "private", "internal"}
 VALID_OWNER_TYPES = {"org", "user"}
 VALID_DEPLOYMENT_SCOPES = {"shared", "tenant"}
 ATLAS_MODES = ("onboard", "adopt", "audit", "health", "upgrade", "recover", "next")
+BASELINE_SKILLS = (
+    "structure",
+    "skill-builder",
+    "lessons",
+    "auditor",
+    "document-intake",
+    "client-experience",
+)
 REQUIRED_SELF_FILES = [
     "README.md",
     "AGENTS.md",
@@ -316,24 +324,90 @@ def gh_authenticated() -> bool:
     return gh_available() and run(["gh", "auth", "status"], check=False).returncode == 0
 
 
+def gh_active_login() -> str | None:
+    if not gh_authenticated():
+        return None
+    result = run(["gh", "api", "user", "--jq", ".login"], check=False)
+    if result.returncode != 0:
+        return None
+    value = result.stdout.strip()
+    return value or None
+
+
+def gh_repo_identity(full_name: str) -> dict[str, str] | None:
+    result = run(["gh", "repo", "view", full_name, "--json", "nameWithOwner,url"], check=False)
+    if result.returncode != 0:
+        return None
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        raise FolderDeskError(f"GitHub returned invalid repository metadata for {full_name}") from exc
+    resolved = payload.get("nameWithOwner")
+    if not isinstance(resolved, str) or not resolved.strip():
+        raise FolderDeskError(f"GitHub did not return resolved repository ownership for {full_name}")
+    return {"requested": full_name, "resolved": resolved, "url": str(payload.get("url", ""))}
+
+
 def gh_repo_exists(full_name: str) -> bool:
-    return run(["gh", "repo", "view", full_name, "--json", "nameWithOwner"], check=False).returncode == 0
+    return gh_repo_identity(full_name) is not None
 
 
-def inspect_repository_state(data: dict[str, Any], exists_fn: Callable[[str], bool] | None = None) -> list[dict[str, str]]:
+def gh_target_operability(data: dict[str, Any]) -> tuple[bool, str]:
+    actor = gh_active_login()
+    if not actor:
+        return False, "active GitHub identity could not be resolved"
+    target = data["target"]
+    owner = target["owner"]
+    owner_type = target.get("owner_type", "org")
+    if owner_type == "user":
+        ok = actor.lower() == owner.lower()
+        return ok, f"active account {actor}; target user {owner}"
+    query = "query($login:String!){organization(login:$login){viewerCanCreateRepositories}}"
+    result = run(["gh", "api", "graphql", "-f", f"query={query}", "-F", f"login={owner}"], check=False)
+    if result.returncode != 0:
+        return False, f"active account {actor}; could not confirm repository-create access to organisation {owner}"
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return False, f"active account {actor}; GitHub organisation access response was invalid"
+    org = payload.get("data", {}).get("organization")
+    allowed = bool(isinstance(org, dict) and org.get("viewerCanCreateRepositories"))
+    return allowed, f"active account {actor}; target organisation {owner}; create access {'confirmed' if allowed else 'not confirmed'}"
+
+
+def inspect_repository_state(
+    data: dict[str, Any], exists_fn: Callable[[str], bool] | None = None
+) -> list[dict[str, str]]:
     owner = data["target"]["owner"]
     repos = repos_from_config(data)
-    if exists_fn is None and not gh_authenticated():
-        return [{"name": repo["name"], "full_name": f"{owner}/{repo['name']}", "action": "UNKNOWN"} for repo in repos]
-    checker = exists_fn or gh_repo_exists
-    return [
-        {
-            "name": repo["name"],
-            "full_name": f"{owner}/{repo['name']}",
-            "action": "REUSE" if checker(f"{owner}/{repo['name']}") else "CREATE",
-        }
-        for repo in repos
-    ]
+    if exists_fn is not None:
+        rows: list[dict[str, str]] = []
+        for repo in repos:
+            requested = f"{owner}/{repo['name']}"
+            exists = exists_fn(requested)
+            rows.append({
+                "name": repo["name"],
+                "full_name": requested,
+                "resolved_name": requested if exists else "",
+                "action": "REUSE" if exists else "CREATE",
+            })
+        return rows
+    if not gh_authenticated():
+        return [
+            {"name": repo["name"], "full_name": f"{owner}/{repo['name']}", "resolved_name": "", "action": "UNKNOWN"}
+            for repo in repos
+        ]
+    rows = []
+    for repo in repos:
+        requested = f"{owner}/{repo['name']}"
+        identity = gh_repo_identity(requested)
+        if identity is None:
+            rows.append({"name": repo["name"], "full_name": requested, "resolved_name": "", "action": "CREATE"})
+            continue
+        resolved = identity["resolved"]
+        action = "REUSE" if resolved.lower() == requested.lower() else "OWNER_MISMATCH"
+        rows.append({"name": repo["name"], "full_name": requested, "resolved_name": resolved, "action": action})
+    return rows
 
 
 def role_label(role: str) -> str:
@@ -361,11 +435,11 @@ def generated_readme(data: dict[str, Any], repo: dict[str, Any]) -> str:
 def generated_agents(data: dict[str, Any], repo: dict[str, Any]) -> str:
     owner = data["target"]["owner"]
     full = f"{owner}/{repo['name']}"
-    return f"""# AGENTS.md — FolderDesk Router\n\nStart with the work. FolderDesk supports the task; it is not the task.\n\n**Repository:** {full}  \n**Role:** {role_label(repo['role'])}\n\n- Assume a capable reasoning agent. Use clear instructions + existing tools first.\n- Human work lives in `work/`, `knowledge/`, `outputs/`, or `archive/`.\n- Agent support, reusable Skills, configuration and machinery live under `.folderdesk/`.\n- Issues are optional continuity, not runtime permission.\n- Reuse before create. Prefer direct reasoning and native repository/platform capability before wrappers.\n- Route before loading. Keep cold-start context small and load depth only when needed.\n- One meaning, one canonical home. Do not create duplicate truth or status layers.\n- Domains are local context/folder concerns unless a real boundary earns separation.\n- Additional repositories are optional expansion. Add one only for a proven ownership, security, scale, concurrency, lifecycle or independent-review boundary.\n- Add deterministic code only for a repeated mechanical failure, exact machine contract, scale advantage or hard boundary.\n- Verify the requested outcome once in the correct owner, then stop.\n\n**Fast links:** [README](README.md) · [FolderDesk support](.folderdesk/README.md) · [Atlas](.github/skills/atlas/SKILL.md) · [Issues](https://github.com/{full}/issues) · [Upstream](https://github.com/tbhrc/folderdesk)\n"""
+    return f"""# AGENTS.md — FolderDesk Router\n\nStart with the work. FolderDesk supports the task; it is not the task.\n\n**Repository:** {full}  \n**Role:** {role_label(repo['role'])}\n\n- Assume a capable reasoning agent. Use clear instructions + existing tools first.\n- Human work lives in `work/`, `knowledge/`, `outputs/`, or `archive/`.\n- Agent support, reusable Skills, configuration and machinery live under `.folderdesk/`.\n- **Folder/naming/placement question** → use [Structure](.folderdesk/skills/structure/SKILL.md).\n- **Repeatable operating behaviour worth keeping** → use [Skill Builder](.folderdesk/skills/skill-builder/SKILL.md).\n- **Material failure/insight that should change future behaviour** → use [Lessons](.folderdesk/skills/lessons/SKILL.md).\n- **Suspected structural/semantic/behaviour/purpose drift** → use [Auditor](.folderdesk/skills/auditor/SKILL.md) once; it is not a recurring gate.\n- **User gives you a file/document** → use [Document Intake](.folderdesk/skills/document-intake/SKILL.md).\n- **Client-facing onboarding, communication or business artifact** → use [Client Experience](.folderdesk/skills/client-experience/SKILL.md).\n- Issues are optional continuity, not runtime permission.\n- Reuse before create. Prefer direct reasoning and native repository/platform capability before wrappers.\n- Route before loading. Keep cold-start context small and load depth only when needed.\n- One meaning, one canonical home. Do not create duplicate truth or status layers.\n- Domains are local context/folder concerns unless a real boundary earns separation.\n- Additional repositories are optional expansion. Add one only for a proven ownership, security, scale, concurrency, lifecycle or independent-review boundary.\n- Add deterministic code only for a repeated mechanical failure, exact machine contract, scale advantage or hard boundary.\n- Verify the requested outcome once in the correct owner, then stop.\n\n**Core Skills:** [Structure](.folderdesk/skills/structure/SKILL.md) · [Skill Builder](.folderdesk/skills/skill-builder/SKILL.md) · [Lessons](.folderdesk/skills/lessons/SKILL.md) · [Auditor](.folderdesk/skills/auditor/SKILL.md) · [Document Intake](.folderdesk/skills/document-intake/SKILL.md) · [Client Experience](.folderdesk/skills/client-experience/SKILL.md)\n\n**Fast links:** [README](README.md) · [FolderDesk support](.folderdesk/README.md) · [Atlas](.github/skills/atlas/SKILL.md) · [Issues](https://github.com/{full}/issues) · [Upstream](https://github.com/tbhrc/folderdesk)\n"""
 
 
 def generated_folderdesk_support() -> str:
-    return """# FolderDesk support\n\nThis directory contains agent support and reusable machinery for this workspace.\n\nDefault rule: **keep it small**. Start with files + native reasoning. Add a Skill, script, index, database, agent or service only after a real requirement proves the current surface insufficient.\n\nRecommended local homes:\n\n- `skills/` — reusable HOW that is specific to this workspace or has not yet earned a separate canonical owner\n- `config/` — non-secret FolderDesk/workspace configuration\n- `evidence/` — bounded machine/operator evidence when native Git history is insufficient\n\nDo not move normal business work out of `work/`, `knowledge/`, `outputs/`, or `archive/` merely because an agent is doing it.\n"""
+    return """# FolderDesk support\n\nThis directory contains agent support and reusable machinery for this workspace.\n\nDefault rule: **keep it small**. Start with files + native reasoning. Add a Skill, script, index, database, agent or service only after a real requirement proves the current surface insufficient.\n\n## Core local Skills\n\n- `skills/structure/` — canonical workspace vocabulary and placement\n- `skills/skill-builder/` — reusable capability creation/update\n- `skills/lessons/` — material learning that changes future behaviour\n- `skills/auditor/` — one-shot drift/necessity check; never a recurring gate\n- `skills/document-intake/` — preserve, ingest, route and retrieve documents\n- `skills/client-experience/` — business-first onboarding and client-facing output\n\nOther local homes:\n\n- `config/` — non-secret FolderDesk/workspace configuration\n- `evidence/` — bounded machine/operator evidence when native Git history is insufficient\n\nDo not move normal business work out of `work/`, `knowledge/`, `outputs/`, or `archive/` merely because an agent is doing it.\n"""
 
 
 def generated_atlas_pointer() -> str:
@@ -388,6 +462,24 @@ def put_content(full: str, path: str, content: str, *, sha: str | None = None) -
         raise FolderDeskError(f"Failed to seed {full}/{path}: {result.stderr.strip() or result.stdout.strip()}")
 
 
+def starter_skill_files() -> list[tuple[str, str]]:
+    rows: list[tuple[str, str]] = []
+    for skill in BASELINE_SKILLS:
+        path = ROOT / "starter" / "skills" / skill / "SKILL.md"
+        if not path.exists():
+            raise FolderDeskError(f"Missing baseline Skill: {path.relative_to(ROOT)}")
+        rows.append((f"{skill}/SKILL.md", path.read_text(encoding="utf-8")))
+    return rows
+
+
+def generated_managed_marker(repo: dict[str, Any]) -> str:
+    return json.dumps({
+        "managed_by": "FolderDesk",
+        "folderdesk_version": read_folderdesk_version(),
+        "role": repo["role"],
+    }, indent=2) + "\n"
+
+
 def seed_new_repo(data: dict[str, Any], repo: dict[str, Any]) -> None:
     owner = data["target"]["owner"]
     full = f"{owner}/{repo['name']}"
@@ -399,16 +491,22 @@ def seed_new_repo(data: dict[str, Any], repo: dict[str, Any]) -> None:
     put_content(full, ".github/skills/atlas/SKILL.md", generated_atlas_pointer())
     put_content(full, ".github/prompts/atlas.prompt.md", generated_atlas_prompt())
     put_content(full, ".folderdesk/README.md", generated_folderdesk_support())
-    put_content(full, ".folderdesk/skills/README.md", "# Workspace Skills\n\nPut reusable workspace-specific HOW here when it has earned a durable home.\n")
-    for path in ("work/.gitkeep", "knowledge/.gitkeep", "outputs/.gitkeep", "archive/.gitkeep"):
-        put_content(full, path, "")
-    print(f"SEED {full}: lean FolderDesk workspace")
+    put_content(full, ".folderdesk/managed.json", generated_managed_marker(repo))
+    put_content(full, ".folderdesk/skills/README.md", "# Workspace Skills\n\nFolderDesk's core local Skills are seeded here. Add another Skill only after repeatable real work earns it.\n")
+    for skill_path, content in starter_skill_files():
+        put_content(full, f".folderdesk/skills/{skill_path}", content)
+    for seed_path in ("work/.gitkeep", "knowledge/.gitkeep", "outputs/.gitkeep", "archive/.gitkeep"):
+        put_content(full, seed_path, "")
+    print(f"SEED {full}: self-contained FolderDesk workspace")
 
 
 def create_repo(data: dict[str, Any], repo: dict[str, Any]) -> bool:
     owner = data["target"]["owner"]
     full = f"{owner}/{repo['name']}"
-    if gh_repo_exists(full):
+    identity = gh_repo_identity(full)
+    if identity is not None:
+        if identity["resolved"].lower() != full.lower():
+            raise FolderDeskError(f"Refusing repository owner/path mismatch: requested {full}, resolved {identity['resolved']}")
         print(f"REUSE {full} (existing repository left unchanged)")
         return False
     cmd = ["gh", "repo", "create", full, f"--{repo['visibility']}", "--description", repo["description"], "--add-readme"]
@@ -485,9 +583,16 @@ def command_doctor(data: dict[str, Any], *, connectors: bool = False) -> int:
         ok = False
     elif gh_authenticated():
         print("PASS GitHub CLI found and authenticated")
+        actor = gh_active_login()
+        print(f"PASS GitHub identity resolved: {actor}" if actor else "CHECK GitHub identity could not be resolved")
     else:
         print("FAIL GitHub CLI is not authenticated for the intended target")
         ok = False
+    states = inspect_repository_state(data) if gh_authenticated() else []
+    mismatches = [row for row in states if row["action"] == "OWNER_MISMATCH"]
+    for row in mismatches:
+        print(f"FAIL repository identity mismatch: requested {row['full_name']}, resolved {row['resolved_name']}")
+    ok = ok and not mismatches
     print("PASS configuration schema")
     if connectors:
         command_connection_readiness(data)
@@ -518,6 +623,16 @@ def command_bootstrap(data: dict[str, Any], apply: bool) -> int:
         return command_plan(data)
     if not gh_authenticated():
         raise FolderDeskError("GitHub must be connected/authenticated before bootstrap --apply")
+    states = inspect_repository_state(data)
+    mismatches = [row for row in states if row["action"] == "OWNER_MISMATCH"]
+    if mismatches:
+        row = mismatches[0]
+        raise FolderDeskError(f"Refusing repository owner/path mismatch: requested {row['full_name']}, resolved {row['resolved_name']}")
+    if any(row["action"] == "CREATE" for row in states):
+        target_ok, detail = gh_target_operability(data)
+        if not target_ok:
+            raise FolderDeskError(f"Cannot create repositories in configured target: {detail}")
+        print(f"GitHub target access: confirmed ({detail}).")
     repos = repos_from_config(data)
     total = len(repos)
     started = time.monotonic()
@@ -529,7 +644,7 @@ def command_bootstrap(data: dict[str, Any], apply: bool) -> int:
         elapsed = max(time.monotonic() - started, 0.0)
         remaining = max((elapsed / index) * (total - index), 0.0)
         print(f"[{index}/{total}] Complete | elapsed {elapsed:.1f}s | estimated remaining {remaining:.1f}s")
-    print("FolderDesk bootstrap complete. Extra repositories were created only if explicitly present in the config.")
+    print("FolderDesk bootstrap complete. New workspaces include the self-contained baseline Skills; existing repositories remain unchanged for explicit adoption/repair.")
     return 0
 
 
@@ -544,18 +659,33 @@ def command_verify(data: dict[str, Any]) -> int:
     failed = False
     for repo in repos_from_config(data):
         full = f"{owner}/{repo['name']}"
-        result = run(["gh", "repo", "view", full, "--json", "nameWithOwner,visibility,url"], check=False)
-        if result.returncode != 0:
+        identity = gh_repo_identity(full)
+        if identity is None:
             failed = failed or repo["required"]
             print(f"MISSING {full}")
             continue
-        required_paths = ("README.md", "AGENTS.md", ".folderdesk/README.md", ".github/skills/atlas/SKILL.md")
-        missing = [path for path in required_paths if not gh_path_exists(full, path)]
+        if identity["resolved"].lower() != full.lower():
+            failed = failed or repo["required"]
+            print(f"OWNER_MISMATCH {full}: resolves to {identity['resolved']}")
+            continue
+        if not gh_path_exists(full, ".folderdesk/managed.json"):
+            print(f"REUSED/UNMANAGED {full}: existing repository is not claimed as FolderDesk-managed; adopt/seed explicitly if desired")
+            continue
+        required_paths = [
+            "README.md",
+            "AGENTS.md",
+            ".folderdesk/README.md",
+            ".folderdesk/managed.json",
+            ".github/skills/atlas/SKILL.md",
+        ]
+        required_paths.extend(f".folderdesk/skills/{skill}/SKILL.md" for skill in BASELINE_SKILLS)
+        missing = [required_path for required_path in required_paths if not gh_path_exists(full, required_path)]
         if missing:
             failed = failed or repo["required"]
             print(f"INCOMPLETE {full}: missing {', '.join(missing)}")
         else:
-            print(f"OK {full}: FolderDesk workspace contract present")
+            print(f"OK {full}: FolderDesk-managed workspace and baseline Skills present")
+    print("Structural verification complete. External connectors, runtimes and business systems are operational only when separately verified through their owning systems.")
     return 1 if failed else 0
 
 
@@ -590,7 +720,7 @@ def manifest_from_config(data: dict[str, Any], *, inspect_target: bool = False, 
         },
         "observation": {
             "repository_state_observed": observed,
-            "meaning": "REUSE means observed present; CREATE means observed missing; UNKNOWN/NOT_OBSERVED is not evidence of absence.",
+            "meaning": "REUSE means exact configured owner/path observed; OWNER_MISMATCH means GitHub resolved elsewhere; CREATE means observed missing; UNKNOWN/NOT_OBSERVED is not evidence of absence.",
         },
         "compatibility": {
             "manifest_schema": MANIFEST_SCHEMA,
@@ -705,6 +835,10 @@ def command_verify_self() -> int:
     for mode in ATLAS_MODES:
         if f"`{mode}`" not in modes:
             raise FolderDeskError(f"Atlas mode missing from reference: {mode}")
+    for skill in BASELINE_SKILLS:
+        skill_path = ROOT / "starter" / "skills" / skill / "SKILL.md"
+        if not skill_path.exists():
+            raise FolderDeskError(f"Missing baseline Skill: {skill_path.relative_to(ROOT)}")
     example = json.loads((ROOT / "profiles/generic-business/folderdesk.example.json").read_text(encoding="utf-8"))
     clone = json.loads(json.dumps(example))
     if clone.get("target", {}).get("owner") == "YOUR-GITHUB-ORG":
